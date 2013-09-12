@@ -4,5 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="lib/jgame-jbox2d.jar" sourcepath="lib/jbox2d-src.zip"/>
 	<classpathentry kind="lib" path="lib/jgame-jre.jar" sourcepath="lib/jgame-src.jar"/>
+	<classpathentry kind="lib" path="lib/jbox2d-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/jgame-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
