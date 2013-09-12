@@ -1,18 +1,29 @@
 package springies;
 
+import javax.swing.JFileChooser;
+
 import jboxGlue.PhysicalObject;
-import jboxGlue.PhysicalObjectCircle;
 import jboxGlue.PhysicalObjectRect;
 import jboxGlue.WorldManager;
 import jgame.JGColor;
-import jgame.JGObject;
 import jgame.platform.JGEngine;
+import object.*;
 
 import org.jbox2d.common.Vec2;
+
+//import javax.swing.JFileChooser;
+
+import environment.Viscosity;
 
 @SuppressWarnings( "serial" )
 public class Springies extends JGEngine
 {
+	Ball ball;
+	
+    private static final JFileChooser INPUT_CHOOSER = 
+            new JFileChooser(System.getProperties().getProperty("user.dir"));
+	Model model;
+	
 	public Springies( )
 	{
 		// set the window size
@@ -40,43 +51,43 @@ public class Springies extends JGEngine
 	public void initGame( )
 	{
 		setFrameRate( 60, 2 );
-		
+
 		// init the world
 		// One thing to keep straight: The world coordinates have y pointing down
 		// the game coordinates have y pointing up
 		// so gravity is along the positive y axis in world coords to point down in game coords
 		// remember to set all directions (eg forces, velocities) in world coords
 		WorldManager.initWorld( this );
-		WorldManager.getWorld().setGravity( new Vec2( 0.0f, 0.1f ) );
+		WorldManager.getWorld().setGravity( new Vec2( 0.0f, 0.0f ) );
+		
+		
+		loadModel();
 		
 		// add a bouncy ball
-		// NOTE: you could make this into a separate class, but I'm lazy
-		PhysicalObject ball = new PhysicalObjectCircle( "ball", 1, JGColor.blue, 10, 5 )
-		{
-			@Override
-			public void hit( JGObject other )
-			{
-				// we hit something! bounce off it!
-				Vec2 velocity = myBody.getLinearVelocity();
-				
-				// is it a tall wall?
-				final double DAMPING_FACTOR = 0.8;
-				boolean isSide = other.getBBox().height > other.getBBox().width;
-				if( isSide )
-				{
-					velocity.x *= -DAMPING_FACTOR;
-				}
-				else
-				{
-					velocity.y *= -DAMPING_FACTOR;
-				}
-				
-				// apply the change
-				myBody.setLinearVelocity( velocity );
-			}
-		};
+		ball = new Ball("ball", 1, JGColor.blue, 10, 5);
 		ball.setPos( displayWidth()/2, displayHeight()/2 );
 		ball.setForce( 8000, -10000 );
+
+		
+		
+		// add mass
+//		Mass mass1 = new Mass("mass1", 3, JGColor.green, 25, 25, 0.5);
+//		mass1.setPos(displayWidth()/3, 200);
+//		mass1.setForce(2000, 10000);
+//		Viscosity.SetViscosity(mass1);
+		
+//		Mass mass2 = new Mass("mass2", 3, JGColor.blue, 25, 25, 0.5);
+//		mass2.setPos(2*displayWidth()/3, 200);
+//		mass2.setForce(0, 1000);
+		
+//		Mass mass3 = new Mass("mass2", 3, JGColor.magenta, 25, 25, 0.5);
+//		mass3.setPos(2*displayWidth()/3, 400);
+		
+		// add a spring
+//		Spring spring1 = new Spring("spring1", 4, JGColor.cyan, mass1, mass2, 100);
+//		Spring spring2 = new Spring("spring2", 4, JGColor.cyan, mass1, mass3, 100);
+//		Spring spring3 = new Spring("spring3", 4, JGColor.cyan, mass2, mass3, 150);
+//		spring.setPos(displayWidth()/2, displayHeight()/3);
 		
 		// add walls to bounce off of
 		// NOTE: immovable objects must have no mass
@@ -94,6 +105,8 @@ public class Springies extends JGEngine
 		wall.setPos( displayWidth() - WALL_MARGIN, displayHeight()/2 );
 	}
 	
+	
+	
 	@Override
 	public void doFrame( )
 	{
@@ -101,7 +114,11 @@ public class Springies extends JGEngine
 		WorldManager.getWorld().step( 1f, 1 );
 		moveObjects();
 		
-		checkCollision( 1 + 2, 1 );
+//		spring.doFrame();
+		Viscosity.SetViscosity(ball);
+		
+		checkCollision( 1+2, 1 );
+//		checkCollision( 2+3, 3 );
 	}
 	
 	@Override
@@ -109,5 +126,15 @@ public class Springies extends JGEngine
 	{
 		// nothing to do
 		// the objects paint themselves
+	}
+	
+	public void loadModel(){
+		if(model == null) model = new Model();
+		
+		Parser parser = new Parser();
+        int response = INPUT_CHOOSER.showOpenDialog(null);
+        if (response == JFileChooser.APPROVE_OPTION) {
+            parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
+        }
 	}
 }
