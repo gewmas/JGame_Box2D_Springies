@@ -5,12 +5,14 @@
     <viscosity magnitude="0.8"/>
 
     <nodes>
-        <mass id="m0" x="392.49963" y="73.369934" vx="-10.8951623" vy="-0.45419145"/>
-        <mass id="m1" x="300" y="100" vx="10" vy="0" mass="7.0"/>
-        <mass id="m2" x="200" y="300" vx="-10" vy="10" mass="10.0"/>
+        <mass id="m0" x="392.49963" y="73.369934" vx="0" vy="0"/>
+        <mass id="m1" x="300" y="100" vx="0" vy="0" mass="7.0"/>
+        <mass id="m2" x="200" y="300" vx="0" vy="0" mass="10.0"/>
     </nodes>
 
     <links>
-        
+        <muscle a="m0" b="m1" restlength="80.0" amplitude="0.5"/>
+        <muscle a="m0" b="m2" restlength="80.0" amplitude="0.5"/>
+        <muscle a="m1" b="m2" restlength="80.0" amplitude="0.5"/>
     </links>
 </model>

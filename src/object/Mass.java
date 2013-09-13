@@ -21,6 +21,11 @@ public class Mass extends PhysicalObjectCircle{
 	        getBody().setLinearVelocity(velocity);
 	}
 	
+	public Mass(String id, int collisionId, JGColor color, double radius,
+			double mass) {
+		super(id, collisionId, JGColor.blue, radius, mass);
+	}
+
 	public void hit( JGObject other )
 	{
 		// we hit something! bounce off it!

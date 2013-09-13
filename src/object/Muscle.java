@@ -22,9 +22,9 @@ public class Muscle extends Spring {
 
 	@Override
 	public void setLength(){
-	    currentLength = 5*restLength*(Math.sin(timer*2*Math.PI));
+	    currentLength = restLength+amplitude*Math.sin(timer);
 	          
-//	   System.out.println("Muscle " + timer + " restLength:" + restLength + " length: " + (currentLength-restLength));
+	   System.out.println("Muscle " + timer + " restLength:" + restLength + " length: " + (currentLength-restLength));
 	}
 
 

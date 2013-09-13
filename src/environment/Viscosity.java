@@ -22,7 +22,7 @@ public class Viscosity extends Force {
 		
 		object.getBody().setLinearVelocity( velocity );
 		
-		System.out.println("Calling Viscosity setForce");
+//		System.out.println("Calling Viscosity setForce");
 	}
 
       
