@@ -3,25 +3,25 @@ package springies;
 import java.util.ArrayList;
 import java.util.List;
 
+import jboxGlue.PhysicalObject;
+import environment.Force;
 import object.*;
 
 public class Model {
-    private List<Mass> masses;
-    private List<Spring> springs;
+	private List<PhysicalObject> objects;
+    private List<Force> forces;
 	
     public Model () {
-    	masses = new ArrayList<Mass>();
-    	springs = new ArrayList<Spring>();
+    	objects = new ArrayList<PhysicalObject>();
+    	forces = new ArrayList<Force>();
     }
     
-    public void add (Mass mass) {
-    	masses.add(mass);
+    public void add(PhysicalObject object){
+    	objects.add(object);
     }
-
-    /**
-     * Add given spring to this simulation.
-     */
-    public void add (Spring spring) {
-    	springs.add(spring);
+    
+    public void add(Force force){
+    	forces.add(force);
     }
+    
 }

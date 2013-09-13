@@ -18,16 +18,14 @@ import environment.Viscosity;
 @SuppressWarnings( "serial" )
 public class Springies extends JGEngine
 {
-	Ball ball;
-	
-    private static final JFileChooser INPUT_CHOOSER = 
+	private static final JFileChooser INPUT_CHOOSER = 
             new JFileChooser(System.getProperties().getProperty("user.dir"));
 	Model model;
 	
 	public Springies( )
 	{
 		// set the window size
-		int height = 480;
+		int height = 600;
 		double aspect = 16.0/9.0;
 		initEngine( (int)(height*aspect), height );
 	}
@@ -64,9 +62,9 @@ public class Springies extends JGEngine
 		loadModel();
 		
 		// add a bouncy ball
-		ball = new Ball("ball", 1, JGColor.blue, 10, 5);
-		ball.setPos( displayWidth()/2, displayHeight()/2 );
-		ball.setForce( 8000, -10000 );
+//		ball = new Ball("ball", 1, JGColor.blue, 10, 5);
+//		ball.setPos( displayWidth()/2, displayHeight()/2 );
+//		ball.setForce( 8000, -10000 );
 
 		
 		
@@ -91,18 +89,18 @@ public class Springies extends JGEngine
 		
 		// add walls to bounce off of
 		// NOTE: immovable objects must have no mass
-		final double WALL_MARGIN = 10;
-		final double WALL_THICKNESS = 10;
-		final double WALL_WIDTH = displayWidth() - WALL_MARGIN*2 + WALL_THICKNESS;
-		final double WALL_HEIGHT = displayHeight() - WALL_MARGIN*2 + WALL_THICKNESS;
-		PhysicalObject wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
-		wall.setPos( displayWidth()/2, WALL_MARGIN );
-		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
-		wall.setPos( displayWidth()/2, displayHeight() - WALL_MARGIN );
-		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
-		wall.setPos( WALL_MARGIN, displayHeight()/2 );
-		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
-		wall.setPos( displayWidth() - WALL_MARGIN, displayHeight()/2 );
+//		final double WALL_MARGIN = 10;
+//		final double WALL_THICKNESS = 10;
+//		final double WALL_WIDTH = displayWidth() - WALL_MARGIN*2 + WALL_THICKNESS;
+//		final double WALL_HEIGHT = displayHeight() - WALL_MARGIN*2 + WALL_THICKNESS;
+//		PhysicalObject wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
+//		wall.setPos( displayWidth()/2, WALL_MARGIN );
+//		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
+//		wall.setPos( displayWidth()/2, displayHeight() - WALL_MARGIN );
+//		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
+//		wall.setPos( WALL_MARGIN, displayHeight()/2 );
+//		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
+//		wall.setPos( displayWidth() - WALL_MARGIN, displayHeight()/2 );
 	}
 	
 	
@@ -115,7 +113,7 @@ public class Springies extends JGEngine
 		moveObjects();
 		
 //		spring.doFrame();
-		Viscosity.SetViscosity(ball);
+//		Viscosity.SetViscosity(ball);
 		
 		checkCollision( 1+2, 1 );
 //		checkCollision( 2+3, 3 );

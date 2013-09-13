@@ -2,15 +2,14 @@ package object;
 
 import org.jbox2d.common.Vec2;
 
-import jboxGlue.PhysicalObjectRect;
+import jboxGlue.*;
 import jgame.JGColor;
 import jgame.JGObject;
 
-public class Mass extends PhysicalObjectRect{
+public class Mass extends PhysicalObjectCircle{
 
-	public Mass(String id, int collisionId, JGColor color, double width,
-			double height, double mass) {
-		super(id, collisionId, color, width, height, mass);
+	public Mass(String id, int collisionId, JGColor color, double radius, double mass) {
+		super(id, collisionId, color, radius, mass);
 		// TODO Auto-generated constructor stub
 	}
 	

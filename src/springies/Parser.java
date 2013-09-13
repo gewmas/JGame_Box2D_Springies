@@ -151,7 +151,7 @@ public class Parser {
 		
 		System.out.println(id + " " + mass + " " + vx + " " + vy + " " + x + " " + y);
 		
-		Mass result = new Mass(id, Common.MASS_CID, JGColor.blue, 25, 25, mass);
+		Mass result = new Mass(id, Common.MASS_CID, JGColor.blue, 10, mass);
 		result.setPos(x, y);
 		Vec2 velocity = new Vec2();
 		velocity.x = (float) vx;
