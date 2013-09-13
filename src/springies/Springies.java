@@ -1,18 +1,18 @@
 package springies;
 
+import java.util.List;
 import javax.swing.JFileChooser;
-
 import jboxGlue.PhysicalObject;
 import jboxGlue.PhysicalObjectRect;
 import jboxGlue.WorldManager;
 import jgame.JGColor;
 import jgame.platform.JGEngine;
 import object.*;
-
 import org.jbox2d.common.Vec2;
 
 //import javax.swing.JFileChooser;
 
+import environment.Force;
 import environment.Viscosity;
 
 @SuppressWarnings( "serial" )
@@ -117,6 +117,14 @@ public class Springies extends JGEngine
 		
 		checkCollision( 1+2, 1 );
 //		checkCollision( 2+3, 3 );
+		
+		List<PhysicalObject> objects = model.getObjects();
+		List<Force> forces = model.getForces();
+		
+		for(Force force : forces){
+		    force.SetForce(objects);
+		}
+		
 	}
 	
 	@Override
