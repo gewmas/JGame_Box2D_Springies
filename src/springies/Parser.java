@@ -25,6 +25,7 @@ public class Parser {
 	
     private static final String MASS_KEYWORD = "mass";
     private static final String FIXED_KEYWORD = "fixed";
+    private static final String MUSCLE_KEYWORD= "muscle";
     private static final String SPRING_KEYWORD = "spring";
     private static final String WALL_KEYWORD = "wall";
     private static final String GRAVITY_KEYWORD = "gravity";
