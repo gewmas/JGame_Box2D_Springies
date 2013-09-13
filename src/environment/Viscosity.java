@@ -1,14 +1,14 @@
 package environment;
 
+import java.util.List;
 import org.jbox2d.common.Vec2;
-
 import jboxGlue.PhysicalObject;
 
 public class Viscosity extends Force {
 
 	private final static double DAMPING_FACTOR = 0.999;
 	
-	public static void SetViscosity(PhysicalObject object){
+	public static void SetForce(PhysicalObject object){
 		Vec2 velocity = object.getBody().getLinearVelocity();
 		
 		velocity.x *= DAMPING_FACTOR;
@@ -16,4 +16,10 @@ public class Viscosity extends Force {
 		
 		object.getBody().setLinearVelocity( velocity );
 	}
+
+        @Override
+        public void SetForce (List<PhysicalObject> objects) {
+            // TODO Auto-generated method stub
+            
+        }
 }

@@ -8,7 +8,7 @@ import environment.Force;
 import object.*;
 
 public class Model {
-	private List<PhysicalObject> objects;
+    private List<PhysicalObject> objects;
     private List<Force> forces;
 	
     public Model () {
@@ -22,6 +22,14 @@ public class Model {
     
     public void add(Force force){
     	forces.add(force);
+    }
+
+    public List<PhysicalObject> getObjects () {
+        return objects;
+    }
+
+    public List<Force> getForces () {
+        return forces;
     }
     
 }
