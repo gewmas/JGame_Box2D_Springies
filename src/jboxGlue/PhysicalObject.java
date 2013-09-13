@@ -157,4 +157,6 @@ public abstract class PhysicalObject extends JGObject
     public void setMass (double mass) {
         this.mass = mass;
     }
+    
+    
 }

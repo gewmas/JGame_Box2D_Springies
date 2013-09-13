@@ -2,7 +2,8 @@ package springies;
 
 public interface Common {
 	public static final int MASS_CID = 3;
-	public static final int SPRING_CID = 4;
+	public static final int FIXEDMASS_CID = 4;
+	public static final int SPRING_CID = 5;
 	
 	//Parser
 	public static final String NODES_KEYWORD = "nodes";
@@ -13,6 +14,7 @@ public interface Common {
 	public static final String WALL_KEYWORD = "wall";
 
 	public static final String MASS_KEYWORD = "mass";
+	public static final String FIXEDMASS_KEYWORD = "fixedmass";
 	public static final String FIXED_KEYWORD = "fixed";
 	public static final String MUSCLE_KEYWORD = "muscle";
 	public static final String SPRING_KEYWORD = "spring";

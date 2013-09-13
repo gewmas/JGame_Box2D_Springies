@@ -88,18 +88,18 @@ public class Springies extends JGEngine
 		
 		// add walls to bounce off of
 		// NOTE: immovable objects must have no mass
-//		final double WALL_MARGIN = 10;
-//		final double WALL_THICKNESS = 10;
-//		final double WALL_WIDTH = displayWidth() - WALL_MARGIN*2 + WALL_THICKNESS;
-//		final double WALL_HEIGHT = displayHeight() - WALL_MARGIN*2 + WALL_THICKNESS;
-//		PhysicalObject wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
-//		wall.setPos( displayWidth()/2, WALL_MARGIN );
-//		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
-//		wall.setPos( displayWidth()/2, displayHeight() - WALL_MARGIN );
-//		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
-//		wall.setPos( WALL_MARGIN, displayHeight()/2 );
-//		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
-//		wall.setPos( displayWidth() - WALL_MARGIN, displayHeight()/2 );
+		final double WALL_MARGIN = 10;
+		final double WALL_THICKNESS = 10;
+		final double WALL_WIDTH = displayWidth() - WALL_MARGIN*2 + WALL_THICKNESS;
+		final double WALL_HEIGHT = displayHeight() - WALL_MARGIN*2 + WALL_THICKNESS;
+		PhysicalObject wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
+		wall.setPos( displayWidth()/2, WALL_MARGIN );
+		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
+		wall.setPos( displayWidth()/2, displayHeight() - WALL_MARGIN );
+		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
+		wall.setPos( WALL_MARGIN, displayHeight()/2 );
+		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
+		wall.setPos( displayWidth() - WALL_MARGIN, displayHeight()/2 );
 	}
 	
 	
@@ -114,7 +114,9 @@ public class Springies extends JGEngine
 //		spring.doFrame();
 //		Viscosity.SetViscosity(ball);
 		
-		checkCollision( 1+2, 1 );
+//		checkCollision( 1+2, 1 );
+//		checkCollision(Common.MASS_CID, Common.FIXEDMASS_CID);
+		checkCollision(Common.FIXEDMASS_CID, Common.MASS_CID); //Mass hit FixedMass
 //		checkCollision( 2+3, 3 );
 		
 		List<PhysicalObject> objects = model.getObjects();

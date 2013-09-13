@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import jgame.JGColor;
+import object.FixedMass;
 import object.Mass;
 import object.Muscle;
 import object.Spring;
@@ -95,6 +96,8 @@ public class Parser {
 
                     if (Common.MASS_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(massCommand(nodeMap));
+                    }else if (Common.FIXEDMASS_KEYWORD.equals(tempNode.getNodeName())){
+                        model.add(fixedMassCommand(nodeMap));
                     }else if (Common.MUSCLE_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(muscleCommand(nodeMap));
                     }else if (Common.SPRING_KEYWORD.equals(tempNode.getNodeName())) {
@@ -154,8 +157,35 @@ public class Parser {
 
         //        System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
 
-        Mass result = new Mass(id, Common.MASS_CID, 10, mass, x, y, vx, vy);
+        Mass result = new Mass(id, Common.MASS_CID, mass, x, y, vx, vy);
         myMasses.put(id, result);
+
+        return result;
+    }
+    
+    private FixedMass fixedMassCommand (NamedNodeMap nodeMap) {
+        for (int i = 0; i < nodeMap.getLength(); i++) {
+            Node node = nodeMap.item(i);
+            String nodeName = node.getNodeName();
+            String nodeValue = node.getNodeValue();
+
+            if (nodeName.equals(Common.MASS_ID)) {
+                id = nodeValue;
+            }
+            else if (nodeName.equals(Common.MASS_X)) {
+                x = Double.parseDouble(nodeValue);
+            }
+            else if (nodeName.equals(Common.MASS_Y)) {
+                y = Double.parseDouble(nodeValue);
+            }
+
+            // System.out.println(node.getNodeName() + " " + node.getNodeValue());
+        }
+
+        //        System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
+
+        FixedMass result = new FixedMass(id, Common.FIXEDMASS_CID, x, y);
+//        myMasses.put(id, result);
 
         return result;
     }
