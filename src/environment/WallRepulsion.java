@@ -1,12 +1,16 @@
 package environment;
 
-import java.util.List;
 import jboxGlue.PhysicalObject;
 
 public class WallRepulsion extends Force {
-
-    public WallRepulsion(int id, double magnitude, double exponent){
-        
+    private String wallId;
+    private double magnitude;
+    private double exponent;
+    
+    public WallRepulsion(String wallId, double magnitude, double exponent){
+        this.wallId = wallId;
+        this.magnitude = magnitude;
+        this.exponent = exponent;
     }
     public void setForce(PhysicalObject object){
         

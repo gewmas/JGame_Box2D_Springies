@@ -1,7 +1,5 @@
 package environment;
 
-import java.util.List;
-import org.jbox2d.common.Vec2;
 import jboxGlue.PhysicalObject;
 
 public class Gravity extends Force {
@@ -14,7 +12,7 @@ public class Gravity extends Force {
     }
     
     public void setForce(PhysicalObject object){
-        object.setForce(magnitude*object.getMass()*Math.cos(direction), magnitude*object.getMass()*Math.sin(direction));
+        object.setForce(magnitude*object.getMass()*Math.cos(direction/180*Math.PI), magnitude*object.getMass()*Math.sin(direction/180*Math.PI));
     }
 
 }

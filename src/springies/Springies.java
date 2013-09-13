@@ -58,7 +58,6 @@ public class Springies extends JGEngine
 		WorldManager.initWorld( this );
 		WorldManager.getWorld().setGravity( new Vec2( 0.0f, 0.0f ) );
 		
-		
 		loadModel();
 		
 		// add a bouncy ball
