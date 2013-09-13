@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import jgame.JGColor;
 import object.Mass;
+import object.Muscle;
 import object.Spring;
 
 import org.jbox2d.common.Vec2;
@@ -108,7 +109,11 @@ public class Parser {
 		 
 					if(MASS_KEYWORD.equals(tempNode.getNodeName())){
 						model.add(massCommand(nodeMap));
-					}else if(SPRING_KEYWORD.equals(tempNode.getNodeName())){
+					}
+					if(MUSCLE_KEYWORD.equals(tempNode.getNodeName())){
+						model.add();
+					}
+					else if(SPRING_KEYWORD.equals(tempNode.getNodeName())){
 						model.add(springCommand(nodeMap));
 					}
 				}
@@ -189,4 +194,11 @@ public class Parser {
 		return new Spring("spring", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant);
     }
 
+	private Muscle muscleCommand(NamedNodeMap nodeMap){
+		for (int i=0; i < nodeMap.getLength(); i++){
+			Node node = nodeMap.item(i);
+			String nodeName = node.getNodeName();
+			String nodeValue = node.getNodeValue();
+		}
+	}
 }
