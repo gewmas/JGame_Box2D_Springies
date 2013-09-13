@@ -17,18 +17,23 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import environment.Gravity;
+import environment.Viscosity;
 
 
 public class Parser {
 
+    private static final String NODES_KEYWORD = "nodes";
+    private static final String LINKS_KEYWORD = "links";
+    private static final String GRAVITY_KEYWORD = "gravity";
+    private static final String VISCOSITY_KEYWORD = "viscosity";
+    private static final String CENTERMASS_KEYWORD = "centermass";
+    private static final String WALL_KEYWORD = "wall";
+    
     private static final String MASS_KEYWORD = "mass";
     private static final String FIXED_KEYWORD = "fixed";
     private static final String MUSCLE_KEYWORD = "muscle";
     private static final String SPRING_KEYWORD = "spring";
-    private static final String WALL_KEYWORD = "wall";
-    private static final String GRAVITY_KEYWORD = "gravity";
-    private static final String VISCOSITY_KEYWORD = "viscosity";
-    private static final String CENTERMASS_KEYWORD = "centermass";
 
     private static final String MASS_ID = "id";
     private static final String MASS_MASS = "mass";
@@ -42,6 +47,8 @@ public class Parser {
     private static final String SPRING_CONSTANT = "constant";
     private static final String SPRING_RESTLENGTH = "restlength";
     private static final String MUSCLE_AMPLITUDE = "amplitude";
+    
+    private static final String VISCOSITY_MAGNITUDE = "magnitude";
 
     // mass IDs
     Map<String, Mass> myMasses = new HashMap<String, Mass>();
@@ -49,7 +56,7 @@ public class Parser {
     private String id;
     private double vx = 0;
     private double vy = 0;
-    private double mass = 0;
+    private double mass = 1;
     private double x = 0;
     private double y = 0;
 
@@ -58,6 +65,8 @@ public class Parser {
     private double constant = 0;
     private double restlength = 0;
     private double amplitude = 0;
+    
+    private double magnitude = 0;
 
     public void loadModel (Model model, File selectedFile) {
 
@@ -101,30 +110,37 @@ public class Parser {
             // make sure it's element node.
             if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
                 // get node name and value
-                // System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
+//                 System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
+                 
                 if (tempNode.hasAttributes()) {
                     // get attributes names and values
                     NamedNodeMap nodeMap = tempNode.getAttributes();
 
                     if (MASS_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(massCommand(nodeMap));
-                    }
-                    if (MUSCLE_KEYWORD.equals(tempNode.getNodeName())) {
+                    }else if (MUSCLE_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(muscleCommand(nodeMap));
-                    }
-                    else if (SPRING_KEYWORD.equals(tempNode.getNodeName())) {
+                    }else if (SPRING_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(springCommand(nodeMap));
+                    }else if(GRAVITY_KEYWORD.equals(tempNode.getNodeName())){
+                        gravityCommand(nodeMap);
+                    }else if(VISCOSITY_KEYWORD.equals(tempNode.getNodeName())){
+                        model.add(viscosityCommand(nodeMap));
+                    }else if(CENTERMASS_KEYWORD.equals(tempNode.getNodeName())){
+                        centerMassCommand(nodeMap);
+                    }else if(WALL_KEYWORD.equals(tempNode.getNodeName())){
+                        wallCommand(nodeMap);
                     }
                 }
 
-                // System.out.println("Node Value =" + tempNode.getTextContent());
+//                 System.out.println("Node Value =" + tempNode.getTextContent());
 
                 if (tempNode.hasChildNodes()) {
                     // loop again if has child nodes
                     printNote(tempNode.getChildNodes(), model);
                 }
 
-                // System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
+//                 System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
 
             }
 
@@ -159,14 +175,9 @@ public class Parser {
             // System.out.println(node.getNodeName() + " " + node.getNodeValue());
         }
 
-        System.out.println(id + " " + mass + " " + vx + " " + vy + " " + x + " " + y);
+//        System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
 
-        Mass result = new Mass(id, Common.MASS_CID, JGColor.blue, 10, mass);
-        result.setPos(x, y);
-        Vec2 velocity = new Vec2();
-        velocity.x = (float) vx;
-        velocity.y = (float) vy;
-        result.getBody().setLinearVelocity(velocity);
+        Mass result = new Mass(id, Common.MASS_CID, 10, mass, x, y, vx, vy);
         myMasses.put(id, result);
 
         return result;
@@ -227,5 +238,56 @@ public class Parser {
         Mass m2 = myMasses.get(id2);
 
         return new Muscle("muscle", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, amplitude);
+    }
+    
+    
+    private void gravityCommand(NamedNodeMap nodeMap){
+        for (int i = 0; i < nodeMap.getLength(); i++) {
+            Node node = nodeMap.item(i);
+            String nodeName = node.getNodeName();
+            String nodeValue = node.getNodeValue();
+            
+            System.out.println(nodeName + " " + nodeValue);
+        }
+        
+        
+    }
+    
+    private Viscosity viscosityCommand(NamedNodeMap nodeMap){
+        for (int i = 0; i < nodeMap.getLength(); i++) {
+            Node node = nodeMap.item(i);
+            String nodeName = node.getNodeName();
+            String nodeValue = node.getNodeValue();
+            
+            if (nodeName.equals(VISCOSITY_MAGNITUDE)) {
+                magnitude = Double.parseDouble(nodeValue);
+            }
+            
+            System.out.println(nodeName + " " + nodeValue);
+        }
+        
+        return new Viscosity(magnitude);
+    }
+    
+    private void centerMassCommand(NamedNodeMap nodeMap){
+        for (int i = 0; i < nodeMap.getLength(); i++) {
+            Node node = nodeMap.item(i);
+            String nodeName = node.getNodeName();
+            String nodeValue = node.getNodeValue();
+            
+            System.out.println(nodeName + " " + nodeValue);
+        }
+        
+    }
+    
+    private void wallCommand(NamedNodeMap nodeMap){
+        for (int i = 0; i < nodeMap.getLength(); i++) {
+            Node node = nodeMap.item(i);
+            String nodeName = node.getNodeName();
+            String nodeValue = node.getNodeValue();
+            
+            System.out.println(nodeName + " " + nodeValue);
+        }
+        
     }
 }

@@ -11,9 +11,14 @@ public class Mass extends PhysicalObjectCircle{
     
         
     
-	public Mass(String id, int collisionId, JGColor color, double radius, double mass) {
-		super(id, collisionId, color, radius, mass);
-		// TODO Auto-generated constructor stub
+	public Mass(String id, int collisionId, double radius, double mass, double x, double y, double vx, double vy) {
+		super(id, collisionId, JGColor.blue, radius, mass);
+		
+		setPos(x, y);
+	        Vec2 velocity = new Vec2();
+	        velocity.x = (float) vx;
+	        velocity.y = (float) vy;
+	        getBody().setLinearVelocity(velocity);
 	}
 	
 	public void hit( JGObject other )

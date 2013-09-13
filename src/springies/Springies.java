@@ -122,7 +122,7 @@ public class Springies extends JGEngine
 		List<Force> forces = model.getForces();
 		
 		for(Force force : forces){
-		    force.SetForce(objects);
+		    force.setForce(objects);
 		}
 		
 	}

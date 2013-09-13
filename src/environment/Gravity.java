@@ -1,13 +1,19 @@
 package environment;
 
 import java.util.List;
+import org.jbox2d.common.Vec2;
 import jboxGlue.PhysicalObject;
 
 public class Gravity extends Force {
-
-    @Override
-    public void SetForce (List<PhysicalObject> objects) {
-        // TODO Auto-generated method stub
+    private double gravity;
+    private double magnitude;
+        
+    Gravity(double gravity, double magnitude){
+        this.gravity = gravity;
+        this.magnitude = magnitude;
+    }
+    
+    public void setForce(PhysicalObject object){
         
     }
 

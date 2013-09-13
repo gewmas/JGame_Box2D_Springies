@@ -5,9 +5,7 @@ import jboxGlue.PhysicalObject;
 
 public class CenterOfMass extends Force {
 
-    @Override
-    public void SetForce (List<PhysicalObject> objects) {
-        // TODO Auto-generated method stub
+    public void setForce(PhysicalObject object){
         
     }
 
