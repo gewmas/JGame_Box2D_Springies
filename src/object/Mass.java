@@ -19,11 +19,13 @@ public class Mass extends PhysicalObjectCircle{
 	        velocity.x = (float) vx;
 	        velocity.y = (float) vy;
 	        getBody().setLinearVelocity(velocity);
+	        this.mass=mass;
 	}
 	
 	public Mass(String id, int collisionId, JGColor color, double radius,
 			double mass) {
 		super(id, collisionId, JGColor.blue, radius, mass);
+		this.mass=mass;
 	}
 
 	public void hit( JGObject other )
