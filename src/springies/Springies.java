@@ -2,18 +2,14 @@ package springies;
 
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import jboxGlue.PhysicalObject;
 import jboxGlue.PhysicalObjectRect;
 import jboxGlue.WorldManager;
 import jgame.JGColor;
 import jgame.platform.JGEngine;
-import object.*;
 import org.jbox2d.common.Vec2;
-
-//import javax.swing.JFileChooser;
-
 import environment.Force;
-import environment.Viscosity;
 
 @SuppressWarnings( "serial" )
 public class Springies extends JGEngine
@@ -92,13 +88,13 @@ public class Springies extends JGEngine
 		final double WALL_THICKNESS = 10;
 		final double WALL_WIDTH = displayWidth() - WALL_MARGIN*2 + WALL_THICKNESS;
 		final double WALL_HEIGHT = displayHeight() - WALL_MARGIN*2 + WALL_THICKNESS;
-		PhysicalObject wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
+		PhysicalObject wall = new PhysicalObjectRect( "wall", Common.WALL_CID, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
 		wall.setPos( displayWidth()/2, WALL_MARGIN );
-		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
+		wall = new PhysicalObjectRect( "wall", Common.WALL_CID, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
 		wall.setPos( displayWidth()/2, displayHeight() - WALL_MARGIN );
-		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
+		wall = new PhysicalObjectRect( "wall", Common.WALL_CID, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
 		wall.setPos( WALL_MARGIN, displayHeight()/2 );
-		wall = new PhysicalObjectRect( "wall", 2, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
+		wall = new PhysicalObjectRect( "wall", Common.WALL_CID, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
 		wall.setPos( displayWidth() - WALL_MARGIN, displayHeight()/2 );
 	}
 	
@@ -111,13 +107,11 @@ public class Springies extends JGEngine
 		WorldManager.getWorld().step( 1f, 1 );
 		moveObjects();
 		
-//		spring.doFrame();
-//		Viscosity.SetViscosity(ball);
-		
 //		checkCollision( 1+2, 1 );
 //		checkCollision(Common.MASS_CID, Common.FIXEDMASS_CID);
+		checkCollision(Common.WALL_CID, Common.MASS_CID);
+		checkCollision(Common.MASS_CID, Common.WALL_CID);
 		checkCollision(Common.FIXEDMASS_CID, Common.MASS_CID); //Mass hit FixedMass
-//		checkCollision( 2+3, 3 );
 		
 		List<PhysicalObject> objects = model.getObjects();
 		List<Force> forces = model.getForces();
@@ -137,16 +131,27 @@ public class Springies extends JGEngine
 	
 	public void loadModel(){
 	    if(model == null) model = new Model();
-		
+
 	    Parser parser = new Parser();
-            int loadObject = INPUT_CHOOSER.showOpenDialog(null);
-            if (loadObject == JFileChooser.APPROVE_OPTION) {
-                parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
-            }
-            
-            int loadEnvironment = INPUT_CHOOSER.showOpenDialog(null);
-            if (loadEnvironment == JFileChooser.APPROVE_OPTION) {
-                parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
-            }
+
+	    JOptionPane.showMessageDialog(this, "Please load object file.");
+
+	    int loadObject = INPUT_CHOOSER.showOpenDialog(null);
+	    if (loadObject == JFileChooser.APPROVE_OPTION) {
+	        parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
+	    }
+
+	    int n = JOptionPane.showConfirmDialog(
+	                                          this,
+	                                          "Would you like to load environment file?",
+	                                          "Apply Force?",
+	                                          JOptionPane.YES_NO_OPTION);
+
+	    if(n == JOptionPane.YES_OPTION){
+	        int loadEnvironment = INPUT_CHOOSER.showOpenDialog(null);
+	        if (loadEnvironment == JFileChooser.APPROVE_OPTION) {
+	            parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
+	        }
+	    }
 	}
 }

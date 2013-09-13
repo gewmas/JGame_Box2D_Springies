@@ -1,6 +1,7 @@
 package springies;
 
 public interface Common {
+        public static final int WALL_CID = 2;
 	public static final int MASS_CID = 3;
 	public static final int FIXEDMASS_CID = 4;
 	public static final int SPRING_CID = 5;

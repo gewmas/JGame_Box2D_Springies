@@ -31,14 +31,31 @@ public class Mass extends PhysicalObjectCircle{
 
     public void hit( JGObject other )
     {
-        if(other.colid == Common.FIXEDMASS_CID){
-            
-            Vec2 velocity = myBody.getLinearVelocity();
-            velocity.x *= -1.2;
-            velocity.y *= -1.2;
-            System.out.println("Hit FixedMass" + velocity.x + " " + velocity.y);
-            myBody.setLinearVelocity( velocity );
+        // we hit something! bounce off it!
+        Vec2 velocity = myBody.getLinearVelocity();
+
+        // is it a tall wall?
+        final double DAMPING_FACTOR = 0.8;
+        boolean isSide = other.getBBox().height > other.getBBox().width;
+        if( isSide )
+        {
+            velocity.x *= -DAMPING_FACTOR;
         }
+        else
+        {
+            velocity.y *= -DAMPING_FACTOR;
+        }
+
+        // apply the change
+        myBody.setLinearVelocity( velocity );
+//        if(other.colid == Common.FIXEDMASS_CID){
+            
+//            Vec2 velocity = myBody.getLinearVelocity();
+//            velocity.x *= -0.8;
+//            velocity.y *= -0.8;
+        System.out.println("Mass Hit" + velocity.x + " " + velocity.y);
+//            myBody.setLinearVelocity( velocity );
+//        }
     }
     
 //    public void paintShape( )

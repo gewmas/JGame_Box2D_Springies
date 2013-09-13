@@ -5,8 +5,7 @@
 
 
     <nodes>
-        <mass id="m2" x="200" y="80" vx="0" vy="20" mass="1.0"/>
-        <fixedmass id="m3" x="200" y="300"/>
+        <mass id="m2" x="200" y="80" vx="10" vy="10" mass="5"/>
     </nodes>
 
     <links>
