@@ -201,6 +201,7 @@ public class Parser {
         return new Spring("spring", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant);
     }
 
+    //TEST
     private Muscle muscleCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
