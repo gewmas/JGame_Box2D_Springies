@@ -49,6 +49,8 @@ public class Parser {
     private static final String MUSCLE_AMPLITUDE = "amplitude";
     
     private static final String VISCOSITY_MAGNITUDE = "magnitude";
+    private static final String GRAVITY_DIRECTION = "direction";
+    private static final String GRAVITY_MAGNITUDE = "magnitude";
 
     // mass IDs
     Map<String, Mass> myMasses = new HashMap<String, Mass>();
@@ -65,7 +67,7 @@ public class Parser {
     private double constant = 0;
     private double restlength = 0;
     private double amplitude = 0;
-    
+    private double direction=0;
     private double magnitude = 0;
 
     public void loadModel (Model model, File selectedFile) {
@@ -241,14 +243,24 @@ public class Parser {
     }
     
     
-    private void gravityCommand(NamedNodeMap nodeMap){
+    private Gravity gravityCommand(NamedNodeMap nodeMap){
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
             
+            if (nodeName.equals(GRAVITY_MAGNITUDE)) {
+                magnitude= Double.parseDouble(nodeValue);     
+            }
+            
+            if (nodeName.equals(GRAVITY_DIRECTION)) {
+                direction= Double.parseDouble(nodeValue);     
+            }
+            
             System.out.println(nodeName + " " + nodeValue);
         }
+        
+        return new Gravity(direction, magnitude);
         
         
     }

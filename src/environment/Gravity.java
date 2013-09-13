@@ -8,7 +8,7 @@ public class Gravity extends Force {
     private double direction;
     private double magnitude;
         
-    Gravity(double direction, double magnitude){
+    public Gravity(double direction, double magnitude){
         this.direction = direction;
         this.magnitude = magnitude;
     }
