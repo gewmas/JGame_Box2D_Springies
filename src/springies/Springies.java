@@ -135,12 +135,17 @@ public class Springies extends JGEngine
 	}
 	
 	public void loadModel(){
-		if(model == null) model = new Model();
+	    if(model == null) model = new Model();
 		
-		Parser parser = new Parser();
-        int response = INPUT_CHOOSER.showOpenDialog(null);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
-        }
+	    Parser parser = new Parser();
+            int loadObject = INPUT_CHOOSER.showOpenDialog(null);
+            if (loadObject == JFileChooser.APPROVE_OPTION) {
+                parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
+            }
+            
+            int loadEnvironment = INPUT_CHOOSER.showOpenDialog(null);
+            if (loadEnvironment == JFileChooser.APPROVE_OPTION) {
+                parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
+            }
 	}
 }
