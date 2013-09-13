@@ -7,7 +7,10 @@ import jgame.JGColor;
 import jgame.JGObject;
 
 public class Mass extends PhysicalObjectCircle{
-
+        
+    
+        
+    
 	public Mass(String id, int collisionId, JGColor color, double radius, double mass) {
 		super(id, collisionId, color, radius, mass);
 		// TODO Auto-generated constructor stub

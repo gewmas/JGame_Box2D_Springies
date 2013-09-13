@@ -1,5 +1,10 @@
 package environment;
 
-public class Force {
+import java.util.List;
+import jboxGlue.PhysicalObject;
 
+public abstract class Force {
+
+    
+    public abstract void SetForce(List<PhysicalObject> objects);
 }

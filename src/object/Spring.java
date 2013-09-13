@@ -18,6 +18,14 @@ public class Spring extends PhysicalObjectRect{
 		this.k = k;
 	}
 	
+	public Spring(String id, int collisionId, JGColor color, Mass mass1, Mass mass2, double length) {
+            super(id, collisionId, color, 0, 0, 0);
+            this.mass1 = mass1;
+            this.mass2 = mass2;
+            this.length = length;
+            this.k = 0;
+        }
+	
 	public void move( ){
 		super.move();
 		
