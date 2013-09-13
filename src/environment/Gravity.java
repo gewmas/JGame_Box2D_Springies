@@ -14,7 +14,7 @@ public class Gravity extends Force {
     }
     
     public void setForce(PhysicalObject object){
-        object.setForce(magnitude*object.mass*Math.cos(direction), magnitude*object.mass*Math.sin(direction));
+        object.setForce(magnitude*object.getMass()*Math.cos(direction), magnitude*object.getMass()*Math.sin(direction));
     }
 
 }

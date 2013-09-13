@@ -17,8 +17,10 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import environment.CenterOfMass;
 import environment.Gravity;
 import environment.Viscosity;
+import environment.WallRepulsion;
 
 
 public class Parser {
@@ -48,9 +50,10 @@ public class Parser {
     private static final String SPRING_RESTLENGTH = "restlength";
     private static final String MUSCLE_AMPLITUDE = "amplitude";
     
-    private static final String VISCOSITY_MAGNITUDE = "magnitude";
+    private static final String MAGNITUDE = "magnitude";
     private static final String GRAVITY_DIRECTION = "direction";
-    private static final String GRAVITY_MAGNITUDE = "magnitude";
+    private static final String EXPONENT = "exponent";
+    
 
     // mass IDs
     Map<String, Mass> myMasses = new HashMap<String, Mass>();
@@ -69,6 +72,8 @@ public class Parser {
     private double amplitude = 0;
     private double direction=0;
     private double magnitude = 0;
+    private double exponent = 0;
+    private int wallId = 0;
 
     public void loadModel (Model model, File selectedFile) {
 
@@ -249,7 +254,7 @@ public class Parser {
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
             
-            if (nodeName.equals(GRAVITY_MAGNITUDE)) {
+            if (nodeName.equals(MAGNITUDE)) {
                 magnitude= Double.parseDouble(nodeValue);     
             }
             
@@ -271,7 +276,7 @@ public class Parser {
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
             
-            if (nodeName.equals(VISCOSITY_MAGNITUDE)) {
+            if (nodeName.equals(MAGNITUDE)) {
                 magnitude = Double.parseDouble(nodeValue);
             }
             
@@ -281,25 +286,48 @@ public class Parser {
         return new Viscosity(magnitude);
     }
     
-    private void centerMassCommand(NamedNodeMap nodeMap){
+    private CenterOfMass centerMassCommand(NamedNodeMap nodeMap){
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
+            
+            if (nodeName.equals(MAGNITUDE)){
+                magnitude = Double.parseDouble(nodeValue);
+            }
+            
+            if (nodeName.equals(EXPONENT)){
+                exponent = Double.parseDouble(nodeValue);
+            }
+            
+            System.out.println(nodeName + " " + nodeValue);
+        }
+
+        return new CenterOfMass(magnitude, exponent);
+    }
+    
+    private WallRepulsion wallCommand(NamedNodeMap nodeMap){
+        for (int i = 0; i < nodeMap.getLength(); i++) {
+            Node node = nodeMap.item(i);
+            String nodeName = node.getNodeName();
+            String nodeValue = node.getNodeValue();
+            
+            if (nodeName.equals(MASS_ID)){
+                wallId = Integer.parseInt(nodeValue);
+            }
+            
+            if (nodeName.equals(MAGNITUDE)){
+                magnitude = Double.parseDouble(nodeValue);
+            }
+            
+            if (nodeName.equals(EXPONENT)){
+                exponent = Double.parseDouble(nodeValue);
+            }       
             
             System.out.println(nodeName + " " + nodeValue);
         }
         
-    }
-    
-    private void wallCommand(NamedNodeMap nodeMap){
-        for (int i = 0; i < nodeMap.getLength(); i++) {
-            Node node = nodeMap.item(i);
-            String nodeName = node.getNodeName();
-            String nodeValue = node.getNodeValue();
-            
-            System.out.println(nodeName + " " + nodeValue);
-        }
+        return new WallRepulsion(wallId, magnitude, exponent);
         
     }
 }
