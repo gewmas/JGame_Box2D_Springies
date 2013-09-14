@@ -5,10 +5,10 @@
 
 
     <nodes>
-        <mass id="m0" x="200" y="300" vx="0" vy="0"/>
-        <mass id="m1" x="300" y="300" vx="0" vy="0"/>
-        <mass id="m2" x="400" y="300" vx="0" vy="0"/>
-        <mass id="m3" x="500" y="300" vx="0" vy="0"/>
+        <mass id="m0" x="200" y="300" vx="-0.5" vy="0"/>
+        <mass id="m1" x="300" y="300" vx="0.5" vy="0"/>
+        <mass id="m2" x="400" y="300" vx="-0.5" vy="0"/>
+        <mass id="m3" x="500" y="300" vx="0.5" vy="0"/>
         <mass id="m4" x="250" y="200" vx="0" vy="0"/>
         <mass id="m5" x="350" y="200" vx="0" vy="0"/>
         <mass id="m6" x="450" y="200" vx="0" vy="0"/>
@@ -26,12 +26,13 @@
         <spring a="m5" b="m7" restlength="55.470715"/>
         <spring a="m5" b="m8" restlength="56.302753"/>
         <spring a="m6" b="m8" restlength="57.035076"/>
-
-        <muscle a="m0" b="m4" restlength="79.47956" amplitude="0.5"/>
+		<spring a="m6" b="m9" restlength="57.035076"/>
+		
+        <muscle a="m0" b="m4" restlength="79.47956" amplitude="1"/>
         <muscle a="m1" b="m4" restlength="77.7946" amplitude="0.5"/>
         <muscle a="m1" b="m5" restlength="80.23092" amplitude="0.5"/>
         <muscle a="m2" b="m5" restlength="78.92401" amplitude="0.5"/>
         <muscle a="m2" b="m6" restlength="77.16217" amplitude="0.5"/>
-        <muscle a="m3" b="m6" restlength="79.47956" amplitude="0.5"/>
+        <muscle a="m3" b="m6" restlength="79.47956" amplitude="1"/>
     </links>
 </model>

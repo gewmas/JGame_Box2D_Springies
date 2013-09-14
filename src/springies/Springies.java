@@ -8,150 +8,156 @@ import jboxGlue.PhysicalObjectRect;
 import jboxGlue.WorldManager;
 import jgame.JGColor;
 import jgame.platform.JGEngine;
+import object.FixedMass;
 import org.jbox2d.common.Vec2;
 import environment.Force;
 
 @SuppressWarnings( "serial" )
 public class Springies extends JGEngine
 {
-	private static final JFileChooser INPUT_CHOOSER = 
+    private boolean environmentEnable = false;
+
+    private static final JFileChooser INPUT_CHOOSER = 
             new JFileChooser(System.getProperties().getProperty("user.dir"));
-	Model model;
-	
-	public Springies( )
-	{
-		// set the window size
-		int height = 600;
-		double aspect = 16.0/9.0;
-		initEngine( (int)(height*aspect), height );
-	}
-	
-	@Override
-	public void initCanvas( )
-	{
-		// I have no idea what tiles do...
-		setCanvasSettings(
-			1, // width of the canvas in tiles
-			1, // height of the canvas in tiles
-			displayWidth(), // width of one tile
-			displayHeight(), // height of one tile
-			null,// foreground colour -> use default colour white
-			null,// background colour -> use default colour black
-			null // standard font -> use default font
-		);
-	}
-	
-	@Override
-	public void initGame( )
-	{
-		setFrameRate( 60, 2 );
+    Model model;
+    
+    private double wallWidth;
+    private double wallHeight;
 
-		// init the world
-		// One thing to keep straight: The world coordinates have y pointing down
-		// the game coordinates have y pointing up
-		// so gravity is along the positive y axis in world coords to point down in game coords
-		// remember to set all directions (eg forces, velocities) in world coords
-		WorldManager.initWorld( this );
-		WorldManager.getWorld().setGravity( new Vec2( 0.0f, 0.0f ) );
-		
-		loadModel();
-		
-		// add a bouncy ball
-//		ball = new Ball("ball", 1, JGColor.blue, 10, 5);
-//		ball.setPos( displayWidth()/2, displayHeight()/2 );
-//		ball.setForce( 8000, -10000 );
+    public Springies( )
+    {
+        // set the window size
+        int height = 600;
+        double aspect = 16.0/9.0;
+        initEngine( (int)(height*aspect), height );
+    }
 
-		
-		
-		// add mass
-//		Mass mass1 = new Mass("mass1", 3, JGColor.green, 25, 25, 0.5);
-//		mass1.setPos(displayWidth()/3, 200);
-//		mass1.setForce(2000, 10000);
-//		Viscosity.SetViscosity(mass1);
-		
-//		Mass mass2 = new Mass("mass2", 3, JGColor.blue, 25, 25, 0.5);
-//		mass2.setPos(2*displayWidth()/3, 200);
-//		mass2.setForce(0, 1000);
-		
-//		Mass mass3 = new Mass("mass2", 3, JGColor.magenta, 25, 25, 0.5);
-//		mass3.setPos(2*displayWidth()/3, 400);
-		
-		// add a spring
-//		Spring spring1 = new Spring("spring1", 4, JGColor.cyan, mass1, mass2, 100);
-//		Spring spring2 = new Spring("spring2", 4, JGColor.cyan, mass1, mass3, 100);
-//		Spring spring3 = new Spring("spring3", 4, JGColor.cyan, mass2, mass3, 150);
-//		spring.setPos(displayWidth()/2, displayHeight()/3);
-		
-		// add walls to bounce off of
-		// NOTE: immovable objects must have no mass
-		final double WALL_MARGIN = 10;
-		final double WALL_THICKNESS = 10;
-		final double WALL_WIDTH = displayWidth() - WALL_MARGIN*2 + WALL_THICKNESS;
-		final double WALL_HEIGHT = displayHeight() - WALL_MARGIN*2 + WALL_THICKNESS;
-		PhysicalObject wall = new PhysicalObjectRect( "wall", Common.WALL_CID, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
-		wall.setPos( displayWidth()/2, WALL_MARGIN );
-		wall = new PhysicalObjectRect( "wall", Common.WALL_CID, JGColor.green, WALL_WIDTH, WALL_THICKNESS );
-		wall.setPos( displayWidth()/2, displayHeight() - WALL_MARGIN );
-		wall = new PhysicalObjectRect( "wall", Common.WALL_CID, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
-		wall.setPos( WALL_MARGIN, displayHeight()/2 );
-		wall = new PhysicalObjectRect( "wall", Common.WALL_CID, JGColor.green, WALL_THICKNESS, WALL_HEIGHT );
-		wall.setPos( displayWidth() - WALL_MARGIN, displayHeight()/2 );
-	}
-	
-	
-	
-	@Override
-	public void doFrame( )
-	{
-		// update game objects
-		WorldManager.getWorld().step( 1f, 1 );
-		moveObjects();
-		
-//		checkCollision( 1+2, 1 );
-//		checkCollision(Common.MASS_CID, Common.FIXEDMASS_CID);
-		checkCollision(Common.WALL_CID, Common.MASS_CID);
-		checkCollision(Common.MASS_CID, Common.WALL_CID);
-		checkCollision(Common.FIXEDMASS_CID, Common.MASS_CID); //Mass hit FixedMass
-		
-		List<PhysicalObject> objects = model.getObjects();
-		List<Force> forces = model.getForces();
-		
-		for(Force force : forces){
-		    force.setForce(objects);
-		}
-		
-	}
-	
-	@Override
-	public void paintFrame( )
-	{
-		// nothing to do
-		// the objects paint themselves
-	}
-	
-	public void loadModel(){
-	    if(model == null) model = new Model();
+    @Override
+    public void initCanvas( )
+    {
+        // I have no idea what tiles do...
+        setCanvasSettings(
+                          1, // width of the canvas in tiles
+                          1, // height of the canvas in tiles
+                          displayWidth(), // width of one tile
+                          displayHeight(), // height of one tile
+                          null,// foreground colour -> use default colour white
+                          null,// background colour -> use default colour black
+                          null // standard font -> use default font
+                );
+    }
 
-	    Parser parser = new Parser();
+    @Override
+    public void initGame( )
+    {
+        setFrameRate( 60, 2 );
 
-	    JOptionPane.showMessageDialog(this, "Please load object file.");
+        // init the world
+        // One thing to keep straight: The world coordinates have y pointing down
+        // the game coordinates have y pointing up
+        // so gravity is along the positive y axis in world coords to point down in game coords
+        // remember to set all directions (eg forces, velocities) in world coords
+        WorldManager.initWorld( this );
+        WorldManager.getWorld().setGravity( new Vec2( 0.0f, 0.0f ) );
 
-	    int loadObject = INPUT_CHOOSER.showOpenDialog(null);
-	    if (loadObject == JFileChooser.APPROVE_OPTION) {
-	        parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
-	    }
+        loadModel();
 
-	    int n = JOptionPane.showConfirmDialog(
-	                                          this,
-	                                          "Would you like to load environment file?",
-	                                          "Apply Force?",
-	                                          JOptionPane.YES_NO_OPTION);
+        //add walls up-1 right-2 down-3 left-4
+        wallWidth = displayWidth() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
+        wallHeight = displayHeight() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
+        model.add(new FixedMass("1", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, Common.WALL_MARGIN));
+        model.add(new FixedMass("3", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, displayHeight() - Common.WALL_MARGIN));
+        model.add(new FixedMass("4", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, Common.WALL_MARGIN, displayHeight()/2));
+        model.add(new FixedMass("2", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, displayWidth() - Common.WALL_MARGIN, displayHeight()/2));
+    }
 
-	    if(n == JOptionPane.YES_OPTION){
-	        int loadEnvironment = INPUT_CHOOSER.showOpenDialog(null);
-	        if (loadEnvironment == JFileChooser.APPROVE_OPTION) {
-	            parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
-	        }
-	    }
-	}
+
+
+    @Override
+    public void doFrame( )
+    {
+        // update game objects
+        WorldManager.getWorld().step( 1f, 1 );
+        moveObjects();
+
+        checkCollision();
+        applyForce();
+//        cheatKeys();
+    }
+
+    private void checkCollision () {
+//        checkCollision(Common.WALL_CID, Common.MASS_CID);
+//        checkCollision(Common.MASS_CID, Common.WALL_CID);
+//        checkCollision(Common.FIXEDMASS_CID, Common.MASS_CID); //Mass hit FixedMass
+    }
+
+    private void applyForce () {
+        List<PhysicalObject> objects = model.getObjects();
+        List<Force> forces = model.getForces();
+    
+        for(Force force : forces){
+            force.setForce(objects);
+        }
+    }
+    
+    /*
+    private void cheatKeys(){
+        if(getKey('N')) {
+            List<FixedMass> fixedMasses = model.getFixedMasses();
+            for(FixedMass fixedMass : fixedMasses){
+                if(fixedMass.getId().equals("1") || fixedMass.getId().equals("3")){
+                    fixedMass.increaseHeight();
+                }
+            }
+            clearKey('N');
+        }else if(getKey('M')){
+            List<FixedMass> fixedMasses = model.getFixedMasses();
+            for(FixedMass fixedMass : fixedMasses){
+                if(fixedMass.getId().equals("2") || fixedMass.getId().equals("4")){
+                    fixedMass.increaseWidth();
+                }
+            }
+            clearKey('M');
+        }
+    }*/
+
+    @Override
+    public void paintFrame( )
+    {
+        // nothing to do
+        // the objects paint themselves
+    }
+
+    public void loadModel(){
+        Parser parser = new Parser();
+        int n = JOptionPane.NO_OPTION;
+        
+        if(model == null) model = new Model();
+
+        if(!environmentEnable){
+            n = JOptionPane.showConfirmDialog(
+                                              this,
+                                              "Would you like to have environment force?",
+                                              "Apply Force?",
+                                              JOptionPane.YES_NO_OPTION);
+        }
+
+        if(n == JOptionPane.YES_OPTION){
+            environmentEnable = true;
+        }
+
+        JOptionPane.showMessageDialog(this, "Please load object file.");
+        int loadObject = INPUT_CHOOSER.showOpenDialog(null);
+        if (loadObject == JFileChooser.APPROVE_OPTION) {
+            parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
+        }
+
+        if(environmentEnable){
+            JOptionPane.showMessageDialog(this, "Please load environment file.");
+            int loadEnvironment = INPUT_CHOOSER.showOpenDialog(null);
+            if (loadEnvironment == JFileChooser.APPROVE_OPTION) {
+                parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
+            }
+        }
+    }
 }

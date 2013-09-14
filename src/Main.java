@@ -1,6 +1,15 @@
-import java.io.File;
-
 import springies.Springies;
+
+/*
+ * Unimplemented Function
+ * 
+ * WallRepulsion
+ * 
+ * Muscle
+ * 
+ * Bouncing
+ * 
+ */
 
 public class Main
 {
