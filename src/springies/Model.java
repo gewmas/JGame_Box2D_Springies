@@ -2,7 +2,6 @@ package springies;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import jboxGlue.PhysicalObject;
 import environment.Force;
 import object.*;
@@ -10,14 +9,20 @@ import object.*;
 public class Model {
     private List<PhysicalObject> objects;
     private List<Force> forces;
+    private List<FixedMass> fixedMass;
 	
     public Model () {
     	objects = new ArrayList<PhysicalObject>();
+    	fixedMass = new ArrayList<FixedMass>();
     	forces = new ArrayList<Force>();
     }
     
     public void add(PhysicalObject object){
-    	objects.add(object);
+        if(object instanceof FixedMass){
+            fixedMass.add((FixedMass) object);
+        }else{
+            objects.add(object);
+        }
     }
     
     public void add(Force force){
@@ -26,6 +31,10 @@ public class Model {
 
     public List<PhysicalObject> getObjects () {
         return objects;
+    }
+
+    public List<FixedMass> getFixedMasses () {
+        return fixedMass;
     }
 
     public List<Force> getForces () {

@@ -6,8 +6,8 @@ import org.jbox2d.collision.PolygonDef;
 
 public class PhysicalObjectRect extends PhysicalObject
 {
-	private double myWidth;
-	private double myHeight;
+	protected double myWidth;
+	protected double myHeight;
 	private double[] myPolyx;
 	private double[] myPolyy;
 	

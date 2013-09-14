@@ -1,4 +1,4 @@
 <environment>
-  <gravity direction="90" magnitude="20"/>
-  <viscosity magnitude="0.9"/>
+  <gravity direction="90" magnitude="2"/>
+  <viscosity magnitude="1"/>
 </environment>
