@@ -20,7 +20,7 @@ public class CenterOfMass extends Force {
         double dy = centerY - object.y;
         double dist = Math.sqrt(dx*dx + dy*dy);
         
-        double force = magnitude*exponent/Math.pow(dist,2);
+        double force = magnitude/Math.pow(dist,exponent);
         object.setForce(dx*force, dy*force);
         
     }

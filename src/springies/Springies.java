@@ -27,9 +27,7 @@ public class Springies extends JGEngine
     public Springies( )
     {
         // set the window size
-        int height = 600;
-        double aspect = 16.0/9.0;
-        initEngine( (int)(height*aspect), height );
+        initEngine( (int)(Common.WIDTH), (int)(Common.HEIGHT));
     }
 
     @Override

@@ -3,6 +3,10 @@ package springies;
 public interface Common {
     public static final double WALL_MARGIN = 10;
     public static final double WALL_THICKNESS = 10;
+    
+    public static final double HEIGHT=600;
+    public static final double ASPECT=16.0/9.0;
+    public static final double WIDTH=HEIGHT*ASPECT;
 
     public static final int WALL_CID = 2;
     public static final int MASS_CID = 3;
