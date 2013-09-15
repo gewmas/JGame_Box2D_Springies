@@ -192,6 +192,7 @@ public class Parser {
 
     private Spring springCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
+            constant=1;
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
@@ -221,6 +222,7 @@ public class Parser {
 
     private Muscle muscleCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
+            restlength=0;
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();

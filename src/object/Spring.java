@@ -27,6 +27,10 @@ public class Spring extends PhysicalObjectRect{
             this.mass1 = mass1;
             this.mass2 = mass2;
             this.restLength = length;
+            if (length==0){
+                restLength=Math.sqrt(Math.pow((this.mass1.x-this.mass2.x),2)+ Math.pow((this.mass1.y-this.mass2.y),2));
+                System.out.println(restLength);
+            }
             this.currentLength = length;
             this.k = 0.05;
         }
