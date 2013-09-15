@@ -1,0 +1,13 @@
+<model>
+    <name>Example</name>
+    <author>Robert Duvall</author>
+
+    <nodes>
+        <mass id="m0" x="100" y="100" vx="0" vy="0" mass="1.0"/>
+        <mass id="m1" x="300" y="100" vx="0" vy="0" mass="1.0"/>
+    </nodes>
+
+    <links>
+        <muscle a="m0" b="m1" restlength="150.0" amplitude="30"/>
+    </links>
+</model>

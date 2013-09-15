@@ -48,20 +48,7 @@ public class Mass extends PhysicalObjectCircle{
 
         // apply the change
         myBody.setLinearVelocity( velocity );
-//        if(other.colid == Common.FIXEDMASS_CID){
-            
-//            Vec2 velocity = myBody.getLinearVelocity();
-//            velocity.x *= -0.8;
-//            velocity.y *= -0.8;
-        System.out.println("Mass Hit" + velocity.x + " " + velocity.y);
-//            myBody.setLinearVelocity( velocity );
-//        }
+
     }
-    
-//    public void paintShape( )
-//    {
-//        myEngine.setColor( myColor );
-//        myEngine.drawOval(x, y, radius*2, radius*2, true, true);
-//    }
 
 }

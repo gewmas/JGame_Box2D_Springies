@@ -3,11 +3,8 @@ import springies.Springies;
 /*
  * Unimplemented Function
  * 
- * WallRepulsion
- * 
  * Muscle
  * 
- * Bouncing
  * 
  */
 

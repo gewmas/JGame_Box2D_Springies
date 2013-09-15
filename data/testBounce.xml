@@ -1,0 +1,10 @@
+<model>
+    <name>Example</name>
+    <author>Robert Duvall</author>
+    
+    <nodes>
+        <mass id="m0" x="200" y="300" vx="50" vy="10"/>
+        <mass id="m1" x="600" y="400" vx="50" vy="10"/>
+    </nodes>
+
+</model>
