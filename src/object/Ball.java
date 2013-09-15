@@ -11,7 +11,6 @@ public class Ball extends PhysicalObjectCircle{
 	
 	public Ball(String name, int collisionId, JGColor color, double radius, double mass) {
 		super(name, collisionId, color, radius, mass);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

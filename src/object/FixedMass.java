@@ -32,10 +32,6 @@ public class FixedMass extends PhysicalObjectRect {
     public void increaseHeight(){
         myHeight += 10;
     }
-
-    public void hit( JGObject other ){
-
-    }
     
     public String getId () {
         return id;

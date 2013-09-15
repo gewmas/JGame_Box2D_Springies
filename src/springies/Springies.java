@@ -4,11 +4,8 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jboxGlue.PhysicalObject;
-import jboxGlue.PhysicalObjectRect;
 import jboxGlue.WorldManager;
-import jgame.JGColor;
 import jgame.platform.JGEngine;
-import object.Ball;
 import object.FixedMass;
 import org.jbox2d.common.Vec2;
 import environment.Force;
@@ -16,8 +13,6 @@ import environment.Force;
 @SuppressWarnings( "serial" )
 public class Springies extends JGEngine
 {
-    private boolean environmentEnable = false;
-
     private static final JFileChooser INPUT_CHOOSER = 
             new JFileChooser(System.getProperties().getProperty("user.dir"));
     Model model;
@@ -51,11 +46,6 @@ public class Springies extends JGEngine
     {
         setFrameRate( 60, 2 );
 
-        // init the world
-        // One thing to keep straight: The world coordinates have y pointing down
-        // the game coordinates have y pointing up
-        // so gravity is along the positive y axis in world coords to point down in game coords
-        // remember to set all directions (eg forces, velocities) in world coords
         WorldManager.initWorld( this );
         WorldManager.getWorld().setGravity( new Vec2( 0.0f, 0.0f ) );
 
@@ -75,7 +65,6 @@ public class Springies extends JGEngine
     @Override
     public void doFrame( )
     {
-        // update game objects
         WorldManager.getWorld().step( 1f, 1 );
         moveObjects();
 
@@ -85,7 +74,7 @@ public class Springies extends JGEngine
     }
 
     private void checkCollision () {
-        checkCollision(Common.WALL_CID+Common.MASS_CID,Common.MASS_CID);
+        checkCollision(Common.WALL_CID,Common.MASS_CID);
     }
 
     private void applyForce () {
@@ -127,34 +116,26 @@ public class Springies extends JGEngine
 
     public void loadModel(){
         Parser parser = new Parser();
-        int n = JOptionPane.NO_OPTION;
-        
+        int n = JOptionPane.YES_OPTION;
+
         if(model == null) model = new Model();
-
-        if(!environmentEnable){
-            n = JOptionPane.showConfirmDialog(
-                                              this,
-                                              "Would you like to have environment force?",
-                                              "Apply Force?",
-                                              JOptionPane.YES_NO_OPTION);
-        }
-
-        if(n == JOptionPane.YES_OPTION){
-            environmentEnable = true;
-        }
-
-        JOptionPane.showMessageDialog(this, "Please load object file.");
-        int loadObject = INPUT_CHOOSER.showOpenDialog(null);
-        if (loadObject == JFileChooser.APPROVE_OPTION) {
-            parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
-        }
-
-        if(environmentEnable){
-            JOptionPane.showMessageDialog(this, "Please load environment file.");
-            int loadEnvironment = INPUT_CHOOSER.showOpenDialog(null);
-            if (loadEnvironment == JFileChooser.APPROVE_OPTION) {
+        
+        JOptionPane.showMessageDialog(this, "Please load a XML file.");
+        
+        while(n == JOptionPane.YES_OPTION){
+            int loadObject = INPUT_CHOOSER.showOpenDialog(null);
+            if (loadObject == JFileChooser.APPROVE_OPTION) {
                 parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
             }
+
+            n = JOptionPane.showConfirmDialog(
+                                              this,
+                                              "Would you like to add more XML file?",
+                                              "LoadModel?",
+                                              JOptionPane.YES_NO_OPTION);
+
         }
+
+
     }
 }

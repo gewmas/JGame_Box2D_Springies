@@ -2,37 +2,40 @@
     <name>Example</name>
     <author>Robert Duvall</author>
 
-	<gravity direction="90" magnitude="200"/>
-
     <nodes>
-        <mass id="m0" x="200" y="300" vx="-5" vy="0"/>
-        <mass id="m1" x="300" y="300" vx="5" vy="0"/>
-        <mass id="m2" x="400" y="300" vx="-5" vy="0"/>
-        <mass id="m3" x="500" y="300" vx="5" vy="0"/>
-        <mass id="m4" x="250" y="200" vx="0" vy="0"/>
-        <mass id="m5" x="350" y="200" vx="0" vy="0"/>
-        <mass id="m6" x="450" y="200" vx="0" vy="0"/>
-        <mass id="m7" x="300" y="100" vx="0" vy="0"/>
-        <mass id="m8" x="350" y="100" vx="0" vy="0"/>
-        <mass id="m9" x="400" y="100" vx="0" vy="0"/>
+        <mass id="m0" x="300" y="550" vx="50" vy="5"/>
+        <mass id="m1" x="340" y="550" vx="50" vy="5"/>
+        <mass id="m2" x="350" y="550" vx="50" vy="5"/>
+        <mass id="m3" x="390" y="550" vx="50" vy="5"/>
+        
+        <mass id="m4" x="275" y="300" vx="5" vy="10"/>
+        <mass id="m5" x="325" y="300" vx="5" vy="10"/>
+        <mass id="m6" x="300" y="250" vx="5" vy="10"/>
     </nodes>
 
     <links>
-        <spring a="m7" b="m8" restlength="55.0"/>
-        <spring a="m8" b="m9" restlength="93.0"/>
-        <spring a="m4" b="m5" restlength="58.0"/>
-        <spring a="m5" b="m6" restlength="54.589375"/>
-        <spring a="m4" b="m7" restlength="51.971146"/>
-        <spring a="m5" b="m7" restlength="55.470715"/>
-        <spring a="m5" b="m8" restlength="56.302753"/>
-        <spring a="m6" b="m8" restlength="57.035076"/>
-		<spring a="m6" b="m9" restlength="57.035076"/>
+        <spring a="m4" b="m5" restlength="50" constant="0.05"/>
+        <spring a="m4" b="m6" restlength="50" constant="0.05"/>
+        <spring a="m5" b="m6" restlength="50" constant="0.05"/>
+        
+        <spring a="m0" b="m1" restlength="50" constant="0.05"/>
+        <spring a="m1" b="m2" restlength="50" constant="0.05"/>
+        <spring a="m2" b="m3" restlength="50" constant="0.05"/>
+        
+        
 		
-        <muscle a="m0" b="m4" restlength="79.47956" amplitude="10"/>
-        <muscle a="m1" b="m4" restlength="77.7946" amplitude="5"/>
-        <muscle a="m1" b="m5" restlength="80.23092" amplitude="5"/>
-        <muscle a="m2" b="m5" restlength="78.92401" amplitude="5"/>
-        <muscle a="m2" b="m6" restlength="77.16217" amplitude="5"/>
-        <muscle a="m3" b="m6" restlength="79.47956" amplitude="10"/>
+        <muscle a="m0" b="m4" restlength="160" amplitude="10"/>
+        <muscle a="m1" b="m4" restlength="80" amplitude="10"/>
+        <muscle a="m2" b="m5" restlength="80" amplitude="10"/>
+        <muscle a="m3" b="m5" restlength="160" amplitude="10"/>
     </links>
+
+	<centermass magnitude="10" exponent="2.0" />
+	<gravity direction="90" magnitude="5" />
+	<viscosity magnitude="0.9" />
+
+	<wall id="1" magnitude="1000" exponent="1.0" />
+	<wall id="2" magnitude="1000" exponent="1.0" />
+	<wall id="3" magnitude="1000" exponent="1.0" />
+	<wall id="4" magnitude="1000" exponent="1.0" />
 </model>
