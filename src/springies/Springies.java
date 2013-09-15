@@ -8,6 +8,7 @@ import jboxGlue.PhysicalObjectRect;
 import jboxGlue.WorldManager;
 import jgame.JGColor;
 import jgame.platform.JGEngine;
+import object.Ball;
 import object.FixedMass;
 import org.jbox2d.common.Vec2;
 import environment.Force;
@@ -84,9 +85,7 @@ public class Springies extends JGEngine
     }
 
     private void checkCollision () {
-//        checkCollision(Common.WALL_CID, Common.MASS_CID);
-//        checkCollision(Common.MASS_CID, Common.WALL_CID);
-//        checkCollision(Common.FIXEDMASS_CID, Common.MASS_CID); //Mass hit FixedMass
+        checkCollision(Common.WALL_CID+Common.MASS_CID,Common.MASS_CID);
     }
 
     private void applyForce () {
