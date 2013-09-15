@@ -38,7 +38,7 @@ public class Parser {
     //spring
     private String id1;
     private String id2;
-    private double constant = 0;
+    private double constant = 1;
     private double restlength = 0;
 
     //gravity
