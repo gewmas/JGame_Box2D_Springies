@@ -18,8 +18,16 @@ public class Spring extends PhysicalObjectRect{
 		this.mass1 = mass1;
 		this.mass2 = mass2;
 		this.restLength = length;
-		this.currentLength = length;
+		if (length==0){
+	                restLength=calculateActualDistance();
+	                System.out.println(restLength);
+	            }
+		this.currentLength = length; //Should this be actual distance between masses?
 		this.k = k;
+	}
+	
+	public double calculateActualDistance(){
+	    return Math.sqrt(Math.pow((mass1.x-mass2.x),2)+ Math.pow((mass1.y-mass2.y),2));
 	}
 	
 	public Spring(String id, int collisionId, JGColor color, Mass mass1, Mass mass2, double length) {
@@ -28,7 +36,7 @@ public class Spring extends PhysicalObjectRect{
             this.mass2 = mass2;
             this.restLength = length;
             if (length==0){
-                restLength=Math.sqrt(Math.pow((this.mass1.x-this.mass2.x),2)+ Math.pow((this.mass1.y-this.mass2.y),2));
+                restLength=calculateActualDistance();
                 System.out.println(restLength);
             }
             this.currentLength = length;
