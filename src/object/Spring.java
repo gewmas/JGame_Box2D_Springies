@@ -32,7 +32,7 @@ public class Spring extends PhysicalObjectRect{
                 System.out.println(restLength);
             }
             this.currentLength = length;
-            this.k = 0.05;
+            this.k = 1;
         }
 	
 	public void move( ){

@@ -223,6 +223,7 @@ public class Parser {
     private Muscle muscleCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
             restlength=0;
+            constant=1;
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
@@ -236,6 +237,9 @@ public class Parser {
             else if (nodeName.equals(Common.SPRING_RESTLENGTH)) {
                 restlength = Double.parseDouble(nodeValue);
             }
+            else if (nodeName.equals(Common.SPRING_CONSTANT)) {
+                constant = Double.parseDouble(nodeValue);
+            }
             else if (nodeName.equals(Common.MUSCLE_AMPLITUDE)) {
                 amplitude = Double.parseDouble(nodeValue);
             }
@@ -245,7 +249,7 @@ public class Parser {
         Mass m1 = myMasses.get(id1);
         Mass m2 = myMasses.get(id2);
 
-        return new Muscle("muscle", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, amplitude);
+        return new Muscle("muscle", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant, amplitude);
     }
 
 

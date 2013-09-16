@@ -7,9 +7,10 @@ public class Muscle extends Spring {
         double timer=0;
     
 	public Muscle(String id, int collisionId, JGColor color, Mass mass1,
-			Mass mass2, double restlength, double amplitude) {
+			Mass mass2, double restlength, double k, double amplitude) {
 		super(id, collisionId, color, mass1, mass2, restlength);
 		this.amplitude = amplitude;
+		this.k=k;
 	}
 	
 	@Override
