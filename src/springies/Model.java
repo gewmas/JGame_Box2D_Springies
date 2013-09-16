@@ -41,4 +41,18 @@ public class Model {
         return forces;
     }
     
+    public void clear(){
+        for(PhysicalObject object:objects){
+            object.remove();
+        }
+        
+        forces.clear();
+        
+        //No need to remove walls and other fixedMass
+        /*for(PhysicalObject object:fixedMass){
+            object.remove();
+        }*/
+        
+    }
+    
 }

@@ -6,16 +6,18 @@ import javax.swing.JOptionPane;
 import jboxGlue.PhysicalObject;
 import jboxGlue.WorldManager;
 import jgame.platform.JGEngine;
-import object.FixedMass;
+import object.*;
+import environment.*;
 import org.jbox2d.common.Vec2;
-import environment.Force;
 
 @SuppressWarnings( "serial" )
 public class Springies extends JGEngine
 {
+    private static final int changeWallThicknessValue = 10;
     private static final JFileChooser INPUT_CHOOSER = 
             new JFileChooser(System.getProperties().getProperty("user.dir"));
-    Model model;
+    private Model model;
+    private Parser parser;
     
     private double wallWidth;
     private double wallHeight;
@@ -44,6 +46,9 @@ public class Springies extends JGEngine
     @Override
     public void initGame( )
     {
+        model = new Model();
+        parser = new Parser();
+        
         setFrameRate( 60, 2 );
 
         WorldManager.initWorld( this );
@@ -62,6 +67,26 @@ public class Springies extends JGEngine
 
 
 
+    public void loadModel(){
+        int n = JOptionPane.YES_OPTION;
+   
+        JOptionPane.showMessageDialog(this, "Please load a XML file.");
+        
+        while(n == JOptionPane.YES_OPTION){
+            int loadObject = INPUT_CHOOSER.showOpenDialog(null);
+            if (loadObject == JFileChooser.APPROVE_OPTION) {
+                parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
+            }
+    
+            n = JOptionPane.showConfirmDialog(
+                                              this,
+                                              "Would you like to add more XML file?",
+                                              "LoadModel?",
+                                              JOptionPane.YES_NO_OPTION);
+    
+        }
+    }
+
     @Override
     public void doFrame( )
     {
@@ -71,7 +96,9 @@ public class Springies extends JGEngine
 
         checkCollision();
         applyForce();
-//        cheatKeys();
+        
+        handleKeyboardEvent();
+        handleMouseEvent();
     }
 
     private void checkCollision () {
@@ -87,26 +114,86 @@ public class Springies extends JGEngine
         }
     }
     
-    /*
-    private void cheatKeys(){
-        if(getKey('N')) {
-            List<FixedMass> fixedMasses = model.getFixedMasses();
-            for(FixedMass fixedMass : fixedMasses){
-                if(fixedMass.getId().equals("1") || fixedMass.getId().equals("3")){
-                    fixedMass.increaseHeight();
-                }
-            }
+    private void handleKeyboardEvent(){
+        //read new XML file and clear all objects and forces
+        if(getKey('N')){
+            loadModel();
             clearKey('N');
-        }else if(getKey('M')){
+        }else if(getKey('C')){
+            clearAllObjects();
+            clearKey('C');
+        }
+        
+        //toggle forces
+        if(getKey('g')){
+            /*List<Force> forces = model.getForces();
+            for(Force force:forces){
+                System.out.println("Force");
+                if(force instanceof Gravity){
+                    System.out.println("Instance of Gravity!");
+                    force.toggleValid();
+                }
+            }*/
+            clearKey('g');
+        }else if(getKey('v')){
+            
+            clearKey('v');
+        }else if(getKey('m')){
+            
+            clearKey('m');
+        }
+        
+        if(getKey('1')){
+            
+            clearKey('1');
+        }else if(getKey('2')){
+            
+            clearKey('2');
+        }else if(getKey('3')){
+            
+            clearKey('3');
+        }else if(getKey('4')){
+            
+            clearKey('4');
+        }
+        
+        if(getKey(KeyUp)){
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
-                if(fixedMass.getId().equals("2") || fixedMass.getId().equals("4")){
-                    fixedMass.increaseWidth();
-                }
+//                if(fixedMass.getId().equals('1')){ //....Check Common.Max_ThickNess..Same For KeyDown
+                    fixedMass.changeThickness(changeWallThicknessValue);
+//                }
             }
-            clearKey('M');
+            clearKey(KeyUp);
+        }else if(getKey(KeyDown)){
+            List<FixedMass> fixedMasses = model.getFixedMasses();
+            for(FixedMass fixedMass : fixedMasses){
+                fixedMass.changeThickness(-changeWallThicknessValue);
+            }
+            clearKey(KeyDown);
         }
-    }*/
+    }
+    
+    private void clearAllObjects () {
+        int n = JOptionPane.showConfirmDialog(
+                                              this,
+                                              "Are you sure to clear all objects?",
+                                              "Clear Ojbects",
+                                              JOptionPane.YES_NO_OPTION);
+        if(n == JOptionPane.YES_OPTION){
+            model.clear();
+        }
+        
+    }
+
+    private void handleMouseEvent(){
+        if(this.getMouseButton(1)){
+            System.out.println(" " + this.getMouseX() + " " + this.getMouseY());
+        }else if(this.getMouseButton(3)){
+            System.out.println("Right Mouse");
+        }
+    }
+    
 
     @Override
     public void paintFrame( )
@@ -115,28 +202,4 @@ public class Springies extends JGEngine
         // the objects paint themselves
     }
 
-    public void loadModel(){
-        Parser parser = new Parser();
-        int n = JOptionPane.YES_OPTION;
-
-        if(model == null) model = new Model();
-        
-        JOptionPane.showMessageDialog(this, "Please load a XML file.");
-        
-        while(n == JOptionPane.YES_OPTION){
-            int loadObject = INPUT_CHOOSER.showOpenDialog(null);
-            if (loadObject == JFileChooser.APPROVE_OPTION) {
-                parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
-            }
-
-            n = JOptionPane.showConfirmDialog(
-                                              this,
-                                              "Would you like to add more XML file?",
-                                              "LoadModel?",
-                                              JOptionPane.YES_NO_OPTION);
-
-        }
-
-
-    }
 }
