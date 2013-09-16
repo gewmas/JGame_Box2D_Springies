@@ -18,6 +18,8 @@ public class FixedMass extends PhysicalObjectRect {
         super(id, collisionId, color, width, height);
         setPos(x, y);
         this.id = id;
+        this.x=x;
+        this.y=y;
 
     }
 

@@ -1,24 +1,25 @@
 package object;
 
+import jboxGlue.PhysicalObject;
 import jboxGlue.PhysicalObjectRect;
 import jgame.JGColor;
 
 public class Spring extends PhysicalObjectRect{
 
-    Mass mass1;
-    Mass mass2;
-    double restLength;
-    double currentLength;
-    double k;
-    double dx;
-    double dy;
+    protected PhysicalObject mass1;
+    protected PhysicalObject mass2;
+    protected double restLength;
+    protected double currentLength;
+    protected double k;
+    protected double dx;
+    protected double dy;
 
-    public Spring(String id, int collisionId, JGColor color, Mass mass1, Mass mass2, double length, double k) {
+    public Spring(String id, int collisionId, JGColor color, PhysicalObject mass1, PhysicalObject mass2, double length, double k) {
         super(id, collisionId, color, 0, 0, 0);
         this.mass1 = mass1;
         this.mass2 = mass2;
         this.restLength = length;
-        this.currentLength = length; //Should this be actual distance between masses?
+        this.currentLength = calculateActualDistance();
         this.k = k;
         
         if (length==0){
@@ -42,8 +43,7 @@ public class Spring extends PhysicalObjectRect{
         mass2.setForce(-dx*force, -dy*force);
    }
 
-    public double calculateActualDistance(){
-        
+    public double calculateActualDistance(){    
         return Math.sqrt(Math.pow((mass1.x-mass2.x),2)+ Math.pow((mass1.y-mass2.y),2));
     }
 

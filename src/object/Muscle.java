@@ -1,13 +1,14 @@
 package object;
 
+import jboxGlue.PhysicalObject;
 import jgame.JGColor;
 
 public class Muscle extends Spring {
         private double amplitude;
-        double timer=0;
+        private double timer=0;
     
-	public Muscle(String id, int collisionId, JGColor color, Mass mass1,
-			Mass mass2, double restlength, double k, double amplitude) {
+	public Muscle(String id, int collisionId, JGColor color, PhysicalObject mass1,
+			PhysicalObject mass2, double restlength, double k, double amplitude) {
 		super(id, collisionId, color, mass1, mass2, restlength, k);
 		this.amplitude = amplitude;
 		this.k=k;

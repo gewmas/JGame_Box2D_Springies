@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import jboxGlue.PhysicalObject;
 import jgame.JGColor;
 import object.FixedMass;
 import object.Mass;
@@ -25,7 +26,7 @@ import environment.WallRepulsion;
 
 public class Parser {
     //mass IDs
-    Map<String, Mass> myMasses = new HashMap<String, Mass>();
+    Map<String, PhysicalObject> myMasses = new HashMap<String, PhysicalObject>();
 
     //mass
     private String id;
@@ -185,7 +186,7 @@ public class Parser {
         //        System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
 
         FixedMass result = new FixedMass(id, Common.FIXEDMASS_CID, x, y);
-//        myMasses.put(id, result);
+        myMasses.put(id, result);
 
         return result;
     }
@@ -214,8 +215,8 @@ public class Parser {
         }
         System.out.println(id1 + " " + id2 + " " + constant + " " + restlength);
 
-        Mass m1 = myMasses.get(id1);
-        Mass m2 = myMasses.get(id2);
+        PhysicalObject m1 = myMasses.get(id1);
+        PhysicalObject m2 = myMasses.get(id2);
 
         return new Spring("spring", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant);
     }
@@ -246,8 +247,8 @@ public class Parser {
 
         }
 
-        Mass m1 = myMasses.get(id1);
-        Mass m2 = myMasses.get(id2);
+        PhysicalObject m1 = myMasses.get(id1);
+        PhysicalObject m2 = myMasses.get(id2);
 
         return new Muscle("muscle", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant, amplitude);
     }
