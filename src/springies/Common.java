@@ -4,6 +4,9 @@ public interface Common {
     public static final double WALL_MARGIN = 10;
     public static final double WALL_THICKNESS = 10;
     
+    public static final int MIN_THICKNESS = 15;
+    public static final int MAX_THICKNESS = 80;
+    
     public static final double HEIGHT=600;
     public static final double ASPECT=16.0/9.0;
     public static final double WIDTH=HEIGHT*ASPECT;

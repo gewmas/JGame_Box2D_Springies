@@ -4,14 +4,15 @@ import jboxGlue.PhysicalObjectRect;
 import jgame.JGColor;
 
 public class FixedMass extends PhysicalObjectRect {
-    private static final int defaultHeight = 10;
-    private static final int defaultWidth = 10;
+    private static final int DEFAULTHeight = 10;
+    private static final int DEFAULTWidth = 10;
+    
     private static final JGColor color = JGColor.green;
     private String id;
 
 
     public FixedMass(String id, int collisionId, double x, double y) {
-        this(id, collisionId, defaultWidth, defaultHeight, x, y);
+        this(id, collisionId, DEFAULTWidth, DEFAULTHeight, x, y);
     }
 
     public FixedMass(String id, int collisionId, double width, double height, double x, double y) {
@@ -23,12 +24,11 @@ public class FixedMass extends PhysicalObjectRect {
 
     }
 
-    public void increaseWidth(){
-        myWidth += 10;
-    }
-    
-    public void increaseHeight(){
-        myHeight += 10;
+    public void changeThickness(double value){
+//        System.out.println(myWidth + " " + myHeight + " " + value); 
+        
+        myWidth += value;
+        myHeight += value;
     }
     
     public String getId () {
