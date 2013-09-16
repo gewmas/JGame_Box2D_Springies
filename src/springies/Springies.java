@@ -66,6 +66,7 @@ public class Springies extends JGEngine
     public void doFrame( )
     {
         WorldManager.getWorld().step( 1f, 1 );
+        
         moveObjects();
 
         checkCollision();

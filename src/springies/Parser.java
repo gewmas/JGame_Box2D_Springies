@@ -155,7 +155,7 @@ public class Parser {
             // System.out.println(node.getNodeName() + " " + node.getNodeValue());
         }
 
-               System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
+//               System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
 
         Mass result = new Mass(id, Common.MASS_CID, mass, x, y, vx, vy);
         myMasses.put(id, result);

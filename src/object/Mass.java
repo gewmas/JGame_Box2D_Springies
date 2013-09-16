@@ -1,32 +1,27 @@
 package object;
 
 import org.jbox2d.common.Vec2;
-import springies.Common;
 import jboxGlue.*;
 import jgame.JGColor;
 import jgame.JGObject;
 
 public class Mass extends PhysicalObjectCircle{
-        private static final JGColor color = JGColor.blue;
-        private static final double radius = 10;
-        
-    
-	public Mass(String id, int collisionId, double mass, double x, double y, double vx, double vy) {
-		super(id, collisionId, color, radius, mass);
-		
-		setPos(x, y);
-	        Vec2 velocity = new Vec2();
-	        velocity.x = (float) vx;
-	        velocity.y = (float) vy;
-	        getBody().setLinearVelocity(velocity);
-	        this.setMass(mass);
-	}
+    private static final JGColor color = JGColor.blue;
+    private static final double radius = 10;
 
 
-    public Mass (String id, int collisionId, JGColor color2, double radius2, double x, double y) {
-        super(id, collisionId, color2, radius2);
-        
+    public Mass(String id, int collisionId, double mass, double x, double y, double vx, double vy) {
+        super(id, collisionId, color, radius, mass);
+
         setPos(x, y);
+        Vec2 velocity = new Vec2();
+        velocity.x = (float) vx;
+        velocity.y = (float) vy;
+        getBody().setLinearVelocity(velocity);
+        
+        this.setMass(mass);
+        this.x = x;
+        this.y = y;
     }
 
     public void hit( JGObject other )
