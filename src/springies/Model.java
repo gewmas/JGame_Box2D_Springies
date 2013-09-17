@@ -55,4 +55,23 @@ public class Model {
         
     }
     
+    public Mass calculateNearestMass(int mouseX, int mouseY){
+        Mass nearestMass = null;
+        double shortestDistance = Double.MAX_VALUE;
+        
+        for(PhysicalObject object:objects){
+            if(object instanceof Mass){
+                double tempDistance = Math.sqrt(Math.pow(object.x-mouseX, 2) + Math.pow(object.y-mouseY, 2));
+                
+                if(tempDistance < shortestDistance){
+                    shortestDistance = tempDistance;
+                    nearestMass = (Mass)object;
+                }
+            }
+        }
+        
+        return nearestMass;
+        
+    }
+    
 }
