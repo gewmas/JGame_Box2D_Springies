@@ -5,11 +5,27 @@ import jboxGlue.*;
 import jgame.JGColor;
 import jgame.JGObject;
 
+/**
+ * Mass object that moves in response to applied forces
+ * 
+ * @author Yuhua Mai, Susan Zhang
+ *
+ */
 public class Mass extends PhysicalObjectCircle{
     private static final JGColor color = JGColor.blue;
     private static final double radius = 10;
 
-
+    /**
+     * Returns a new Mass object
+     * 
+     * @param id object ID
+     * @param collisionId object collision ID
+     * @param mass mass of object
+     * @param x initial x location 
+     * @param y initial y location
+     * @param vx initial x direction velocity
+     * @param vy initial y direction velocity
+     */
     public Mass(String id, int collisionId, double mass, double x, double y, double vx, double vy) {
         super(id, collisionId, color, radius, mass);
 
@@ -24,8 +40,12 @@ public class Mass extends PhysicalObjectCircle{
         this.y = y;
     }
 
-    public void hit( JGObject other )
-    {
+    /**
+     * Defines collisions with other JGObjects
+     * 
+     * @param other the object that the mass collides with
+     */
+    public void hit(JGObject other){
         // we hit something! bounce off it!
         Vec2 velocity = myBody.getLinearVelocity();
 

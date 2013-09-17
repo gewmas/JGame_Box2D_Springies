@@ -1,0 +1,5 @@
+Springies Design Document:
+
+Yuhua Mai, Susan Zhang
+
+To be completed after implementation of part 2

@@ -29,7 +29,10 @@ public interface Common {
     public static final String FIXED_KEYWORD = "fixed";
     public static final String MUSCLE_KEYWORD = "muscle";
     public static final String SPRING_KEYWORD = "spring";
-
+    public static final int DEFAULT_MASS = 1;
+    public static final int DEFAULT_K = 1;
+    
+    
     public static final String MASS_ID = "id";
     public static final String MASS_MASS = "mass";
     public static final String MASS_VX = "vx";

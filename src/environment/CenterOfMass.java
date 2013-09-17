@@ -4,6 +4,11 @@ import java.util.List;
 import object.Mass;
 import jboxGlue.PhysicalObject;
 
+/**
+ * CenterOfMass force
+ * 
+ *
+ */
 public class CenterOfMass extends Force {
     private double magnitude;
     private double exponent;

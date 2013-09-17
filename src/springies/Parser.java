@@ -22,24 +22,28 @@ import environment.CenterOfMass;
 import environment.Gravity;
 import environment.Viscosity;
 import environment.WallRepulsion;
-
+/**  Reads in XML Files and adds objects and forces to Model
+ * 
+ */
 
 public class Parser {
     //mass IDs
+    
+    
     Map<String, PhysicalObject> myMasses = new HashMap<String, PhysicalObject>();
 
     //mass
     private String id;
     private double vx = 0;
     private double vy = 0;
-    private double mass = 1; //Website says default mass is 0?
+    private double mass = Common.DEFAULT_MASS;
     private double x = 0;
     private double y = 0;
 
     //spring
     private String id1;
     private String id2;
-    private double constant = 1;
+    private double constant = Common.DEFAULT_K;
     private double restlength = 0;
 
     //gravity
@@ -129,6 +133,7 @@ public class Parser {
     }
 
     private Mass massCommand (NamedNodeMap nodeMap) {
+        mass=Common.DEFAULT_MASS;
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
@@ -192,8 +197,8 @@ public class Parser {
     }
 
     private Spring springCommand (NamedNodeMap nodeMap) {
+        constant=Common.DEFAULT_K;
         for (int i = 0; i < nodeMap.getLength(); i++) {
-            constant=1;
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
@@ -222,9 +227,10 @@ public class Parser {
     }
 
     private Muscle muscleCommand (NamedNodeMap nodeMap) {
+        restlength=0;
+        constant=Common.DEFAULT_K;
         for (int i = 0; i < nodeMap.getLength(); i++) {
-            restlength=0;
-            constant=1;
+ 
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
