@@ -111,6 +111,7 @@ public class Springies extends JGEngine
     
         for(Force force : forces){
             force.setForce(objects);
+//            System.out.println("Instance of Gravity!" + force.getClass().getSimpleName());
         }
     }
     
@@ -125,22 +126,15 @@ public class Springies extends JGEngine
         }
         
         //toggle forces
-        if(getKey('g')){
-            /*List<Force> forces = model.getForces();
-            for(Force force:forces){
-                System.out.println("Force");
-                if(force instanceof Gravity){
-                    System.out.println("Instance of Gravity!");
-                    force.toggleValid();
-                }
-            }*/
-            clearKey('g');
-        }else if(getKey('v')){
-            
-            clearKey('v');
-        }else if(getKey('m')){
-            
-            clearKey('m');
+        if(getKey('G')){
+            toggleForce(Common.GRAVITY_CLASS_NAME);
+            clearKey('G');
+        }else if(getKey('V')){
+            toggleForce(Common.VISCOSITY_CLASS_NAME);
+            clearKey('V');
+        }else if(getKey('M')){
+            toggleForce(Common.CENTEROFMASS_CLASS_NAME);
+            clearKey('M');
         }
         
         if(getKey('1')){
@@ -184,6 +178,16 @@ public class Springies extends JGEngine
             model.clear();
         }
         
+    }
+    
+    private void toggleForce(String className){
+        List<Force> forces = model.getForces();
+        for(Force force:forces){
+            if(force.getClass().getSimpleName().equals(className)){
+                force.toggleValid();       
+//                System.out.println("Calling toggleValid! " + force.getClass().getSimpleName());
+            }
+        }
     }
 
     private void handleMouseEvent(){

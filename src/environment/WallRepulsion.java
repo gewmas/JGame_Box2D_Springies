@@ -13,6 +13,7 @@ public class WallRepulsion extends Force {
         this.magnitude = magnitude;
         this.exponent = exponent;
     }
+    
     public void setForce(PhysicalObject object){
         if (wallId.equals("1")){
             object.setForce(0, calculateForce(calculateDistance(object)));

@@ -18,7 +18,12 @@ public abstract class Force {
     }
     
     public void toggleValid () {
-        System.out.println("Toggle Valid!");
         this.valid = !this.valid;
+        
+        if(valid){
+            System.out.println(getClass().getSimpleName() + " On.");
+        }else{
+            System.out.println(getClass().getSimpleName() + " Off.");
+        }
     }
 }

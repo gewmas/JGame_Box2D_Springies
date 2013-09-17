@@ -16,6 +16,12 @@ public interface Common {
     public static final int FIXEDMASS_CID = 4;
     public static final int SPRING_CID = 5;
 
+    //Force Name
+    public static final String GRAVITY_CLASS_NAME = "Gravity";
+    public static final String VISCOSITY_CLASS_NAME = "Viscosity";
+    public static final String CENTEROFMASS_CLASS_NAME = "CenterOfMass";
+    public static final String WALLREPULSION_CLASS_NAME = "WallRepulsion";
+    
     //Parser
     public static final String NODES_KEYWORD = "nodes";
     public static final String LINKS_KEYWORD = "links";

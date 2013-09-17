@@ -16,6 +16,8 @@ public class Viscosity extends Force {
 	    velocity.x *= magnitude;
 	    velocity.y *= magnitude;
 	    object.getBody().setLinearVelocity( velocity );
+	    
+	    System.out.println("Calling Viscosity setForce!");
 	}
 
 }
