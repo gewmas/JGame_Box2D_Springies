@@ -24,6 +24,7 @@ public class Springies extends JGEngine
     private double wallHeight;
     
     private boolean mousePressed = false;
+    private boolean massCreated = false;
 
     public Springies( )
     {
@@ -199,10 +200,19 @@ public class Springies extends JGEngine
     private void handleMouseEvent(){
         if(this.getMouseButton(1)){ //left click pressed
             System.out.println(" " + this.getMouseX() + " " + this.getMouseY());
+            
+            if(!massCreated){
+                Mass nearestMass = model.calculateNearestMass(this.getMouseX(), this.getMouseY());
+                System.out.println("NearestMass position: " + nearestMass.x + " " + nearestMass.y);
+                
+                massCreated = true;
+            }
+            
             mousePressed = true;
         }else if(!this.getMouseButton(1) && mousePressed){ //left click release
             System.out.println("Mouse released");
             mousePressed = false;
+            massCreated = false;
         }
     }
     
