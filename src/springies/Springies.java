@@ -1,6 +1,7 @@
 package springies;
 
 import java.util.List;
+import java.awt.event.*;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jboxGlue.PhysicalObject;
@@ -21,6 +22,8 @@ public class Springies extends JGEngine
     
     private double wallWidth;
     private double wallHeight;
+    
+    private boolean mousePressed = false;
 
     public Springies( )
     {
@@ -48,6 +51,9 @@ public class Springies extends JGEngine
     {
         model = new Model();
         parser = new Parser();
+        
+//        this.addMouseListener(this.getMouseListeners());
+        
         
         setFrameRate( 60, 2 );
 
@@ -191,10 +197,12 @@ public class Springies extends JGEngine
     }
 
     private void handleMouseEvent(){
-        if(this.getMouseButton(1)){
+        if(this.getMouseButton(1)){ //left click pressed
             System.out.println(" " + this.getMouseX() + " " + this.getMouseY());
-        }else if(this.getMouseButton(3)){
-            System.out.println("Right Mouse");
+            mousePressed = true;
+        }else if(!this.getMouseButton(1) && mousePressed){ //left click release
+            System.out.println("Mouse released");
+            mousePressed = false;
         }
     }
     
