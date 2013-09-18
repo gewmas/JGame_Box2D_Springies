@@ -198,6 +198,7 @@ public class Parser {
 
     private Spring springCommand (NamedNodeMap nodeMap) {
         constant=Common.DEFAULT_K;
+        restlength=0;
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();

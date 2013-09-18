@@ -3,7 +3,7 @@
   <author></author>
 
   <nodes>
-    <fixed id="m0" x="225" y="10"/>
+    <mass id="m0" x="225" y="10"/>
     <mass id="m1" x="245" y="55" vx="0" vy="0"/>
     <mass id="m2" x="185" y="115" vx="0" vy="0"/>
     <mass id="m3" x="225" y="130" vx="0" vy="0"/>

@@ -6,6 +6,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jboxGlue.PhysicalObject;
 import jboxGlue.WorldManager;
+import jgame.JGColor;
 import jgame.platform.JGEngine;
 import object.*;
 import environment.*;
@@ -25,7 +26,10 @@ public class Springies extends JGEngine
     
     private boolean mousePressed = false;
     private boolean massCreated = false;
-
+    
+    private Mass mouseMass;
+    private Spring mouseSpring;
+    
     public Springies( )
     {
         // set the window size
@@ -204,13 +208,23 @@ public class Springies extends JGEngine
             if(!massCreated){
                 Mass nearestMass = model.calculateNearestMass(this.getMouseX(), this.getMouseY());
                 System.out.println("NearestMass position: " + nearestMass.x + " " + nearestMass.y);
+                mouseMass= new Mass("mouse", Common.MASS_CID, 1, this.getMouseX(), this.getMouseY(), 0, 0);
+//                model.add(mouseMass);
+                mouseSpring=new Spring("mouseSpring", Common.SPRING_CID, JGColor.red, nearestMass, mouseMass, 0, 1);
+//                model.add(mouseSpring);
                 
                 massCreated = true;
             }
             
+            mouseMass.setPos(this.getMouseX(), this.getMouseY());
+            
             mousePressed = true;
         }else if(!this.getMouseButton(1) && mousePressed){ //left click release
             System.out.println("Mouse released");
+            
+            mouseMass.remove();
+            mouseSpring.remove();
+            
             mousePressed = false;
             massCreated = false;
         }
