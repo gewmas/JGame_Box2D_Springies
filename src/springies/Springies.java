@@ -22,18 +22,13 @@ import org.jbox2d.common.Vec2;
 @SuppressWarnings( "serial" )
 public class Springies extends JGEngine
 {
-    private static final int changeWallThicknessValue = 10;
     private static final JFileChooser INPUT_CHOOSER = 
             new JFileChooser(System.getProperties().getProperty("user.dir"));
     private Model model;
-    private Parser parser;
     
-    private double wallWidth;
-    private double wallHeight;
-    
+    //used in handleMouseEvnet()
     private boolean mousePressed = false;
     private boolean massCreated = false;
-    
     private Mass mouseMass;
     private Spring mouseSpring;
     
@@ -83,8 +78,8 @@ public class Springies extends JGEngine
         loadModel();
 
         //add walls up-1 right-2 down-3 left-4
-        wallWidth = displayWidth() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
-        wallHeight = displayHeight() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
+        double wallWidth = displayWidth() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
+        double wallHeight = displayHeight() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
         model.add(new FixedMass("1", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, Common.WALL_MARGIN));
         model.add(new FixedMass("3", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, displayHeight() - Common.WALL_MARGIN));
         model.add(new FixedMass("4", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, Common.WALL_MARGIN, displayHeight()/2));
@@ -100,7 +95,7 @@ public class Springies extends JGEngine
         JOptionPane.showMessageDialog(this, "Please load a XML file.");
         
         while(n == JOptionPane.YES_OPTION){
-            parser = new Parser();
+            Parser parser = new Parser();
             int loadObject = INPUT_CHOOSER.showOpenDialog(null);
             if (loadObject == JFileChooser.APPROVE_OPTION) {
                 parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
@@ -148,7 +143,6 @@ public class Springies extends JGEngine
     
         for(Force force : forces){
             force.setForce(objects);
-//            System.out.println("Instance of Gravity!" + force.getClass().getSimpleName());
         }
     }
     
@@ -194,15 +188,13 @@ public class Springies extends JGEngine
         if(getKey(KeyUp)){
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
-//                if(fixedMass.getId().equals('1')){ //....Check Common.Max_ThickNess..Same For KeyDown
-                    fixedMass.changeThickness(changeWallThicknessValue);
-//                }
+                fixedMass.changeThickness(Common.CHANGE_THICKNESS);
             }
             clearKey(KeyUp);
         }else if(getKey(KeyDown)){
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
-                fixedMass.changeThickness(-changeWallThicknessValue);
+                fixedMass.changeThickness(-Common.CHANGE_THICKNESS);
             }
             clearKey(KeyDown);
         }
@@ -230,8 +222,7 @@ public class Springies extends JGEngine
         List<Force> forces = model.getForces();
         for(Force force:forces){
             if(force.getClass().getSimpleName().equals(className)){
-                force.toggleValid();       
-//                System.out.println("Calling toggleValid! " + force.getClass().getSimpleName());
+                force.toggleValid(); 
             }
         }
     }
@@ -248,7 +239,7 @@ public class Springies extends JGEngine
             
             if(!massCreated){
                 Mass nearestMass = model.calculateNearestMass(this.getMouseX(), this.getMouseY());
-                System.out.println("NearestMass position: " + nearestMass.x + " " + nearestMass.y);
+                
                 mouseMass= new Mass("mouse", Common.MASS_CID, 1, this.getMouseX(), this.getMouseY(), 0, 0);
 //                model.add(mouseMass);
                 mouseSpring=new Spring("mouseSpring", Common.SPRING_CID, JGColor.white, nearestMass, mouseMass, 0, 1);

@@ -8,6 +8,6 @@
     </nodes>
 
     <links>
-        <muscle a="m0" b="m1" restlength="150.0" amplitude="30"/>
+        <muscle a="m0" b="m1" restlength="150.0" amplitude="1"/>
     </links>
 </model>
