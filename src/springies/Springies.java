@@ -1,7 +1,6 @@
 package springies;
 
 import java.util.List;
-import java.awt.event.*;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jboxGlue.PhysicalObject;
