@@ -1,5 +1,12 @@
 package springies;
 
+/**
+ * Common class that store all magic numbers
+ * 
+ * @author Yuhua Mai, Susan Zhang
+ *
+ */
+
 public interface Common {
     public static final double WALL_MARGIN = 10;
     public static final double WALL_THICKNESS = 10;

@@ -11,6 +11,14 @@ import object.*;
 import environment.*;
 import org.jbox2d.common.Vec2;
 
+/**
+ * Springies class that init Canvas, create World, load XML files to Model, set Force to Mass
+ * and perform key and mouse operations
+ * 
+ * @author Yuhua Mai, Susan Zhang
+ *
+ */
+
 @SuppressWarnings( "serial" )
 public class Springies extends JGEngine
 {
@@ -29,12 +37,18 @@ public class Springies extends JGEngine
     private Mass mouseMass;
     private Spring mouseSpring;
     
+    /**
+     * create JGEngine
+     */
     public Springies( )
     {
         // set the window size
         initEngine( (int)(Common.WIDTH), (int)(Common.HEIGHT));
     }
 
+    /**
+     * create Canvas
+     */
     @Override
     public void initCanvas( )
     {
@@ -50,6 +64,9 @@ public class Springies extends JGEngine
                 );
     }
 
+    /**
+     * init Game, setFrameRate, setWorld, loadModel and create walls
+     */
     @Override
     public void initGame( )
     {
@@ -75,8 +92,9 @@ public class Springies extends JGEngine
         model.add(new FixedMass("2", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, displayWidth() - Common.WALL_MARGIN, displayHeight()/2));
     }
 
-
-
+    /**
+     * Pop option pane for user to choose XML file
+     */
     public void loadModel(){
         int n = JOptionPane.YES_OPTION;
    
@@ -97,6 +115,9 @@ public class Springies extends JGEngine
         }
     }
 
+    /**
+     * Update methods
+     */
     @Override
     public void doFrame( )
     {
@@ -111,10 +132,16 @@ public class Springies extends JGEngine
         handleMouseEvent();
     }
 
+    /**
+     * checkCollision for Wall and Mass
+     */
     private void checkCollision () {
-        checkCollision(Common.WALL_CID,Common.MASS_CID);
+        checkCollision(Common.WALL_CID,Common.MASS_CID); //latter one call the hit method
     }
 
+    /**
+     * appleForce for every object in Model
+     */
     private void applyForce () {
         List<PhysicalObject> objects = model.getObjects();
         List<Force> forces = model.getForces();
@@ -125,6 +152,9 @@ public class Springies extends JGEngine
         }
     }
     
+    /**
+     * handleKeyboardEvent to load more XML files, clear all objecs, toggleForce and change wall thickness
+     */
     private void handleKeyboardEvent(){
         //read new XML file and clear all objects and forces
         if(getKey('N')){
@@ -178,6 +208,9 @@ public class Springies extends JGEngine
         }
     }
     
+    /**
+     * Call model's method to clear all objects
+     */
     private void clearAllObjects () {
         int n = JOptionPane.showConfirmDialog(
                                               this,
@@ -190,6 +223,9 @@ public class Springies extends JGEngine
         
     }
     
+    /**
+     * toggle force in Force
+     */
     private void toggleForce(String className){
         List<Force> forces = model.getForces();
         for(Force force:forces){
@@ -200,6 +236,12 @@ public class Springies extends JGEngine
         }
     }
 
+    /**
+     * handleMouse Event
+     * When clicked, create a Mass connected by a Spring to the nearestMass
+     * When dragged, the created Mass will move
+     * When release, the created Mass and Spring will removed
+     */
     private void handleMouseEvent(){
         if(this.getMouseButton(1)){ //left click pressed
             System.out.println(" " + this.getMouseX() + " " + this.getMouseY());
@@ -230,6 +272,9 @@ public class Springies extends JGEngine
     }
     
 
+    /**
+     * PaintFrame, empty method
+     */
     @Override
     public void paintFrame( )
     {
