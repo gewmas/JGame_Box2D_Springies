@@ -21,6 +21,10 @@ public interface Common {
     public static final String VISCOSITY_CLASS_NAME = "Viscosity";
     public static final String CENTEROFMASS_CLASS_NAME = "CenterOfMass";
     public static final String WALLREPULSION_CLASS_NAME = "WallRepulsion";
+    public static final String WALLREPULSION1_CLASS_NAME = "WallRepulsion1";
+    public static final String WALLREPULSION2_CLASS_NAME = "WallRepulsion2";
+    public static final String WALLREPULSION3_CLASS_NAME = "WallRepulsion3";
+    public static final String WALLREPULSION4_CLASS_NAME = "WallRepulsion4";
     
     //Parser
     public static final String NODES_KEYWORD = "nodes";

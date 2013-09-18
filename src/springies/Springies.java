@@ -149,16 +149,16 @@ public class Springies extends JGEngine
         }
         
         if(getKey('1')){
-            
+            toggleForce(Common.WALLREPULSION1_CLASS_NAME);
             clearKey('1');
         }else if(getKey('2')){
-            
+            toggleForce(Common.WALLREPULSION2_CLASS_NAME);
             clearKey('2');
         }else if(getKey('3')){
-            
+            toggleForce(Common.WALLREPULSION3_CLASS_NAME);
             clearKey('3');
         }else if(getKey('4')){
-            
+            toggleForce(Common.WALLREPULSION4_CLASS_NAME);
             clearKey('4');
         }
         
@@ -210,7 +210,7 @@ public class Springies extends JGEngine
                 System.out.println("NearestMass position: " + nearestMass.x + " " + nearestMass.y);
                 mouseMass= new Mass("mouse", Common.MASS_CID, 1, this.getMouseX(), this.getMouseY(), 0, 0);
 //                model.add(mouseMass);
-                mouseSpring=new Spring("mouseSpring", Common.SPRING_CID, JGColor.red, nearestMass, mouseMass, 0, 1);
+                mouseSpring=new Spring("mouseSpring", Common.SPRING_CID, JGColor.white, nearestMass, mouseMass, 0, 1);
 //                model.add(mouseSpring);
                 
                 massCreated = true;

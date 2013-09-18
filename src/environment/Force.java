@@ -5,8 +5,7 @@ import object.Mass;
 import jboxGlue.PhysicalObject;
 
 public abstract class Force {
-
-    public abstract void setForce(PhysicalObject object);
+    
     public boolean valid = true;
 
     public void setForce (List<PhysicalObject> objects) {
@@ -16,6 +15,7 @@ public abstract class Force {
             }
         }
     }
+    public abstract void setForce(PhysicalObject object);
     
     public void toggleValid () {
         this.valid = !this.valid;

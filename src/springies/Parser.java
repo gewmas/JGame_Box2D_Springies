@@ -22,6 +22,10 @@ import environment.CenterOfMass;
 import environment.Gravity;
 import environment.Viscosity;
 import environment.WallRepulsion;
+import environment.WallRepulsion1;
+import environment.WallRepulsion2;
+import environment.WallRepulsion3;
+import environment.WallRepulsion4;
 /**  Reads in XML Files and adds objects and forces to Model
  * 
  */
@@ -339,8 +343,17 @@ public class Parser {
 
             System.out.println(nodeName + " " + nodeValue);
         }
-
-        return new WallRepulsion(wallId, magnitude, exponent);
+        
+        
+        if (wallId.equals("1")){
+            return new WallRepulsion1(wallId, magnitude, exponent);
+        }else if (wallId.equals("2")){
+            return new WallRepulsion2(wallId, magnitude, exponent);
+        }else if (wallId.equals("3")){
+            return new WallRepulsion3(wallId, magnitude, exponent);
+        }else{
+            return new WallRepulsion4(wallId, magnitude, exponent);
+        }
 
     }
 }
