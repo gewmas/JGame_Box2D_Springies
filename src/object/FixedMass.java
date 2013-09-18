@@ -31,6 +31,14 @@ public class FixedMass extends PhysicalObjectRect {
         myHeight += value;
     }
     
+    public double getWidth(){
+        return myWidth;
+    }
+    
+    public double getHeight(){
+        return myHeight;
+    }
+    
     public String getId () {
         return id;
     }

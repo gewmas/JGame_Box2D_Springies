@@ -166,14 +166,35 @@ public class Springies extends JGEngine
             for(FixedMass fixedMass : fixedMasses){
 //                if(fixedMass.getId().equals('1')){ //....Check Common.Max_ThickNess..Same For KeyDown
                     fixedMass.changeThickness(changeWallThicknessValue);
+                    fixedMass.setBBox(0,0, (int) (fixedMass.getWidth()), (int) (fixedMass.getHeight()));
 //                }
             }
+            
+            List<Force> forces = model.getForces();
+            
+            for (Force force : forces){
+                if (force instanceof WallRepulsion){
+                    ((WallRepulsion) force).incrementWallThickness((double) changeWallThicknessValue);
+                }
+            }
+            
+            
             clearKey(KeyUp);
         }else if(getKey(KeyDown)){
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
                 fixedMass.changeThickness(-changeWallThicknessValue);
+                fixedMass.setBBox(0,0, (int) (fixedMass.getWidth()), (int) (fixedMass.getHeight()));
             }
+            
+List<Force> forces = model.getForces();
+            
+            for (Force force : forces){
+                if (force instanceof WallRepulsion){
+                    ((WallRepulsion) force).incrementWallThickness((double) -changeWallThicknessValue);
+                }
+            }
+            
             clearKey(KeyDown);
         }
     }
