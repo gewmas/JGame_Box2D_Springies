@@ -71,7 +71,6 @@ public class Springies extends JGEngine
     public void initGame( )
     {
         model = new Model();
-        parser = new Parser();
         
 //        this.addMouseListener(this.getMouseListeners());
         
@@ -101,6 +100,7 @@ public class Springies extends JGEngine
         JOptionPane.showMessageDialog(this, "Please load a XML file.");
         
         while(n == JOptionPane.YES_OPTION){
+            parser = new Parser();
             int loadObject = INPUT_CHOOSER.showOpenDialog(null);
             if (loadObject == JFileChooser.APPROVE_OPTION) {
                 parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
