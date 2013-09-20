@@ -16,7 +16,7 @@ public class WallRepulsion2 extends WallRepulsion {
     }
     
     public double calculateDistance(PhysicalObject object){      
-        return (Common.WIDTH-Common.WALL_MARGIN-Common.WALL_THICKNESS-object.x);           
+        return (Common.WIDTH-Common.WALL_MARGIN-wallThickness-object.x);           
        
     }
 

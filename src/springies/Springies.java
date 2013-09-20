@@ -24,6 +24,7 @@ public class Springies extends JGEngine
 {
     private static final JFileChooser INPUT_CHOOSER = 
             new JFileChooser(System.getProperties().getProperty("user.dir"));
+    private Assembly assembly;
     private Model model;
     
     //used in handleMouseEvnet()
@@ -65,7 +66,13 @@ public class Springies extends JGEngine
     @Override
     public void initGame( )
     {
+<<<<<<< HEAD
         model = new Model();
+=======
+//        model = new Model();
+        assembly = new Assembly();
+        parser = new Parser();
+>>>>>>> WallRepulsionTesting
         
 //        this.addMouseListener(this.getMouseListeners());
         
@@ -76,7 +83,9 @@ public class Springies extends JGEngine
         WorldManager.getWorld().setGravity( new Vec2( 0.0f, 0.0f ) );
 
         loadModel();
-
+        
+        model = new Model();
+        assembly.addModel(model);
         //add walls up-1 right-2 down-3 left-4
         double wallWidth = displayWidth() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
         double wallHeight = displayHeight() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
@@ -91,13 +100,17 @@ public class Springies extends JGEngine
      */
     public void loadModel(){
         int n = JOptionPane.YES_OPTION;
-   
+        
         JOptionPane.showMessageDialog(this, "Please load a XML file.");
         
         while(n == JOptionPane.YES_OPTION){
             Parser parser = new Parser();
             int loadObject = INPUT_CHOOSER.showOpenDialog(null);
             if (loadObject == JFileChooser.APPROVE_OPTION) {
+                model = new Model();
+                assembly.addModel(model);
+//                parser = new Parser();
+                
                 parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
             }
     
@@ -138,13 +151,26 @@ public class Springies extends JGEngine
      * appleForce for every object in Model
      */
     private void applyForce () {
+<<<<<<< HEAD
         List<PhysicalObject> objects = model.getObjects();
         List<Force> forces = model.getForces();
     
         for(Force force : forces){
             force.setForce(objects);
+=======
+        for (Model model: assembly.getModels()){
+            List<PhysicalObject> objects = model.getObjects();
+            List<Force> forces = model.getForces();
+
+            for(Force force : forces){
+                force.setForce(objects);
+                //            System.out.println("Instance of Gravity!" + force.getClass().getSimpleName());
+            }
+>>>>>>> WallRepulsionTesting
         }
     }
+        
+        
     
     /**
      * handleKeyboardEvent to load more XML files, clear all objecs, toggleForce and change wall thickness
@@ -188,15 +214,51 @@ public class Springies extends JGEngine
         if(getKey(KeyUp)){
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
+<<<<<<< HEAD
                 fixedMass.changeThickness(Common.CHANGE_THICKNESS);
+=======
+//                if(fixedMass.getId().equals('1')){ //....Check Common.Max_ThickNess..Same For KeyDown
+                    fixedMass.changeThickness(changeWallThicknessValue);
+                    fixedMass.setBBox(0,0, (int) (fixedMass.getWidth()), (int) (fixedMass.getHeight()));
+//                }
+>>>>>>> WallRepulsionTesting
             }
+            
+            List<Force> forces = model.getForces();
+            
+            for (Force force : forces){
+                if (force instanceof WallRepulsion){
+                    ((WallRepulsion) force).incrementWallThickness((double) changeWallThicknessValue);
+                }
+            }
+            
+            
             clearKey(KeyUp);
         }else if(getKey(KeyDown)){
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
+<<<<<<< HEAD
                 fixedMass.changeThickness(-Common.CHANGE_THICKNESS);
+=======
+                fixedMass.changeThickness(-changeWallThicknessValue);
+                fixedMass.setBBox(0,0, (int) (fixedMass.getWidth()), (int) (fixedMass.getHeight()));
+>>>>>>> WallRepulsionTesting
             }
+
+            List<Force> forces = model.getForces();
+
+            for (Force force : forces){
+                if (force instanceof WallRepulsion){
+                    ((WallRepulsion) force).incrementWallThickness((double) -changeWallThicknessValue);
+                }
+            }
+            
             clearKey(KeyDown);
+        }
+        
+        if(getKey('D')){
+            assembly.setColor();
+            clearKey('D');
         }
     }
     
@@ -210,7 +272,9 @@ public class Springies extends JGEngine
                                               "Clear Ojbects",
                                               JOptionPane.YES_NO_OPTION);
         if(n == JOptionPane.YES_OPTION){
-            model.clear();
+            for (Model model: assembly.getModels()){
+                model.clear();      
+            }
         }
         
     }
@@ -219,10 +283,22 @@ public class Springies extends JGEngine
      * toggle force in Force
      */
     private void toggleForce(String className){
+<<<<<<< HEAD
         List<Force> forces = model.getForces();
         for(Force force:forces){
             if(force.getClass().getSimpleName().equals(className)){
                 force.toggleValid(); 
+=======
+        int i = 0;
+        for (Model model: assembly.getModels()){
+            System.out.println("!!!!!!!!!!!!model + " + i++);
+            List<Force> forces = model.getForces();
+            for(Force force:forces){
+                if(force.getClass().getSimpleName().equals(className)){
+                    force.toggleValid();       
+                    //                System.out.println("Calling toggleValid! " + force.getClass().getSimpleName());
+                }
+>>>>>>> WallRepulsionTesting
             }
         }
     }

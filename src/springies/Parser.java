@@ -34,6 +34,8 @@ import environment.WallRepulsion4;
  */
 
 public class Parser {
+//    private static int createdTimes = 0;
+    
     //mass IDs
     Map<String, PhysicalObject> myMasses = new HashMap<String, PhysicalObject>();
 
@@ -62,12 +64,19 @@ public class Parser {
     private double exponent = 0;
     private String wallId;
 
+<<<<<<< HEAD
     /**
      * parse selectedFile and create new object to model
      * 
      * @param model created by Springies
      * @param selectedFile the opened XML file
      */
+=======
+    Parser(){
+        
+    }
+    
+>>>>>>> WallRepulsionTesting
     public void loadModel (Model model, File selectedFile) {
         DocumentBuilder dBuilder = null;
         try {
