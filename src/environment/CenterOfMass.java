@@ -28,7 +28,7 @@ public class CenterOfMass extends Force {
         double force = magnitude/Math.pow(dist,exponent);
         object.setForce(dx*force, dy*force);
         
-        System.out.println("Calling CenterOfMass setForce!");
+//        System.out.println("Calling CenterOfMass setForce!");
     }
     
     public void setForce (List<PhysicalObject> objects) {

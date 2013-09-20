@@ -249,13 +249,13 @@ public class Springies extends JGEngine
             System.out.println(" " + this.getMouseX() + " " + this.getMouseY());
             
             if(!massCreated){
-                Mass nearestMass = model.calculateNearestMass(this.getMouseX(), this.getMouseY());
+                Mass nearestMass = assembly.calculateNearestMass(this.getMouseX(), this.getMouseY());
                 System.out.println("NearestMass position: " + nearestMass.x + " " + nearestMass.y);
+
                 mouseMass= new Mass("mouse", Common.MASS_CID, 1, this.getMouseX(), this.getMouseY(), 0, 0);
-//                model.add(mouseMass);
+                System.out.println("1");
                 mouseSpring=new Spring("mouseSpring", Common.SPRING_CID, JGColor.white, nearestMass, mouseMass, 0, 1);
-//                model.add(mouseSpring);
-                
+                System.out.println("2");
                 massCreated = true;
             }
             
