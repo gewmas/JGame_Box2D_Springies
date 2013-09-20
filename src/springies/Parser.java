@@ -31,6 +31,8 @@ import environment.WallRepulsion4;
  */
 
 public class Parser {
+//    private static int createdTimes = 0;
+    
     //mass IDs
     
     
@@ -61,6 +63,10 @@ public class Parser {
     private double exponent = 0;
     private String wallId;
 
+    Parser(){
+        
+    }
+    
     public void loadModel (Model model, File selectedFile) {
         DocumentBuilder dBuilder = null;
         try {

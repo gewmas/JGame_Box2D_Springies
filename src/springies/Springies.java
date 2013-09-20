@@ -17,6 +17,7 @@ public class Springies extends JGEngine
     private static final int changeWallThicknessValue = 10;
     private static final JFileChooser INPUT_CHOOSER = 
             new JFileChooser(System.getProperties().getProperty("user.dir"));
+    private Assembly assembly;
     private Model model;
     private Parser parser;
     
@@ -53,7 +54,8 @@ public class Springies extends JGEngine
     @Override
     public void initGame( )
     {
-        model = new Model();
+//        model = new Model();
+        assembly = new Assembly();
         parser = new Parser();
         
 //        this.addMouseListener(this.getMouseListeners());
@@ -65,7 +67,9 @@ public class Springies extends JGEngine
         WorldManager.getWorld().setGravity( new Vec2( 0.0f, 0.0f ) );
 
         loadModel();
-
+        
+        model = new Model();
+        assembly.addModel(model);
         //add walls up-1 right-2 down-3 left-4
         wallWidth = displayWidth() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
         wallHeight = displayHeight() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
@@ -79,12 +83,16 @@ public class Springies extends JGEngine
 
     public void loadModel(){
         int n = JOptionPane.YES_OPTION;
-   
+        
         JOptionPane.showMessageDialog(this, "Please load a XML file.");
         
         while(n == JOptionPane.YES_OPTION){
             int loadObject = INPUT_CHOOSER.showOpenDialog(null);
             if (loadObject == JFileChooser.APPROVE_OPTION) {
+                model = new Model();
+                assembly.addModel(model);
+//                parser = new Parser();
+                
                 parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
             }
     
@@ -116,14 +124,18 @@ public class Springies extends JGEngine
     }
 
     private void applyForce () {
-        List<PhysicalObject> objects = model.getObjects();
-        List<Force> forces = model.getForces();
-    
-        for(Force force : forces){
-            force.setForce(objects);
-//            System.out.println("Instance of Gravity!" + force.getClass().getSimpleName());
+        for (Model model: assembly.getModels()){
+            List<PhysicalObject> objects = model.getObjects();
+            List<Force> forces = model.getForces();
+
+            for(Force force : forces){
+                force.setForce(objects);
+                //            System.out.println("Instance of Gravity!" + force.getClass().getSimpleName());
+            }
         }
     }
+        
+        
     
     private void handleKeyboardEvent(){
         //read new XML file and clear all objects and forces
@@ -186,9 +198,9 @@ public class Springies extends JGEngine
                 fixedMass.changeThickness(-changeWallThicknessValue);
                 fixedMass.setBBox(0,0, (int) (fixedMass.getWidth()), (int) (fixedMass.getHeight()));
             }
-            
-List<Force> forces = model.getForces();
-            
+
+            List<Force> forces = model.getForces();
+
             for (Force force : forces){
                 if (force instanceof WallRepulsion){
                     ((WallRepulsion) force).incrementWallThickness((double) -changeWallThicknessValue);
@@ -196,6 +208,11 @@ List<Force> forces = model.getForces();
             }
             
             clearKey(KeyDown);
+        }
+        
+        if(getKey('D')){
+            assembly.setColor();
+            clearKey('D');
         }
     }
     
@@ -206,17 +223,23 @@ List<Force> forces = model.getForces();
                                               "Clear Ojbects",
                                               JOptionPane.YES_NO_OPTION);
         if(n == JOptionPane.YES_OPTION){
-            model.clear();
+            for (Model model: assembly.getModels()){
+                model.clear();      
+            }
         }
         
     }
     
     private void toggleForce(String className){
-        List<Force> forces = model.getForces();
-        for(Force force:forces){
-            if(force.getClass().getSimpleName().equals(className)){
-                force.toggleValid();       
-//                System.out.println("Calling toggleValid! " + force.getClass().getSimpleName());
+        int i = 0;
+        for (Model model: assembly.getModels()){
+            System.out.println("!!!!!!!!!!!!model + " + i++);
+            List<Force> forces = model.getForces();
+            for(Force force:forces){
+                if(force.getClass().getSimpleName().equals(className)){
+                    force.toggleValid();       
+                    //                System.out.println("Calling toggleValid! " + force.getClass().getSimpleName());
+                }
             }
         }
     }

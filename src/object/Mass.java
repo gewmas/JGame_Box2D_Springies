@@ -65,5 +65,9 @@ public class Mass extends PhysicalObjectCircle{
         myBody.setLinearVelocity( velocity );
 
     }
+    
+    public void setMassColor(JGColor color){
+        this.setColor(color);
+    }
 
 }
