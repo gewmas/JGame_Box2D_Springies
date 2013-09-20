@@ -26,17 +26,16 @@ import environment.WallRepulsion1;
 import environment.WallRepulsion2;
 import environment.WallRepulsion3;
 import environment.WallRepulsion4;
-
-/**  
- * Reads in XML Files and adds objects and forces to Model
+/**  Reads in XML Files and adds objects and forces to Model
  * 
- * @author Yuhua Mai, Susan Zhang
  */
 
 public class Parser {
 //    private static int createdTimes = 0;
     
     //mass IDs
+    
+    
     Map<String, PhysicalObject> myMasses = new HashMap<String, PhysicalObject>();
 
     //mass
@@ -64,19 +63,10 @@ public class Parser {
     private double exponent = 0;
     private String wallId;
 
-<<<<<<< HEAD
-    /**
-     * parse selectedFile and create new object to model
-     * 
-     * @param model created by Springies
-     * @param selectedFile the opened XML file
-     */
-=======
     Parser(){
         
     }
     
->>>>>>> WallRepulsionTesting
     public void loadModel (Model model, File selectedFile) {
         DocumentBuilder dBuilder = null;
         try {
@@ -100,18 +90,12 @@ public class Parser {
         // System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
         if (doc.hasChildNodes()) {
-            traverseNode(doc.getChildNodes(), model);
+            traverseNote(doc.getChildNodes(), model);
         }
 
     }
 
-    /**
-     * traverse Nodes in the XML file
-     * 
-     * @param nodeList nodeList of the XML file
-     * @param model model to store new created object
-     */
-    private void traverseNode(NodeList nodeList, Model model) {
+    private void traverseNote(NodeList nodeList, Model model) {
         for (int count = 0; count < nodeList.getLength(); count++) {
 
             Node tempNode = nodeList.item(count);
@@ -148,7 +132,7 @@ public class Parser {
 
                 if (tempNode.hasChildNodes()) {
                     // loop again if has child nodes
-                    traverseNode(tempNode.getChildNodes(), model);
+                    traverseNote(tempNode.getChildNodes(), model);
                 }
 
                 //                 System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
@@ -158,12 +142,6 @@ public class Parser {
         }
     }
 
-    /**
-     * Parse mass keyword and create Mass class
-     * 
-     * @param nodeMap nodeMap of XML files
-     * @return Mass
-     */
     private Mass massCommand (NamedNodeMap nodeMap) {
         mass=Common.DEFAULT_MASS;
         for (int i = 0; i < nodeMap.getLength(); i++) {
@@ -201,12 +179,6 @@ public class Parser {
         return result;
     }
     
-    /**
-     * Parse fixedmass keyword and create Mass class
-     * 
-     * @param nodeMap nodeMap of XML files
-     * @return FixedMass
-     */
     private FixedMass fixedMassCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
@@ -234,12 +206,6 @@ public class Parser {
         return result;
     }
 
-    /**
-     * Parse spring keyword and create Mass class
-     * 
-     * @param nodeMap nodeMap of XML files
-     * @return Spring
-     */
     private Spring springCommand (NamedNodeMap nodeMap) {
         constant=Common.DEFAULT_K;
         restlength=0;
@@ -271,12 +237,6 @@ public class Parser {
         return new Spring("spring", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant);
     }
 
-    /**
-     * Parse muscle keyword and create Mass class
-     * 
-     * @param nodeMap nodeMap of XML files
-     * @return Muscle
-     */
     private Muscle muscleCommand (NamedNodeMap nodeMap) {
         restlength=0;
         constant=Common.DEFAULT_K;
@@ -310,12 +270,7 @@ public class Parser {
         return new Muscle("muscle", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant, amplitude);
     }
 
-    /**
-     * Parse gravity keyword and create Mass class
-     * 
-     * @param nodeMap nodeMap of XML files
-     * @return Gravity
-     */
+
     private Gravity gravityCommand(NamedNodeMap nodeMap){
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
@@ -338,12 +293,6 @@ public class Parser {
 
     }
 
-    /**
-     * Parse Viscosity keyword and create Mass class
-     * 
-     * @param nodeMap nodeMap of XML files
-     * @return Viscosity
-     */
     private Viscosity viscosityCommand(NamedNodeMap nodeMap){
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
@@ -360,12 +309,6 @@ public class Parser {
         return new Viscosity(magnitude);
     }
 
-    /**
-     * Parse centerofmass keyword and create Mass class
-     * 
-     * @param nodeMap nodeMap of XML files
-     * @return CenterOfMass
-     */
     private CenterOfMass centerMassCommand(NamedNodeMap nodeMap){
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
@@ -386,12 +329,6 @@ public class Parser {
         return new CenterOfMass(magnitude, exponent);
     }
 
-    /**
-     * Parse wallrepulsion keyword and create Mass class
-     * 
-     * @param nodeMap nodeMap of XML files
-     * @return WallRepulsion
-     */
     private WallRepulsion wallCommand(NamedNodeMap nodeMap){
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);

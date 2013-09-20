@@ -11,40 +11,31 @@ import object.*;
 import environment.*;
 import org.jbox2d.common.Vec2;
 
-/**
- * Springies class that init Canvas, create World, load XML files to Model, set Force to Mass
- * and perform key and mouse operations
- * 
- * @author Yuhua Mai, Susan Zhang
- *
- */
-
 @SuppressWarnings( "serial" )
 public class Springies extends JGEngine
 {
+    private static final int changeWallThicknessValue = 10;
     private static final JFileChooser INPUT_CHOOSER = 
             new JFileChooser(System.getProperties().getProperty("user.dir"));
     private Assembly assembly;
     private Model model;
+    private Parser parser;
     
-    //used in handleMouseEvnet()
+    private double wallWidth;
+    private double wallHeight;
+    
     private boolean mousePressed = false;
     private boolean massCreated = false;
+    
     private Mass mouseMass;
     private Spring mouseSpring;
     
-    /**
-     * create JGEngine
-     */
     public Springies( )
     {
         // set the window size
         initEngine( (int)(Common.WIDTH), (int)(Common.HEIGHT));
     }
 
-    /**
-     * create Canvas
-     */
     @Override
     public void initCanvas( )
     {
@@ -60,19 +51,12 @@ public class Springies extends JGEngine
                 );
     }
 
-    /**
-     * init Game, setFrameRate, setWorld, loadModel and create walls
-     */
     @Override
     public void initGame( )
     {
-<<<<<<< HEAD
-        model = new Model();
-=======
 //        model = new Model();
         assembly = new Assembly();
         parser = new Parser();
->>>>>>> WallRepulsionTesting
         
 //        this.addMouseListener(this.getMouseListeners());
         
@@ -87,24 +71,22 @@ public class Springies extends JGEngine
         model = new Model();
         assembly.addModel(model);
         //add walls up-1 right-2 down-3 left-4
-        double wallWidth = displayWidth() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
-        double wallHeight = displayHeight() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
+        wallWidth = displayWidth() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
+        wallHeight = displayHeight() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
         model.add(new FixedMass("1", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, Common.WALL_MARGIN));
         model.add(new FixedMass("3", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, displayHeight() - Common.WALL_MARGIN));
         model.add(new FixedMass("4", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, Common.WALL_MARGIN, displayHeight()/2));
         model.add(new FixedMass("2", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, displayWidth() - Common.WALL_MARGIN, displayHeight()/2));
     }
 
-    /**
-     * Pop option pane for user to choose XML file
-     */
+
+
     public void loadModel(){
         int n = JOptionPane.YES_OPTION;
         
         JOptionPane.showMessageDialog(this, "Please load a XML file.");
         
         while(n == JOptionPane.YES_OPTION){
-            Parser parser = new Parser();
             int loadObject = INPUT_CHOOSER.showOpenDialog(null);
             if (loadObject == JFileChooser.APPROVE_OPTION) {
                 model = new Model();
@@ -123,9 +105,6 @@ public class Springies extends JGEngine
         }
     }
 
-    /**
-     * Update methods
-     */
     @Override
     public void doFrame( )
     {
@@ -140,24 +119,11 @@ public class Springies extends JGEngine
         handleMouseEvent();
     }
 
-    /**
-     * checkCollision for Wall and Mass
-     */
     private void checkCollision () {
-        checkCollision(Common.WALL_CID,Common.MASS_CID); //latter one call the hit method
+        checkCollision(Common.WALL_CID,Common.MASS_CID);
     }
 
-    /**
-     * appleForce for every object in Model
-     */
     private void applyForce () {
-<<<<<<< HEAD
-        List<PhysicalObject> objects = model.getObjects();
-        List<Force> forces = model.getForces();
-    
-        for(Force force : forces){
-            force.setForce(objects);
-=======
         for (Model model: assembly.getModels()){
             List<PhysicalObject> objects = model.getObjects();
             List<Force> forces = model.getForces();
@@ -166,15 +132,11 @@ public class Springies extends JGEngine
                 force.setForce(objects);
                 //            System.out.println("Instance of Gravity!" + force.getClass().getSimpleName());
             }
->>>>>>> WallRepulsionTesting
         }
     }
         
         
     
-    /**
-     * handleKeyboardEvent to load more XML files, clear all objecs, toggleForce and change wall thickness
-     */
     private void handleKeyboardEvent(){
         //read new XML file and clear all objects and forces
         if(getKey('N')){
@@ -214,14 +176,10 @@ public class Springies extends JGEngine
         if(getKey(KeyUp)){
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
-<<<<<<< HEAD
-                fixedMass.changeThickness(Common.CHANGE_THICKNESS);
-=======
 //                if(fixedMass.getId().equals('1')){ //....Check Common.Max_ThickNess..Same For KeyDown
                     fixedMass.changeThickness(changeWallThicknessValue);
                     fixedMass.setBBox(0,0, (int) (fixedMass.getWidth()), (int) (fixedMass.getHeight()));
 //                }
->>>>>>> WallRepulsionTesting
             }
             
             List<Force> forces = model.getForces();
@@ -237,12 +195,8 @@ public class Springies extends JGEngine
         }else if(getKey(KeyDown)){
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
-<<<<<<< HEAD
-                fixedMass.changeThickness(-Common.CHANGE_THICKNESS);
-=======
                 fixedMass.changeThickness(-changeWallThicknessValue);
                 fixedMass.setBBox(0,0, (int) (fixedMass.getWidth()), (int) (fixedMass.getHeight()));
->>>>>>> WallRepulsionTesting
             }
 
             List<Force> forces = model.getForces();
@@ -262,9 +216,6 @@ public class Springies extends JGEngine
         }
     }
     
-    /**
-     * Call model's method to clear all objects
-     */
     private void clearAllObjects () {
         int n = JOptionPane.showConfirmDialog(
                                               this,
@@ -279,16 +230,7 @@ public class Springies extends JGEngine
         
     }
     
-    /**
-     * toggle force in Force
-     */
     private void toggleForce(String className){
-<<<<<<< HEAD
-        List<Force> forces = model.getForces();
-        for(Force force:forces){
-            if(force.getClass().getSimpleName().equals(className)){
-                force.toggleValid(); 
-=======
         int i = 0;
         for (Model model: assembly.getModels()){
             System.out.println("!!!!!!!!!!!!model + " + i++);
@@ -298,24 +240,17 @@ public class Springies extends JGEngine
                     force.toggleValid();       
                     //                System.out.println("Calling toggleValid! " + force.getClass().getSimpleName());
                 }
->>>>>>> WallRepulsionTesting
             }
         }
     }
 
-    /**
-     * handleMouse Event
-     * When clicked, create a Mass connected by a Spring to the nearestMass
-     * When dragged, the created Mass will move
-     * When release, the created Mass and Spring will removed
-     */
     private void handleMouseEvent(){
         if(this.getMouseButton(1)){ //left click pressed
             System.out.println(" " + this.getMouseX() + " " + this.getMouseY());
             
             if(!massCreated){
                 Mass nearestMass = model.calculateNearestMass(this.getMouseX(), this.getMouseY());
-                
+                System.out.println("NearestMass position: " + nearestMass.x + " " + nearestMass.y);
                 mouseMass= new Mass("mouse", Common.MASS_CID, 1, this.getMouseX(), this.getMouseY(), 0, 0);
 //                model.add(mouseMass);
                 mouseSpring=new Spring("mouseSpring", Common.SPRING_CID, JGColor.white, nearestMass, mouseMass, 0, 1);
@@ -339,9 +274,6 @@ public class Springies extends JGEngine
     }
     
 
-    /**
-     * PaintFrame, empty method
-     */
     @Override
     public void paintFrame( )
     {
