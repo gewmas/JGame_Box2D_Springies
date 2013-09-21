@@ -173,12 +173,14 @@ public class Springies extends JGEngine
             clearKey('4');
         }
         
+        dbgShowBoundingBox(getKey('B'));
+        
         if(getKey(KeyUp)){
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
 //                if(fixedMass.getId().equals('1')){ //....Check Common.Max_ThickNess..Same For KeyDown
                     fixedMass.changeThickness(changeWallThicknessValue);
-                    fixedMass.setBBox(0,0, (int) (fixedMass.getWidth()), (int) (fixedMass.getHeight()));
+                    fixedMass.setWallBox();
 //                }
             }
             
@@ -196,7 +198,7 @@ public class Springies extends JGEngine
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
                 fixedMass.changeThickness(-changeWallThicknessValue);
-                fixedMass.setBBox(0,0, (int) (fixedMass.getWidth()), (int) (fixedMass.getHeight()));
+                fixedMass.setWallBox();
             }
 
             List<Force> forces = model.getForces();
@@ -249,13 +251,13 @@ public class Springies extends JGEngine
             System.out.println(" " + this.getMouseX() + " " + this.getMouseY());
             
             if(!massCreated){
-                Mass nearestMass = assembly.calculateNearestMass(this.getMouseX(), this.getMouseY());
+                Mass nearestMass = model.calculateNearestMass(this.getMouseX(), this.getMouseY());
                 System.out.println("NearestMass position: " + nearestMass.x + " " + nearestMass.y);
-
                 mouseMass= new Mass("mouse", Common.MASS_CID, 1, this.getMouseX(), this.getMouseY(), 0, 0);
-                System.out.println("1");
+//                model.add(mouseMass);
                 mouseSpring=new Spring("mouseSpring", Common.SPRING_CID, JGColor.white, nearestMass, mouseMass, 0, 1);
-                System.out.println("2");
+//                model.add(mouseSpring);
+                
                 massCreated = true;
             }
             

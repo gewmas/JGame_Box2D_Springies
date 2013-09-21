@@ -39,6 +39,10 @@ public class FixedMass extends PhysicalObjectRect {
         return myHeight;
     }
     
+    public void setWallBox(){
+        this.setBBox(-(int) (this.getWidth()/2), -(int) (this.getHeight()/2), (int) (this.getWidth()), (int) (this.getHeight()));
+    }
+    
     public String getId () {
         return id;
     }
