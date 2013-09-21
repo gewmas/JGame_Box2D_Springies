@@ -2,6 +2,11 @@ package environment;
 
 import springies.Common;
 
+/** 
+ * Subclass of Force that applies force to mass that is inversely proportional to normal distance between wall and 
+ * mass raised to exponent
+ * 
+ */
 public abstract class WallRepulsion extends Force {
 //    private String wallId;
     private double magnitude;
@@ -23,6 +28,4 @@ public abstract class WallRepulsion extends Force {
         return magnitude/Math.pow(distance, exponent);
     }
     
- 
-
 }

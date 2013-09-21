@@ -15,17 +15,6 @@ public class Mass extends PhysicalObjectCircle{
     private static final JGColor color = JGColor.blue;
     private static final double radius = 10;
 
-    /**
-     * Returns a new Mass object
-     * 
-     * @param id object ID
-     * @param collisionId object collision ID
-     * @param mass mass of object
-     * @param x initial x location 
-     * @param y initial y location
-     * @param vx initial x direction velocity
-     * @param vy initial y direction velocity
-     */
     public Mass(String id, int collisionId, double mass, double x, double y, double vx, double vy) {
         super(id, collisionId, color, radius, mass);
 
@@ -66,6 +55,12 @@ public class Mass extends PhysicalObjectCircle{
 
     }
     
+    
+    /**
+     * Changes color of Mass
+     * 
+     * @param color
+     */
     public void setMassColor(JGColor color){
         this.setColor(color);
     }

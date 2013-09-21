@@ -3,6 +3,13 @@ package object;
 import jboxGlue.PhysicalObjectRect;
 import jgame.JGColor;
 
+/**
+ * A mass object that is not affected by applied forces
+ * 
+ * 
+ * @author susanzhang93
+ *
+ */
 public class FixedMass extends PhysicalObjectRect {
     private static final int DEFAULTHeight = 10;
     private static final int DEFAULTWidth = 10;
@@ -25,8 +32,6 @@ public class FixedMass extends PhysicalObjectRect {
     }
 
     public void changeThickness(double value){
-//        System.out.println(myWidth + " " + myHeight + " " + value); 
-        
         myWidth += value;
         myHeight += value;
     }
