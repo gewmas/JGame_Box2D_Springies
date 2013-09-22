@@ -11,6 +11,8 @@ public class PhysicalObjectRect extends PhysicalObject
 	private double[] myPolyx;
 	private double[] myPolyy;
 	
+	
+	
 	public PhysicalObjectRect( String id, int collisionId, JGColor color, double width, double height )
 	{
 		this( id, collisionId, color, width, height, 0 );

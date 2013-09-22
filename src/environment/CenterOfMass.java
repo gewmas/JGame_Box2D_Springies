@@ -5,7 +5,9 @@ import object.Mass;
 import jboxGlue.PhysicalObject;
 
 /**
- * CenterOfMass force
+ * Class for CenterOfMass force 
+ * 
+ * @author Yuhua Mai, Susan Zhang
  * 
  *
  */
@@ -15,11 +17,20 @@ public class CenterOfMass extends Force {
     private double centerX;
     private double centerY;
     
+    /**
+     * Constructor for CenterOfMass class
+     * 
+     * @param magnitude magnitude of center of mass force
+     * @param exponent the exponent that the force will be inversely proportional to
+     */
     public CenterOfMass(double magnitude, double exponent){
         this.magnitude = magnitude;
         this.exponent = exponent;
     }
 
+    /**
+     * Applies center of mass force on a single Physical object
+     */
     public void setForce(PhysicalObject object){
         double dx = centerX - object.x;
         double dy = centerY - object.y;
@@ -31,11 +42,16 @@ public class CenterOfMass extends Force {
 //        System.out.println("Calling CenterOfMass setForce!");
     }
     
+    /**
+     * Calculates center of mass of a single assembly's list of PhysicalObjects and
+     * then calls setForce individually for each mass
+     */
+    @Override
     public void setForce (List<PhysicalObject> objects) {
         centerX = 0;
         centerY = 0;
         int counter = 0;
-        //calculate new center
+
         for(PhysicalObject object : objects){
             if(object instanceof Mass){
                 counter++;
@@ -46,14 +62,8 @@ public class CenterOfMass extends Force {
         }
         centerX /= counter;
         centerY /= counter;
-        
-        //apply force
+      
         super.setForce(objects);
-//        for(PhysicalObject object : objects){
-//            if(object instanceof Mass){
-//                setForce(object);
-//            }
-//        }
         
     }
 

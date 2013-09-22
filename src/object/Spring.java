@@ -17,17 +17,18 @@ public class Spring extends PhysicalObjectRect{
     protected double k;
     protected double dx;
     protected double dy;
-/**
- * Constructor for Spring Object
- * 
- * @param id object ID
- * @param collisionId object collision ID
- * @param color color of spring
- * @param mass1 first Mass object that is attached to spring
- * @param mass2 second Mass object that is attached to spring
- * @param length rest length 
- * @param k spring constant
- */
+    
+    /**
+     * Constructor for Spring Object
+     * 
+     * @param id object ID
+     * @param collisionId object collision ID
+     * @param color color of spring
+     * @param mass1 first Mass object that is attached to spring
+     * @param mass2 second Mass object that is attached to spring
+     * @param length rest length 
+     * @param k spring constant
+     */
     public Spring(String id, int collisionId, JGColor color, PhysicalObject mass1, PhysicalObject mass2, double length, double k) {
         super(id, collisionId, color, 0, 0, 0);
         this.mass1 = mass1;

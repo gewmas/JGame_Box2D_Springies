@@ -180,7 +180,6 @@ public class Springies extends JGEngine
             for(FixedMass fixedMass : fixedMasses){
 //                if(fixedMass.getId().equals('1')){ //....Check Common.Max_ThickNess..Same For KeyDown
                     fixedMass.changeThickness(changeWallThicknessValue);
-                    fixedMass.setWallBox();
 //                }
             }
             
@@ -198,7 +197,6 @@ public class Springies extends JGEngine
             List<FixedMass> fixedMasses = model.getFixedMasses();
             for(FixedMass fixedMass : fixedMasses){
                 fixedMass.changeThickness(-changeWallThicknessValue);
-                fixedMass.setWallBox();
             }
 
             List<Force> forces = model.getForces();

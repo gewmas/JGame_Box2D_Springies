@@ -2,6 +2,12 @@ package environment;
 
 import jboxGlue.PhysicalObject;
 
+/**
+ * Class for Gravity force
+ * 
+ * @author Yuhua Mai, Susan Zhang
+ *
+ */
 public class Gravity extends Force {
     private double direction;
     private double magnitude;
@@ -11,6 +17,9 @@ public class Gravity extends Force {
         this.magnitude = magnitude;
     }
     
+    /**
+     * Breaks down force into x and y components and applies force to a single PhysicalObject
+     */
     public void setForce(PhysicalObject object){
         object.setForce(magnitude*object.getMass()*Math.cos(direction/180*Math.PI), magnitude*object.getMass()*Math.sin(direction/180*Math.PI));
     
