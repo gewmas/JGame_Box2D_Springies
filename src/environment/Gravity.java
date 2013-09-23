@@ -3,7 +3,8 @@ package environment;
 import jboxGlue.PhysicalObject;
 
 /**
- * Class for Gravity force
+ * Class for Gravity force, which exerts a force on the object proportional to 
+ * the objects
  * 
  * @author Yuhua Mai, Susan Zhang
  *
@@ -11,7 +12,13 @@ import jboxGlue.PhysicalObject;
 public class Gravity extends Force {
     private double direction;
     private double magnitude;
-        
+    
+    /**
+     * Constructor method for Gravity class
+     * 
+     * @param direction direction of gravity force (degrees clockwise from positive x axis)
+     * @param magnitude magnitude of gravity force (pixels/s)
+     */
     public Gravity(double direction, double magnitude){
         this.direction = direction;
         this.magnitude = magnitude;

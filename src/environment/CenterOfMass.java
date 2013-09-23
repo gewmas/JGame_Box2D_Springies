@@ -5,11 +5,11 @@ import object.Mass;
 import jboxGlue.PhysicalObject;
 
 /**
- * Class for CenterOfMass force 
+ * Class for CenterOfMass force. The center of mass force attracts all masses in a single model towards
+ * the weighted average position of the masses. 
  * 
  * @author Yuhua Mai, Susan Zhang
  * 
- *
  */
 public class CenterOfMass extends Force {
     private double magnitude;
@@ -44,7 +44,10 @@ public class CenterOfMass extends Force {
     
     /**
      * Calculates center of mass of a single assembly's list of PhysicalObjects and
-     * then calls setForce individually for each mass
+     * then calls setForce individually for each mass. This overrides the setForce method
+     * in the superclass because the method needs to be aware of all the masses in each model
+     * in order to calculate the center of mass.
+     * 
      */
     @Override
     public void setForce (List<PhysicalObject> objects) {

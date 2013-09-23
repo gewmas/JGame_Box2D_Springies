@@ -7,7 +7,8 @@ import environment.Force;
 import object.*;
 
 /**
- * Model class that store ArrayList of PhysicalObject, FixedMass and Force
+ * Model class that stores an ArrayList of PhysicalObject, FixedMass and Force. A new Model class is needed 
+ * for every XML file that is loaded.
  * 
  * @author Yuhua Mai, Susan Zhang
  *

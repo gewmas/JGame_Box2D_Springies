@@ -6,7 +6,12 @@ import java.util.Random;
 import object.Mass;
 import jboxGlue.PhysicalObject;
 import jgame.JGColor;
-
+/**
+ * Class that holds models for each individual assembly
+ * 
+ * @author Yuhua Mai, Susan Zhang
+ *
+ */
 public class Assembly {
     private List<Model> models = new ArrayList<Model>();
     
