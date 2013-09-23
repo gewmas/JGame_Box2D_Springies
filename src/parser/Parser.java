@@ -1,4 +1,4 @@
-package springies;
+package parser;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +18,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import springies.Common;
+import springies.Model;
 import environment.CenterOfMass;
 import environment.Gravity;
 import environment.Viscosity;
@@ -50,9 +52,9 @@ public class Parser {
     private double constant = Common.DEFAULT_K;
     private double restlength = 0;
 
-    // gravity
+//    // gravity
     private double amplitude = 0;
-    private double direction = 0;
+//    private double direction = 0;
 
     // viscosity, center mass, wall
     private double magnitude = 0;
@@ -128,7 +130,9 @@ public class Parser {
                         model.add(springCommand(nodeMap));
                     }
                     else if (Common.GRAVITY_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(gravityCommand(nodeMap));
+//                        model.add(gravityCommand(nodeMap));
+                        
+                        model.add((new CreateGravity()).createForce(nodeMap));
                     }
                     else if (Common.VISCOSITY_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(viscosityCommand(nodeMap));
@@ -284,23 +288,23 @@ public class Parser {
                           amplitude);
     }
 
-    private Gravity gravityCommand (NamedNodeMap nodeMap) {
-        for (int i = 0; i < nodeMap.getLength(); i++) {
-            Node node = nodeMap.item(i);
-            String nodeName = node.getNodeName();
-            String nodeValue = node.getNodeValue();
-
-            if (nodeName.equals(Common.MAGNITUDE)) {
-                magnitude = Double.parseDouble(nodeValue);
-            }
-
-            if (nodeName.equals(Common.GRAVITY_DIRECTION)) {
-                direction = Double.parseDouble(nodeValue);
-            }
-        }
-
-        return new Gravity(direction, magnitude);
-    }
+//    private Gravity gravityCommand (NamedNodeMap nodeMap) {
+//        for (int i = 0; i < nodeMap.getLength(); i++) {
+//            Node node = nodeMap.item(i);
+//            String nodeName = node.getNodeName();
+//            String nodeValue = node.getNodeValue();
+//
+//            if (nodeName.equals(Common.MAGNITUDE)) {
+//                magnitude = Double.parseDouble(nodeValue);
+//            }
+//
+//            if (nodeName.equals(Common.GRAVITY_DIRECTION)) {
+//                direction = Double.parseDouble(nodeValue);
+//            }
+//        }
+//
+//        return new Gravity(direction, magnitude);
+//    }
 
     private Viscosity viscosityCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {

@@ -13,6 +13,7 @@ import object.FixedMass;
 import object.Mass;
 import object.Spring;
 import org.jbox2d.common.Vec2;
+import parser.Parser;
 import environment.Force;
 import environment.WallRepulsion;
 
