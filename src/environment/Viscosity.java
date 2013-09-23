@@ -16,13 +16,16 @@ public class Viscosity extends Force {
 	
         /**
          * Constructor for Viscosity Force
-         * 
-         * @param magnitude
+         * @param magnitude magnitude of viscosity force
          */
 	public Viscosity(double magnitude){
 	    this.magnitude = magnitude;
 	}
 	
+	/**
+	 * Applies force to physical object that is proportional to x and y components of object's velocity
+	 * 
+	 */
 	public void setForce(PhysicalObject object){
 	    Vec2 velocity = object.getBody().getLinearVelocity();
 	    velocity.x *= magnitude;

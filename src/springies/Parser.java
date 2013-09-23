@@ -32,10 +32,7 @@ import environment.WallRepulsion4;
 
 public class Parser {
 //    private static int createdTimes = 0;
-    
-    //mass IDs
-    
-    
+        
     Map<String, PhysicalObject> myMasses = new HashMap<String, PhysicalObject>();
 
     //mass

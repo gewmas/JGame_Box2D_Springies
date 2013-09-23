@@ -4,10 +4,11 @@ import jboxGlue.PhysicalObjectRect;
 import jgame.JGColor;
 
 /**
- * A fixed object that is not affected by applied forces. This can be used to instantiate a fixed mass or a wall.
+ * A fixed object that is not affected by applied forces. 
+ * This can be used to instantiate a fixed mass or a wall.
  * 
  * 
- * @author susanzhang93
+ * @author Yuhua Mai, Susan Zhang
  *
  */
 public class FixedMass extends PhysicalObjectRect {
@@ -19,7 +20,7 @@ public class FixedMass extends PhysicalObjectRect {
 
     /**
      * Constructor for FixedMass class if height and width are not given. This constructor
-     * is used if you are trying to create a fixed mass in the environment
+     * is used to create a fixed mass in the environment with a default height and width.
      * 
      * @param id Object ID
      * @param collisionId Object collision ID
@@ -63,8 +64,7 @@ public class FixedMass extends PhysicalObjectRect {
     public double getHeight(){
         return myHeight;
     }
-    
-
+   
     public String getId () {
         return id;
     }

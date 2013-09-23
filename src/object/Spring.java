@@ -24,9 +24,9 @@ public class Spring extends PhysicalObjectRect{
      * @param id object ID
      * @param collisionId object collision ID
      * @param color color of spring
-     * @param mass1 first Mass object that is attached to spring
-     * @param mass2 second Mass object that is attached to spring
-     * @param length rest length 
+     * @param mass1 first PhysicalObject that is attached to spring
+     * @param mass2 second PhysicalObject that is attached to spring
+     * @param length rest length of spring
      * @param k spring constant
      */
     public Spring(String id, int collisionId, JGColor color, PhysicalObject mass1, PhysicalObject mass2, double length, double k) {
