@@ -20,14 +20,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import springies.Common;
 import springies.Model;
-import environment.CenterOfMass;
-import environment.Gravity;
-import environment.Viscosity;
-import environment.WallRepulsion;
-import environment.WallRepulsion1;
-import environment.WallRepulsion2;
-import environment.WallRepulsion3;
-import environment.WallRepulsion4;
 
 
 /**
@@ -54,14 +46,14 @@ public class Parser {
 
 //    // gravity
     private double amplitude = 0;
-//    private double direction = 0;
+////    private double direction = 0;
+//
+//    // viscosity, center mass, wall
+//    private double magnitude = 0;
 
-    // viscosity, center mass, wall
-    private double magnitude = 0;
-
-    // wall
-    private double exponent = 0;
-    private String wallId;
+//    // wall
+//    private double exponent = 0;
+//    private String wallId;
 
     /**
      * parse selectedFile and create new object to model
@@ -135,13 +127,13 @@ public class Parser {
                         model.add((new CreateGravity()).createForce(nodeMap));
                     }
                     else if (Common.VISCOSITY_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(viscosityCommand(nodeMap));
+                        model.add((new CreateViscosity()).createForce(nodeMap));
                     }
                     else if (Common.CENTERMASS_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(centerMassCommand(nodeMap));
+                        model.add((new CreateCenterOfMass()).createForce(nodeMap));
                     }
                     else if (Common.WALL_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(wallCommand(nodeMap));
+                        model.add((new CreateWallRepulsion()).createForce(nodeMap));
                     }
                 }
 
@@ -288,25 +280,7 @@ public class Parser {
                           amplitude);
     }
 
-//    private Gravity gravityCommand (NamedNodeMap nodeMap) {
-//        for (int i = 0; i < nodeMap.getLength(); i++) {
-//            Node node = nodeMap.item(i);
-//            String nodeName = node.getNodeName();
-//            String nodeValue = node.getNodeValue();
-//
-//            if (nodeName.equals(Common.MAGNITUDE)) {
-//                magnitude = Double.parseDouble(nodeValue);
-//            }
-//
-//            if (nodeName.equals(Common.GRAVITY_DIRECTION)) {
-//                direction = Double.parseDouble(nodeValue);
-//            }
-//        }
-//
-//        return new Gravity(direction, magnitude);
-//    }
-
-    private Viscosity viscosityCommand (NamedNodeMap nodeMap) {
+/*    private Viscosity viscosityCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
@@ -318,54 +292,7 @@ public class Parser {
         }
 
         return new Viscosity(magnitude);
-    }
+    }*/
 
-    private CenterOfMass centerMassCommand (NamedNodeMap nodeMap) {
-        for (int i = 0; i < nodeMap.getLength(); i++) {
-            Node node = nodeMap.item(i);
-            String nodeName = node.getNodeName();
-            String nodeValue = node.getNodeValue();
-
-            if (nodeName.equals(Common.MAGNITUDE)) {
-                magnitude = Double.parseDouble(nodeValue);
-            }
-
-            if (nodeName.equals(Common.EXPONENT)) {
-                exponent = Double.parseDouble(nodeValue);
-            }
-
-        }
-
-        return new CenterOfMass(magnitude, exponent);
-    }
-
-    private WallRepulsion wallCommand (NamedNodeMap nodeMap) {
-        for (int i = 0; i < nodeMap.getLength(); i++) {
-            Node node = nodeMap.item(i);
-            String nodeName = node.getNodeName();
-            String nodeValue = node.getNodeValue();
-
-            if (nodeName.equals(Common.MASS_ID)) {
-                wallId = nodeValue;
-            }
-
-            if (nodeName.equals(Common.MAGNITUDE)) {
-                magnitude = Double.parseDouble(nodeValue);
-            }
-
-            if (nodeName.equals(Common.EXPONENT)) {
-                exponent = Double.parseDouble(nodeValue);
-            }
-
-        }
-
-        if (wallId.equals("1"))
-            return new WallRepulsion1(wallId, magnitude, exponent);
-        else if (wallId.equals("2"))
-            return new WallRepulsion2(wallId, magnitude, exponent);
-        else if (wallId.equals("3"))
-            return new WallRepulsion3(wallId, magnitude, exponent);
-        else return new WallRepulsion4(wallId, magnitude, exponent);
-
-    }
+  
 }
