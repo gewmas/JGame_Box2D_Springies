@@ -5,8 +5,9 @@ import jgame.JGColor;
 
 /**
  * A fixed object that is not affected by applied forces. 
- * This can be used to instantiate a fixed mass or a wall.
- * 
+ * This object can be used to instantiate a fixed mass or a wall.
+ * By default, this shows up as a green square (mass) or rectangle (wall).
+ * The height and width of a wall can be changed to change the size of the 
  * 
  * @author Yuhua Mai, Susan Zhang
  *
@@ -43,7 +44,6 @@ public class FixedMass extends PhysicalObjectRect {
         this.id = id;
         this.x=x;
         this.y=y;
-
     }
 
     /**

@@ -4,7 +4,9 @@ import jboxGlue.PhysicalObject;
 
 /**
  * Class for Gravity force, which exerts a force on the object proportional to 
- * the objects
+ * the mass of the object. The gravity force is a vector that is defined by a magnitude
+ * and direction (given by an angle). The x and y components of the vector are calculated
+ * to apply forces in the x and y direction to masses.
  * 
  * @author Yuhua Mai, Susan Zhang
  *

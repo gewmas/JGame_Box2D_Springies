@@ -22,6 +22,6 @@ Information about program:
 
 Known issues:
 
-Extra features:
+Extra features: The color of each model in the environment can be toggled using the 'D' key. There is a force status message on the left of the screen. Holding down the 'B' key displays the bounding boxes of all the objects on the screen.
 
 Impressions: Some of instructions/descriptions of objects and forces on the website were a bit ambiguous

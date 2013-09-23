@@ -12,7 +12,13 @@ import jgame.platform.JGEngine;
 import object.*;
 import environment.*;
 import org.jbox2d.common.Vec2;
-
+/**
+ * Springies class. This class initializes display, calls parser to generate objects, and updates the forces
+ * on the objects in each frame. This class also manages the toggling of environment forces.
+ * 
+ * @author Yuhua Mai, Susan Zhang
+ *
+ */
 @SuppressWarnings( "serial" )
 public class Springies extends JGEngine
 {
@@ -37,16 +43,21 @@ public class Springies extends JGEngine
     
     List<FixedMass> walls;
     
+    /**
+     * Constructor for Springies class that sets window size
+     */
     public Springies( )
     {
-        // set the window size
         initEngine( (int)(Common.WIDTH), (int)(Common.HEIGHT));
     }
 
+    /**
+     * Initializes canvas of display
+     * 
+     */
     @Override
     public void initCanvas( )
     {
-        // I have no idea what tiles do...
         setCanvasSettings(
                           1, // width of the canvas in tiles
                           1, // height of the canvas in tiles
@@ -58,10 +69,12 @@ public class Springies extends JGEngine
                 );
     }
 
+    /**
+     * Initializes objects on display. 
+     */
     @Override
     public void initGame( )
     {
-//        model = new Model();
         assembly = new Assembly();
         parser = new Parser();
         
@@ -75,8 +88,15 @@ public class Springies extends JGEngine
         WorldManager.getWorld().setGravity( new Vec2( 0.0f, 0.0f ) );
 
         loadModel();
+        makeWalls();
         
-        //add walls up-1 right-2 down-3 left-4
+    }
+
+    /**
+     * Sets the four walls of the display. 
+     */
+    public void makeWalls(){
+      //add walls up-1 right-2 down-3 left-4
         wallWidth = displayWidth() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
         wallHeight = displayHeight() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
         walls.add(new FixedMass("1", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, Common.WALL_MARGIN));
@@ -85,11 +105,8 @@ public class Springies extends JGEngine
         walls.add(new FixedMass("2", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, displayWidth() - Common.WALL_MARGIN, displayHeight()/2));
     }
 
-
-
     public void loadModel(){
-        int n = JOptionPane.YES_OPTION;
-        
+        int n = JOptionPane.YES_OPTION;      
         JOptionPane.showMessageDialog(this, "Please load a XML file.");
         
         while(n == JOptionPane.YES_OPTION){
@@ -112,10 +129,13 @@ public class Springies extends JGEngine
                                               "Would you like to add more XML file?",
                                               "LoadModel?",
                                               JOptionPane.YES_NO_OPTION);
-    
         }
     }
 
+    /**
+     * Defines the actions to be done in a single frame. This includes: moving objects,
+     * checking for collisions, applying forces, and detecting keyboard/mouse events.
+     */
     @Override
     public void doFrame( )
     {

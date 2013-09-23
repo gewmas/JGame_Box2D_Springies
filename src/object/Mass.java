@@ -7,7 +7,9 @@ import jgame.JGColor;
 import jgame.JGObject;
 
 /**
- * Mass object that moves in response to applied forces
+ * Mass object that moves in response to applied forces. Shows up as a blue
+ * circle on screen by default. When this object hits another object, the collision will
+ * be elastic. The color of the mass can be changed to differentiate among models.
  * 
  * @author Yuhua Mai, Susan Zhang
  *

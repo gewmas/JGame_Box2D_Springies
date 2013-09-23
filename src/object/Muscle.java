@@ -5,7 +5,8 @@ import jgame.JGColor;
 /**
  * 
  * This class defines the Muscle object, a spring that is able to generate its own force on the two 
- * masses attached its endpoints
+ * masses attached its endpoints. The oscillation of the muscle is defined by the amplitude multiplied
+ * by a sinusoidal function. A timer is incremented in the move function to cause the sinusoidal function to vary.
  * 
  * 
  * @author Yuhua Mai, Susan Zhang
@@ -50,10 +51,5 @@ public class Muscle extends Spring {
 	@Override
 	public void setLength(){
 	    currentLength = restLength+amplitude*Math.sin(timer);
-	          
-//	   System.out.println("Muscle " + timer + " restLength:" + restLength + " length: " + (currentLength-restLength));
 	}
-
-
-
 }

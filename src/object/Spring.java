@@ -3,7 +3,10 @@ package object;
 import jboxGlue.PhysicalObject;
 import jboxGlue.PhysicalObjectRect;
 import jgame.JGColor;
-/**Spring object that behaves accordingly to Hooke's law F=-kx
+/**
+ * Spring object that exerts forces on its two attached masses according to Hooke's law F=-kx. 
+ * The final force applied to a mass is broken up into x and y components. The further
+ * apart the masses are, the greater the force.
  * 
  * 
  *@author Yuhua Mai, Susan Zhang
@@ -62,7 +65,8 @@ public class Spring extends PhysicalObjectRect{
         mass2.setForce(-dx*force, -dy*force);
    }
     
-    /** Calculates the Euclidean distance between the two masses the spring is attached to
+    /**
+     * Calculates the Euclidean distance between the two masses the spring is attached to.
      * 
      * @return distance between mass1 and mass2
      */
@@ -70,8 +74,9 @@ public class Spring extends PhysicalObjectRect{
         return Math.sqrt(Math.pow((mass1.x-mass2.x),2)+ Math.pow((mass1.y-mass2.y),2));
     }
 
-    /** Sets current length of spring to distance between mass1 and mass2
-
+    /** 
+     * Sets current length of spring to distance between mass1 and mass2. This is called after the 
+     * masses have been moved by the spring, so the spring is 
      */
     public void setLength(){
         currentLength = calculateActualDistance();
