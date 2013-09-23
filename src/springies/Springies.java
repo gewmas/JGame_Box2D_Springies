@@ -21,6 +21,7 @@ public class Springies extends JGEngine
             new JFileChooser(System.getProperties().getProperty("user.dir"));
     private Assembly assembly;
     private Model model;
+    private Model environmentModel;
     private Parser parser;
     
     private double wallWidth;
@@ -67,8 +68,6 @@ public class Springies extends JGEngine
         walls = new ArrayList<FixedMass>();
         
         this.wallThickness = Common.WALL_THICKNESS;
-//        this.addMouseListener(this.getMouseListeners());
-        
         
         setFrameRate( 60, 2 );
 
@@ -96,11 +95,16 @@ public class Springies extends JGEngine
         while(n == JOptionPane.YES_OPTION){
             int loadObject = INPUT_CHOOSER.showOpenDialog(null);
             if (loadObject == JFileChooser.APPROVE_OPTION) {
-                model = new Model();
-                assembly.addModel(model);
-//                parser = new Parser();
-                
-                parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
+//                System.out.println(INPUT_CHOOSER.getSelectedFile().getName());
+                if(INPUT_CHOOSER.getSelectedFile().getName().equals("environment.xml")){
+//                    System.out.println("environment!!");
+                    environmentModel = new Model();
+                    parser.loadModel(environmentModel, INPUT_CHOOSER.getSelectedFile());
+                }else{
+                    model = new Model();
+                    assembly.addModel(model);
+                    parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
+                }
             }
     
             n = JOptionPane.showConfirmDialog(
@@ -137,7 +141,16 @@ public class Springies extends JGEngine
 
             for(Force force : forces){
                 force.setForce(objects);
-                //            System.out.println("Instance of Gravity!" + force.getClass().getSimpleName());
+                System.out.println("Instance of Gravity!" + force.getClass().getSimpleName());
+            }
+            
+            if(environmentModel != null){
+                List<Force> environmentForces = environmentModel.getForces();
+                for(Force environmentForce:environmentForces){
+                    environmentForce.setForce(objects);
+                    System.out.println("Environment Instance of Force!" + environmentForce.getClass().getSimpleName());
+
+                }
             }
         }
     }
@@ -207,6 +220,7 @@ public class Springies extends JGEngine
         }
         
         wallThickness+=changeWallThicknessValue;
+        System.out.println(wallThickness);
         for (Model model: assembly.getModels()){
             List<PhysicalObject> ojbects = model.getObjects();
             for(PhysicalObject object:ojbects){
@@ -255,7 +269,15 @@ public class Springies extends JGEngine
                 if(force.getClass().getSimpleName().equals(className)){
                   System.out.print("Toggle force in model " + i++ + " ");
                     force.toggleValid();       
-                    //                System.out.println("Calling toggleValid! " + force.getClass().getSimpleName());
+                }
+            }
+            
+            if(environmentModel != null){
+                List<Force> environmentForces = environmentModel.getForces();
+                for(Force force:environmentForces){
+                    if(force.getClass().getSimpleName().equals(className)){
+                        force.toggleValid();       
+                    }
                 }
             }
         }
@@ -301,6 +323,18 @@ public class Springies extends JGEngine
             List<Force> forces = model.getForces();
             drawString("Model" + modelIndex++, 15, infoOffset+=20, -1, new JGFont("arial",0,15), JGColor.red);
             for(Force force:forces){
+                if(force.isValid()){
+                    drawString(force.getClass().getSimpleName() + " ON", 15, infoOffset+=20, -1, new JGFont("arial",0,15), JGColor.white);
+                }else{
+                    drawString(force.getClass().getSimpleName() + " OFF", 15, infoOffset+=20, -1, new JGFont("arial",0,15), JGColor.white);
+                }
+            }
+        }
+        
+        if(environmentModel != null){
+            List<Force> environmentForces = environmentModel.getForces();
+            drawString("EnvironmentModel", 15, infoOffset+=20, -1, new JGFont("arial",0,15), JGColor.red);
+            for(Force force:environmentForces){
                 if(force.isValid()){
                     drawString(force.getClass().getSimpleName() + " ON", 15, infoOffset+=20, -1, new JGFont("arial",0,15), JGColor.white);
                 }else{

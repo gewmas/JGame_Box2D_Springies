@@ -12,8 +12,8 @@ public interface Common {
     public static final double WALL_THICKNESS = 15;
     
     public static final double CHANGE_THICKNESS = 10;
-    public static final double MIN_THICKNESS = 10;
-    public static final double MAX_THICKNESS = 400;
+    public static final double MIN_THICKNESS = 30;
+    public static final double MAX_THICKNESS = 205;
     
     public static final double HEIGHT=600;
     public static final double ASPECT=16.0/9.0;

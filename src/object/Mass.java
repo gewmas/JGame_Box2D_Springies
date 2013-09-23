@@ -37,7 +37,7 @@ public class Mass extends PhysicalObjectCircle{
         velocity.y = (float) vy;
         getBody().setLinearVelocity(velocity);
         
-        //this.setMass(mass);
+        this.setMass(mass);
         this.x = x;
         this.y = y;
         this.wallThickness = Common.WALL_THICKNESS;

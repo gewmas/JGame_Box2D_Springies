@@ -16,6 +16,7 @@ public abstract class PhysicalObject extends JGObject
     protected JGColor myColor;
     protected Body myBody;
     protected float myRotation;
+    protected double mass = 0;
 
 
     protected PhysicalObject( String name, int collisionId, JGColor color )
@@ -149,8 +150,13 @@ public abstract class PhysicalObject extends JGObject
 
     protected abstract void paintShape( );
 
+    public void setMass(double mass){
+        this.mass = mass;
+    }
+    
     public double getMass () {
-        return getBody().getMass();
+//        return getBody().getMass();
+        return this.mass;
     }
 
 }
