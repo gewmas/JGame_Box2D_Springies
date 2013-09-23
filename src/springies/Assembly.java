@@ -7,23 +7,33 @@ import object.Mass;
 import jboxGlue.PhysicalObject;
 import jgame.JGColor;
 /**
- * Class that holds models for each individual assembly
+ * Class that holds models for each individual assembly. Essentially an ArrayList of models
+ * with some extended functionality, such as changing color of the objects.
  * 
  * @author Yuhua Mai, Susan Zhang
  *
  */
 public class Assembly {
     private List<Model> models = new ArrayList<Model>();
-    
+    /**
+     * Returns list of models contained in assembly
+     */
     public List<Model> getModels() {
         return models;
     }
 
+    /**
+     * Adds model to assembly
+     * @param newModel model to add
+     */
     public void addModel(Model newModel){
         models.add(newModel);
     }
     
-    public void setColor(){
+    /**
+     * Changes color of masses in each model in assembly to a random color
+     */
+    public void setRandomColor(){
         for(Model model : models){
             List<PhysicalObject> objects = model.getObjects();
             JGColor color = getRandomColor();
@@ -36,6 +46,11 @@ public class Assembly {
         }
     }
     
+    /**
+     * Generates a random JGColor by using a random generator between 0 and 255
+     * 
+     * @return random
+     */
     public JGColor getRandomColor(){
         Random generator = new Random();
         
@@ -46,6 +61,13 @@ public class Assembly {
         return new JGColor(r, g, b);
     }
     
+    /**
+     * Returns the mass that is closest to a mouse click
+     * 
+     * @param mouseX x position of mouse
+     * @param mouseY y position of mouse
+     * @return mass that is closest to where mouse was clicked
+     */
     public Mass calculateNearestMass(int mouseX, int mouseY){
         List<Mass> masses = new ArrayList<Mass>();
         Mass nearestMass = null;
@@ -73,6 +95,9 @@ public class Assembly {
         
     }
     
+    /**
+     * Clears the List of models
+     */
     public void clear(){
         models.clear();
     }

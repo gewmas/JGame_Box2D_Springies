@@ -295,13 +295,9 @@ public class Parser {
             if (nodeName.equals(Common.GRAVITY_DIRECTION)) {
                 direction= Double.parseDouble(nodeValue);     
             }
-
-//            System.out.println(nodeName + " " + nodeValue);
         }
 
         return new Gravity(direction, magnitude);
-
-
     }
 
     private Viscosity viscosityCommand(NamedNodeMap nodeMap){
@@ -313,8 +309,6 @@ public class Parser {
             if (nodeName.equals(Common.MAGNITUDE)) {
                 magnitude = Double.parseDouble(nodeValue);
             }
-
-//            System.out.println(nodeName + " " + nodeValue);
         }
 
         return new Viscosity(magnitude);
@@ -334,7 +328,6 @@ public class Parser {
                 exponent = Double.parseDouble(nodeValue);
             }
 
-//            System.out.println(nodeName + " " + nodeValue);
         }
 
         return new CenterOfMass(magnitude, exponent);
@@ -358,10 +351,8 @@ public class Parser {
                 exponent = Double.parseDouble(nodeValue);
             }       
 
-//            System.out.println(nodeName + " " + nodeValue);
         }
-        
-        
+          
         if (wallId.equals("1")){
             return new WallRepulsion1(wallId, magnitude, exponent);
         }else if (wallId.equals("2")){

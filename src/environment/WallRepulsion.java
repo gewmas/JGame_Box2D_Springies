@@ -1,5 +1,6 @@
 package environment;
 
+import jboxGlue.PhysicalObject;
 import springies.Common;
 
 /** 
@@ -45,5 +46,12 @@ public abstract class WallRepulsion extends Force {
     public double calculateForce(double distance){
         return magnitude/Math.pow(distance, exponent);
     }
+    
+    /**
+     * Calculates normal distance between wall and PhysicalObject
+     * @param object Physical Object that is to be affected by wall repulsion force
+     * @return normal distance between wall and object
+     */
+    public abstract double calculateDistance(PhysicalObject object);
     
 }
