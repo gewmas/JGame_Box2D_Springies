@@ -271,13 +271,13 @@ public class Springies extends JGEngine
                     force.toggleValid();       
                 }
             }
-            
-            if(environmentModel != null){
-                List<Force> environmentForces = environmentModel.getForces();
-                for(Force force:environmentForces){
-                    if(force.getClass().getSimpleName().equals(className)){
-                        force.toggleValid();       
-                    }
+        }
+        
+        if(environmentModel != null){
+            List<Force> environmentForces = environmentModel.getForces();
+            for(Force force:environmentForces){
+                if(force.getClass().getSimpleName().equals(className)){
+                    force.toggleValid();       
                 }
             }
         }
