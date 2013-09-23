@@ -1,6 +1,7 @@
 package object;
 
 import org.jbox2d.common.Vec2;
+import springies.Common;
 import jboxGlue.*;
 import jgame.JGColor;
 import jgame.JGObject;
@@ -14,6 +15,7 @@ import jgame.JGObject;
 public class Mass extends PhysicalObjectCircle{
     private static final JGColor color = JGColor.blue;
     private static final double radius = 10;
+    private double wallThickness;
 
     /**
      * Returns a new mass object
@@ -38,6 +40,7 @@ public class Mass extends PhysicalObjectCircle{
         //this.setMass(mass);
         this.x = x;
         this.y = y;
+        this.wallThickness = Common.WALL_THICKNESS;
     }
 
     /**
@@ -65,7 +68,29 @@ public class Mass extends PhysicalObjectCircle{
         myBody.setLinearVelocity( velocity );
 
     }
-      
+
+    
+    /**
+     * Offset the masses once it go outside the wall
+     * Could not work very well because the offset is set to be small
+     */
+    public void move( ){
+        super.move();
+        
+        if(x < Common.WALL_MARGIN + wallThickness){
+            setPos(x+Common.CHANGE_THICKNESS,y);
+        }
+        if(x > Common.WIDTH-Common.WALL_MARGIN-wallThickness){
+            setPos(x-Common.CHANGE_THICKNESS,y);
+        }
+        if(y < Common.WALL_MARGIN + wallThickness){
+            setPos(x, y+Common.CHANGE_THICKNESS);
+        }
+        if(y > Common.HEIGHT-Common.WALL_MARGIN-wallThickness){
+            setPos(x, y-Common.CHANGE_THICKNESS);
+        }
+    }
+    
     /**
      * Changes color of Mass
      * 
@@ -73,6 +98,27 @@ public class Mass extends PhysicalObjectCircle{
      */
     public void setMassColor(JGColor color){
         this.setColor(color);
+    }
+    
+    /**
+     * Changes the position of masses as the wall thickness change
+     * 
+     * @param the value to change the wall thickness
+     */
+    public void changePos(int changeWallThicknessValue){
+        wallThickness+=changeWallThicknessValue;
+        
+//        System.out.println("Wall Thickness" + wallThickness);
+        
+        if(x < Common.WIDTH/2 && y < Common.HEIGHT/2){
+            setPos(x+changeWallThicknessValue, y+changeWallThicknessValue);
+        }else if(x > Common.WIDTH/2 && y < Common.HEIGHT/2){
+            setPos(x-changeWallThicknessValue, y+changeWallThicknessValue);
+        }else if(x < Common.WIDTH/2 && y > Common.HEIGHT/2){
+            setPos(x+changeWallThicknessValue, y-changeWallThicknessValue);
+        }else if(x > Common.WIDTH/2 && y > Common.HEIGHT/2){
+            setPos(x-changeWallThicknessValue, y-changeWallThicknessValue);
+        }
     }
 
 }

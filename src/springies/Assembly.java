@@ -73,4 +73,8 @@ public class Assembly {
         
     }
     
+    public void clear(){
+        models.clear();
+    }
+    
 }

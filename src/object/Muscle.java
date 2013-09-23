@@ -51,7 +51,7 @@ public class Muscle extends Spring {
 	public void setLength(){
 	    currentLength = restLength+amplitude*Math.sin(timer);
 	          
-	   System.out.println("Muscle " + timer + " restLength:" + restLength + " length: " + (currentLength-restLength));
+//	   System.out.println("Muscle " + timer + " restLength:" + restLength + " length: " + (currentLength-restLength));
 	}
 
 

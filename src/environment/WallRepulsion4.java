@@ -12,7 +12,7 @@ public class WallRepulsion4 extends WallRepulsion {
     public void setForce(PhysicalObject object){ 
         object.setForce(calculateForce(calculateDistance(object)),0);
         
-        System.out.println("Calling WallRepulsion4 setForce!");
+//        System.out.println("Calling WallRepulsion4 setForce!");
     }
     
     public double calculateDistance(PhysicalObject object){

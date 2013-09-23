@@ -1,11 +1,13 @@
 package springies;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jboxGlue.PhysicalObject;
 import jboxGlue.WorldManager;
 import jgame.JGColor;
+import jgame.JGFont;
 import jgame.platform.JGEngine;
 import object.*;
 import environment.*;
@@ -29,6 +31,10 @@ public class Springies extends JGEngine
     
     private Mass mouseMass;
     private Spring mouseSpring;
+    
+    private double wallThickness;
+    
+    List<FixedMass> walls;
     
     public Springies( )
     {
@@ -58,6 +64,9 @@ public class Springies extends JGEngine
         assembly = new Assembly();
         parser = new Parser();
         
+        walls = new ArrayList<FixedMass>();
+        
+        this.wallThickness = Common.WALL_THICKNESS;
 //        this.addMouseListener(this.getMouseListeners());
         
         
@@ -68,15 +77,13 @@ public class Springies extends JGEngine
 
         loadModel();
         
-        model = new Model();
-        assembly.addModel(model);
         //add walls up-1 right-2 down-3 left-4
         wallWidth = displayWidth() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
         wallHeight = displayHeight() - Common.WALL_MARGIN*2 + Common.WALL_THICKNESS;
-        model.add(new FixedMass("1", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, Common.WALL_MARGIN));
-        model.add(new FixedMass("3", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, displayHeight() - Common.WALL_MARGIN));
-        model.add(new FixedMass("4", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, Common.WALL_MARGIN, displayHeight()/2));
-        model.add(new FixedMass("2", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, displayWidth() - Common.WALL_MARGIN, displayHeight()/2));
+        walls.add(new FixedMass("1", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, Common.WALL_MARGIN));
+        walls.add(new FixedMass("3", Common.WALL_CID, wallWidth,  Common.WALL_THICKNESS, displayWidth()/2, displayHeight() - Common.WALL_MARGIN));
+        walls.add(new FixedMass("4", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, Common.WALL_MARGIN, displayHeight()/2));
+        walls.add(new FixedMass("2", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight, displayWidth() - Common.WALL_MARGIN, displayHeight()/2));
     }
 
 
@@ -176,36 +183,12 @@ public class Springies extends JGEngine
         dbgShowBoundingBox(getKey('B'));
         
         if(getKey(KeyUp)){
-            List<FixedMass> fixedMasses = model.getFixedMasses();
-            for(FixedMass fixedMass : fixedMasses){
-//                if(fixedMass.getId().equals('1')){ //....Check Common.Max_ThickNess..Same For KeyDown
-                    fixedMass.changeThickness(changeWallThicknessValue);
-//                }
-            }
-            
-            List<Force> forces = model.getForces();
-            
-            for (Force force : forces){
-                if (force instanceof WallRepulsion){
-                    ((WallRepulsion) force).incrementWallThickness((double) changeWallThicknessValue);
-                }
-            }
+            changeWallThickness(changeWallThicknessValue);
                   
             clearKey(KeyUp);
             
         }else if(getKey(KeyDown)){
-            List<FixedMass> fixedMasses = model.getFixedMasses();
-            for(FixedMass fixedMass : fixedMasses){
-                fixedMass.changeThickness(-changeWallThicknessValue);
-            }
-
-            List<Force> forces = model.getForces();
-
-            for (Force force : forces){
-                if (force instanceof WallRepulsion){
-                    ((WallRepulsion) force).incrementWallThickness((double) -changeWallThicknessValue);
-                }
-            }
+            changeWallThickness(-changeWallThicknessValue);
             
             clearKey(KeyDown);
         }
@@ -215,6 +198,37 @@ public class Springies extends JGEngine
             clearKey('D');
         }
     }
+
+    private void changeWallThickness (int changeWallThicknessValue) {
+        if(wallThickness > Common.MAX_THICKNESS){
+            changeWallThicknessValue = -5;
+        }else if(wallThickness < Common.MIN_THICKNESS){
+            changeWallThicknessValue = 5;
+        }
+        
+        wallThickness+=changeWallThicknessValue;
+        for (Model model: assembly.getModels()){
+            List<PhysicalObject> ojbects = model.getObjects();
+            for(PhysicalObject object:ojbects){
+                if(object instanceof Mass){
+                    ((Mass)object).changePos(changeWallThicknessValue);
+                }
+            }
+            
+//            List<FixedMass> fixedMasses = model.getFixedMasses();
+            for(FixedMass fixedMass : walls){
+                    fixedMass.changeThickness(changeWallThicknessValue);
+            }
+            
+            List<Force> forces = model.getForces();
+            for (Force force : forces){
+                if (force instanceof WallRepulsion){
+                    ((WallRepulsion) force).incrementWallThickness((double) changeWallThicknessValue);
+                }
+            }
+        }
+        
+    }
     
     private void clearAllObjects () {
         int n = JOptionPane.showConfirmDialog(
@@ -222,10 +236,13 @@ public class Springies extends JGEngine
                                               "Are you sure to clear all objects?",
                                               "Clear Ojbects",
                                               JOptionPane.YES_NO_OPTION);
-        if(n == JOptionPane.YES_OPTION){
+        if(n == JOptionPane.YES_OPTION){    
             for (Model model: assembly.getModels()){
                 model.clear();      
             }
+            
+            assembly.clear();
+            
         }
         
     }
@@ -233,10 +250,10 @@ public class Springies extends JGEngine
     private void toggleForce(String className){
         int i = 0;
         for (Model model: assembly.getModels()){
-            System.out.println("!!!!!!!!!!!!model + " + i++);
             List<Force> forces = model.getForces();
             for(Force force:forces){
                 if(force.getClass().getSimpleName().equals(className)){
+                  System.out.print("Toggle force in model " + i++ + " ");
                     force.toggleValid();       
                     //                System.out.println("Calling toggleValid! " + force.getClass().getSimpleName());
                 }
@@ -276,8 +293,23 @@ public class Springies extends JGEngine
     @Override
     public void paintFrame( )
     {
-        // nothing to do
-        // the objects paint themselves
+        super.paintFrame();
+
+        int modelIndex = 0;
+        int infoOffset = 10;
+        for (Model model: assembly.getModels()){
+            List<Force> forces = model.getForces();
+            drawString("Model" + modelIndex++, 15, infoOffset+=20, -1, new JGFont("arial",0,15), JGColor.red);
+            for(Force force:forces){
+                if(force.isValid()){
+                    drawString(force.getClass().getSimpleName() + " ON", 15, infoOffset+=20, -1, new JGFont("arial",0,15), JGColor.white);
+                }else{
+                    drawString(force.getClass().getSimpleName() + " OFF", 15, infoOffset+=20, -1, new JGFont("arial",0,15), JGColor.white);
+                }
+            }
+        }
+        
+        
     }
 
 }

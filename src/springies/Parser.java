@@ -26,6 +26,8 @@ import environment.WallRepulsion1;
 import environment.WallRepulsion2;
 import environment.WallRepulsion3;
 import environment.WallRepulsion4;
+
+
 /**  Reads in XML Files and adds objects and forces to Model
  * 
  */
@@ -64,6 +66,12 @@ public class Parser {
         
     }
     
+    /**
+     * parse selectedFile and create new object to model
+     * 
+     * @param model created by Springies
+     * @param selectedFile the opened XML file
+     */
     public void loadModel (Model model, File selectedFile) {
         DocumentBuilder dBuilder = null;
         try {
@@ -92,6 +100,12 @@ public class Parser {
 
     }
 
+    /**
+     * traverse Nodes in the XML file
+     * 
+     * @param nodeList nodeList of the XML file
+     * @param model model to store new created object
+     */
     private void traverseNote(NodeList nodeList, Model model) {
         for (int count = 0; count < nodeList.getLength(); count++) {
 
@@ -226,7 +240,7 @@ public class Parser {
 
             // System.out.println(node.getNodeName() + " " + node.getNodeValue());
         }
-        System.out.println(id1 + " " + id2 + " " + constant + " " + restlength);
+//        System.out.println(id1 + " " + id2 + " " + constant + " " + restlength);
 
         PhysicalObject m1 = myMasses.get(id1);
         PhysicalObject m2 = myMasses.get(id2);
@@ -282,7 +296,7 @@ public class Parser {
                 direction= Double.parseDouble(nodeValue);     
             }
 
-            System.out.println(nodeName + " " + nodeValue);
+//            System.out.println(nodeName + " " + nodeValue);
         }
 
         return new Gravity(direction, magnitude);
@@ -300,7 +314,7 @@ public class Parser {
                 magnitude = Double.parseDouble(nodeValue);
             }
 
-            System.out.println(nodeName + " " + nodeValue);
+//            System.out.println(nodeName + " " + nodeValue);
         }
 
         return new Viscosity(magnitude);
@@ -320,7 +334,7 @@ public class Parser {
                 exponent = Double.parseDouble(nodeValue);
             }
 
-            System.out.println(nodeName + " " + nodeValue);
+//            System.out.println(nodeName + " " + nodeValue);
         }
 
         return new CenterOfMass(magnitude, exponent);
@@ -344,7 +358,7 @@ public class Parser {
                 exponent = Double.parseDouble(nodeValue);
             }       
 
-            System.out.println(nodeName + " " + nodeValue);
+//            System.out.println(nodeName + " " + nodeValue);
         }
         
         

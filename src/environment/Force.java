@@ -12,6 +12,8 @@ public abstract class Force {
     
     public boolean valid = true;
 
+    
+
     /**
      * Applies force to masses only in a list of physical objects
      * 
@@ -40,5 +42,13 @@ public abstract class Force {
         }else{
             System.out.println(getClass().getSimpleName() + " Off.");
         }
+    }
+    
+    /**
+     * check the force is on or not
+     * @return valid
+     */
+    public boolean isValid () {
+        return valid;
     }
 }
