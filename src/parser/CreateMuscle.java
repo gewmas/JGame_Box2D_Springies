@@ -1,5 +1,6 @@
 package parser;
 
+import java.util.Map;
 import jboxGlue.PhysicalObject;
 import jgame.JGColor;
 import object.Muscle;
@@ -7,17 +8,23 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import springies.Common;
 
+
 public class CreateMuscle extends CreateObject {
     private double restlength = 0;
     private double constant = Common.DEFAULT_K;
     private String id1;
     private String id2;
     private double amplitude = 0;
-    
+
+    Map<String, PhysicalObject> myMasses;
+
+    CreateMuscle (Map<String, PhysicalObject> myMasses) {
+        this.myMasses = myMasses;
+    }
+
     @Override
     public PhysicalObject createObject (NamedNodeMap nodeMap) {
 
-        
         for (int i = 0; i < nodeMap.getLength(); i++) {
 
             Node node = nodeMap.item(i);
@@ -47,7 +54,7 @@ public class CreateMuscle extends CreateObject {
 
         return new Muscle("muscle", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant,
                           amplitude);
-    
+
     }
 
 }

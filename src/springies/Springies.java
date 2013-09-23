@@ -81,7 +81,7 @@ public class Springies extends JGEngine
     public void initGame ()
     {
         assembly = new Assembly();
-        parser = new Parser();
+//        parser = new Parser();
 
         walls = new ArrayList<FixedMass>();
 
@@ -109,11 +109,13 @@ public class Springies extends JGEngine
             if (loadObject == JFileChooser.APPROVE_OPTION) {
                 if (INPUT_CHOOSER.getSelectedFile().getName().equals("environment.xml")) {
                     environmentModel = new Model();
+                    parser = new Parser();
                     parser.loadModel(environmentModel, INPUT_CHOOSER.getSelectedFile());
                 }
                 else {
                     model = new Model();
                     assembly.addModel(model);
+                    parser = new Parser();
                     parser.loadModel(model, INPUT_CHOOSER.getSelectedFile());
                 }
             }

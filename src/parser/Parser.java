@@ -8,11 +8,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import jboxGlue.PhysicalObject;
-import jgame.JGColor;
-import object.FixedMass;
-import object.Mass;
-import object.Muscle;
-import object.Spring;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -29,31 +24,6 @@ import springies.Model;
 
 public class Parser {
     Map<String, PhysicalObject> myMasses = new HashMap<String, PhysicalObject>();
-    CreateMass massCreator = new CreateMass();
-    // mass
-//    private String id;
-//    private double vx = 0;
-//    private double vy = 0;
-//    private double mass = Common.DEFAULT_MASS;
-//    private double x = 0;
-//    private double y = 0;
-
-    // spring
-//    private String id1;
-//    private String id2;
-//    private double constant = Common.DEFAULT_K;
-//    private double restlength = 0;
-
-//    // gravity
-//    private double amplitude = 0;
-//    private double direction = 0;
-//
-//    // viscosity, center mass, wall
-//    private double magnitude = 0;
-
-//    // wall
-//    private double exponent = 0;
-//    private String wallId;
 
     /**
      * parse selectedFile and create new object to model
@@ -110,20 +80,18 @@ public class Parser {
                     NamedNodeMap nodeMap = tempNode.getAttributes();
 
                     if (Common.MASS_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(new CreateMass().createObject(nodeMap));
+                        model.add(new CreateMass(myMasses).createObject(nodeMap));
                     }
                     else if (Common.FIXEDMASS_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(new CreateFixedMass().createObject(nodeMap));
+                        model.add(new CreateFixedMass(myMasses).createObject(nodeMap));
                     }
                     else if (Common.MUSCLE_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(new CreateMuscle().createObject(nodeMap));
+                        model.add(new CreateMuscle(myMasses).createObject(nodeMap));
                     }
                     else if (Common.SPRING_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(new CreateSpring().createObject(nodeMap));
+                        model.add(new CreateSpring(myMasses).createObject(nodeMap));
                     }
                     else if (Common.GRAVITY_KEYWORD.equals(tempNode.getNodeName())) {
-//                        model.add(gravityCommand(nodeMap));
-                        
                         model.add((new CreateGravity()).createForce(nodeMap));
                     }
                     else if (Common.VISCOSITY_KEYWORD.equals(tempNode.getNodeName())) {
@@ -151,148 +119,4 @@ public class Parser {
         }
     }
 
-//    private Mass massCommand (NamedNodeMap nodeMap) {
-//        mass = Common.DEFAULT_MASS;
-//        for (int i = 0; i < nodeMap.getLength(); i++) {
-//            Node node = nodeMap.item(i);
-//            String nodeName = node.getNodeName();
-//            String nodeValue = node.getNodeValue();
-//
-//            if (nodeName.equals(Common.MASS_ID)) {
-//                id = nodeValue;
-//            }
-//            else if (nodeName.equals(Common.MASS_MASS)) {
-//                mass = Double.parseDouble(nodeValue);
-//            }
-//            else if (nodeName.equals(Common.MASS_VX)) {
-//                vx = Double.parseDouble(nodeValue);
-//            }
-//            else if (nodeName.equals(Common.MASS_VY)) {
-//                vy = Double.parseDouble(nodeValue);
-//            }
-//            else if (nodeName.equals(Common.MASS_X)) {
-//                x = Double.parseDouble(nodeValue);
-//            }
-//            else if (nodeName.equals(Common.MASS_Y)) {
-//                y = Double.parseDouble(nodeValue);
-//            }
-//
-//            // System.out.println(node.getNodeName() + " " + node.getNodeValue());
-//        }
-//
-//        // System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
-//
-//        Mass result = new Mass(id, Common.MASS_CID, mass, x, y, vx, vy);
-//        myMasses.put(id, result);
-//
-//        return result;
-//    }
-
-//    private FixedMass fixedMassCommand (NamedNodeMap nodeMap) {
-//        for (int i = 0; i < nodeMap.getLength(); i++) {
-//            Node node = nodeMap.item(i);
-//            String nodeName = node.getNodeName();
-//            String nodeValue = node.getNodeValue();
-//
-//            if (nodeName.equals(Common.MASS_ID)) {
-//                id = nodeValue;
-//            }
-//            else if (nodeName.equals(Common.MASS_X)) {
-//                x = Double.parseDouble(nodeValue);
-//            }
-//            else if (nodeName.equals(Common.MASS_Y)) {
-//                y = Double.parseDouble(nodeValue);
-//            }
-//
-//            // System.out.println(node.getNodeName() + " " + node.getNodeValue());
-//        }
-//
-//        // System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
-//
-//        FixedMass result = new FixedMass(id, Common.FIXEDMASS_CID, x, y);
-//        myMasses.put(id, result);
-//
-//        return result;
-//    }
-
-//    private Spring springCommand (NamedNodeMap nodeMap) {
-//        constant = Common.DEFAULT_K;
-//        restlength = 0;
-//        for (int i = 0; i < nodeMap.getLength(); i++) {
-//            Node node = nodeMap.item(i);
-//            String nodeName = node.getNodeName();
-//            String nodeValue = node.getNodeValue();
-//
-//            if (nodeName.equals(Common.SPRING_A)) {
-//                id1 = nodeValue;
-//            }
-//            else if (nodeName.equals(Common.SPRING_B)) {
-//                id2 = nodeValue;
-//            }
-//            else if (nodeName.equals(Common.SPRING_CONSTANT)) {
-//                constant = Double.parseDouble(nodeValue);
-//            }
-//            else if (nodeName.equals(Common.SPRING_RESTLENGTH)) {
-//                restlength = Double.parseDouble(nodeValue);
-//            }
-//
-//            // System.out.println(node.getNodeName() + " " + node.getNodeValue());
-//        }
-//        // System.out.println(id1 + " " + id2 + " " + constant + " " + restlength);
-//
-//        PhysicalObject m1 = myMasses.get(id1);
-//        PhysicalObject m2 = myMasses.get(id2);
-//
-//        return new Spring("spring", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant);
-//    }
-
-//    private Muscle muscleCommand (NamedNodeMap nodeMap) {
-//        restlength = 0;
-//        constant = Common.DEFAULT_K;
-//        for (int i = 0; i < nodeMap.getLength(); i++) {
-//
-//            Node node = nodeMap.item(i);
-//            String nodeName = node.getNodeName();
-//            String nodeValue = node.getNodeValue();
-//
-//            if (nodeName.equals(Common.SPRING_A)) {
-//                id1 = nodeValue;
-//            }
-//            else if (nodeName.equals(Common.SPRING_B)) {
-//                id2 = nodeValue;
-//            }
-//            else if (nodeName.equals(Common.SPRING_RESTLENGTH)) {
-//                restlength = Double.parseDouble(nodeValue);
-//            }
-//            else if (nodeName.equals(Common.SPRING_CONSTANT)) {
-//                constant = Double.parseDouble(nodeValue);
-//            }
-//            else if (nodeName.equals(Common.MUSCLE_AMPLITUDE)) {
-//                amplitude = Double.parseDouble(nodeValue);
-//            }
-//
-//        }
-//
-//        PhysicalObject m1 = myMasses.get(id1);
-//        PhysicalObject m2 = myMasses.get(id2);
-//
-//        return new Muscle("muscle", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant,
-//                          amplitude);
-//    }
-
-/*    private Viscosity viscosityCommand (NamedNodeMap nodeMap) {
-        for (int i = 0; i < nodeMap.getLength(); i++) {
-            Node node = nodeMap.item(i);
-            String nodeName = node.getNodeName();
-            String nodeValue = node.getNodeValue();
-
-            if (nodeName.equals(Common.MAGNITUDE)) {
-                magnitude = Double.parseDouble(nodeValue);
-            }
-        }
-
-        return new Viscosity(magnitude);
-    }*/
-
-  
 }
