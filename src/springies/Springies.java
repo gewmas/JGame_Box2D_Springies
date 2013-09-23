@@ -97,25 +97,9 @@ public class Springies extends JGEngine
     }
 
     /**
-     * Sets the four walls of the display. The wall IDs start at the top wall and go clockwise.
-     */
-    public void makeWalls () {
-        wallWidth = displayWidth() - Common.WALL_MARGIN * 2 + Common.WALL_THICKNESS;
-        wallHeight = displayHeight() - Common.WALL_MARGIN * 2 + Common.WALL_THICKNESS;
-        walls.add(new FixedMass("1", Common.WALL_CID, wallWidth, Common.WALL_THICKNESS,
-                                displayWidth() / 2, Common.WALL_MARGIN));
-        walls.add(new FixedMass("3", Common.WALL_CID, wallWidth, Common.WALL_THICKNESS,
-                                displayWidth() / 2, displayHeight() - Common.WALL_MARGIN));
-        walls.add(new FixedMass("4", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight,
-                                Common.WALL_MARGIN, displayHeight() / 2));
-        walls.add(new FixedMass("2", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight,
-                                displayWidth() - Common.WALL_MARGIN, displayHeight() / 2));
-    }
-
-    /**
      * Loads XML files into assembly by calling parser. Allows for loading of multiple files.
      */
-    public void loadModel () {
+    private void loadModel () {
         int n = JOptionPane.YES_OPTION;
         JOptionPane.showMessageDialog(this, "Please load a XML file.");
 
@@ -139,6 +123,22 @@ public class Springies extends JGEngine
                                               "LoadModel?",
                                               JOptionPane.YES_NO_OPTION);
         }
+    }
+
+    /**
+     * Sets the four walls of the display. The wall IDs start at the top wall and go clockwise.
+     */
+    private void makeWalls () {
+        wallWidth = displayWidth() - Common.WALL_MARGIN * 2 + Common.WALL_THICKNESS;
+        wallHeight = displayHeight() - Common.WALL_MARGIN * 2 + Common.WALL_THICKNESS;
+        walls.add(new FixedMass("1", Common.WALL_CID, wallWidth, Common.WALL_THICKNESS,
+                                displayWidth() / 2, Common.WALL_MARGIN));
+        walls.add(new FixedMass("3", Common.WALL_CID, wallWidth, Common.WALL_THICKNESS,
+                                displayWidth() / 2, displayHeight() - Common.WALL_MARGIN));
+        walls.add(new FixedMass("4", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight,
+                                Common.WALL_MARGIN, displayHeight() / 2));
+        walls.add(new FixedMass("2", Common.WALL_CID, Common.WALL_THICKNESS, wallHeight,
+                                displayWidth() - Common.WALL_MARGIN, displayHeight() / 2));
     }
 
     @Override
@@ -346,7 +346,7 @@ public class Springies extends JGEngine
      */
     private void handleMouseEvent () {
         if (getMouseButton(1)) { // left click pressed
-            System.out.println(" " + getMouseX() + " " + getMouseY());
+//            System.out.println(" " + getMouseX() + " " + getMouseY());
 
             if (!massCreated) {
                 Mass nearestMass = assembly.calculateNearestMass(getMouseX(), getMouseY());
@@ -363,7 +363,7 @@ public class Springies extends JGEngine
             mousePressed = true;
         }
         else if (!getMouseButton(1) && mousePressed) { // left click release
-            System.out.println("Mouse released");
+//            System.out.println("Mouse released");
 
             mouseMass.remove();
             mouseSpring.remove();

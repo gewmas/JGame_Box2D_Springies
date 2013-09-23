@@ -64,9 +64,17 @@ public class Spring extends PhysicalObjectRect {
     }
 
     /**
+     * Sets current length of spring to distance between mass1 and mass2. This is called after the
+     * masses have been moved by the spring, so the spring is
+     */
+    protected void setLength () {
+        currentLength = calculateActualDistance();
+    }
+
+    /**
      * Applies force on masses based on Hooke's law and x and y distances between masses
      */
-    public void springMove () {
+    protected void springMove () {
         dx = mass2.x - mass1.x;
         dy = mass2.y - mass1.y;
 
@@ -81,16 +89,8 @@ public class Spring extends PhysicalObjectRect {
      * 
      * @return distance between mass1 and mass2
      */
-    public double calculateActualDistance () {
+    private double calculateActualDistance () {
         return Math.sqrt(Math.pow((mass1.x - mass2.x), 2) + Math.pow((mass1.y - mass2.y), 2));
-    }
-
-    /**
-     * Sets current length of spring to distance between mass1 and mass2. This is called after the
-     * masses have been moved by the spring, so the spring is
-     */
-    public void setLength () {
-        currentLength = calculateActualDistance();
     }
 
     @Override

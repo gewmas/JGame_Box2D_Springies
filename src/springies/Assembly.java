@@ -55,7 +55,7 @@ public class Assembly {
      * 
      * @return random
      */
-    public JGColor getRandomColor () {
+    private JGColor getRandomColor () {
         Random generator = new Random();
 
         int r = generator.nextInt(255);
