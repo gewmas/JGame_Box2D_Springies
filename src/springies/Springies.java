@@ -232,6 +232,11 @@ public class Springies extends JGEngine
         }
     }
 
+    /**
+     * Changes the thickness of walls on display. Also changes the wall repulsion forces respectively.
+     * 
+     * @param changeWallThicknessValue
+     */
     private void changeWallThickness (int changeWallThicknessValue) {
         if(wallThickness > Common.MAX_THICKNESS){
             changeWallThicknessValue = -5;
@@ -264,6 +269,10 @@ public class Springies extends JGEngine
         
     }
     
+    /**
+     * Clears all objects from display window. There is also a popup to check if the user
+     * really wants to clear all the objects.
+     */
     private void clearAllObjects () {
         int n = JOptionPane.showConfirmDialog(
                                               this,
@@ -281,6 +290,12 @@ public class Springies extends JGEngine
         
     }
     
+    /**
+     * Goes through list of all forces in object models or environment model to toggle
+     * type of force given in parameter
+     * 
+     * @param className Type of force to be toggled
+     */
     private void toggleForce(String className){
         int i = 0;
         for (Model model: assembly.getModels()){
@@ -303,6 +318,11 @@ public class Springies extends JGEngine
         }
     }
 
+    /**
+     * Detects if mouse is clicked. When mouse is held down, a mass is created at the location that
+     * the mouse clicks and a spring will extend to the nearest mass in any model. When the mouse is
+     * lifted, both of these objects will disappear.
+     */
     private void handleMouseEvent(){
         if(this.getMouseButton(1)){ //left click pressed
             System.out.println(" " + this.getMouseX() + " " + this.getMouseY());
