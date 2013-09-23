@@ -28,16 +28,15 @@ import environment.WallRepulsion3;
 import environment.WallRepulsion4;
 
 
-/**  Reads in XML Files and adds objects and forces to Model
+/**
+ * Reads in XML Files and adds objects and forces to Model
  * 
  */
 
 public class Parser {
-//    private static int createdTimes = 0;
-        
     Map<String, PhysicalObject> myMasses = new HashMap<String, PhysicalObject>();
 
-    //mass
+    // mass
     private String id;
     private double vx = 0;
     private double vy = 0;
@@ -45,27 +44,23 @@ public class Parser {
     private double x = 0;
     private double y = 0;
 
-    //spring
+    // spring
     private String id1;
     private String id2;
     private double constant = Common.DEFAULT_K;
     private double restlength = 0;
 
-    //gravity
+    // gravity
     private double amplitude = 0;
-    private double direction=0;
+    private double direction = 0;
 
-    //viscosity, center mass, wall
+    // viscosity, center mass, wall
     private double magnitude = 0;
 
-    //wall
+    // wall
     private double exponent = 0;
     private String wallId;
 
-    Parser(){
-        
-    }
-    
     /**
      * parse selectedFile and create new object to model
      * 
@@ -106,7 +101,7 @@ public class Parser {
      * @param nodeList nodeList of the XML file
      * @param model model to store new created object
      */
-    private void traverseNote(NodeList nodeList, Model model) {
+    private void traverseNote (NodeList nodeList, Model model) {
         for (int count = 0; count < nodeList.getLength(); count++) {
 
             Node tempNode = nodeList.item(count);
@@ -114,7 +109,7 @@ public class Parser {
             // make sure it's element node.
             if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
                 // get node name and value
-                //                System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
+                // System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
 
                 if (tempNode.hasAttributes()) {
                     // get attributes names and values
@@ -122,31 +117,38 @@ public class Parser {
 
                     if (Common.MASS_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(massCommand(nodeMap));
-                    }else if (Common.FIXEDMASS_KEYWORD.equals(tempNode.getNodeName())){
+                    }
+                    else if (Common.FIXEDMASS_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(fixedMassCommand(nodeMap));
-                    }else if (Common.MUSCLE_KEYWORD.equals(tempNode.getNodeName())) {
+                    }
+                    else if (Common.MUSCLE_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(muscleCommand(nodeMap));
-                    }else if (Common.SPRING_KEYWORD.equals(tempNode.getNodeName())) {
+                    }
+                    else if (Common.SPRING_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(springCommand(nodeMap));
-                    }else if(Common.GRAVITY_KEYWORD.equals(tempNode.getNodeName())){
+                    }
+                    else if (Common.GRAVITY_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(gravityCommand(nodeMap));
-                    }else if(Common.VISCOSITY_KEYWORD.equals(tempNode.getNodeName())){
+                    }
+                    else if (Common.VISCOSITY_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(viscosityCommand(nodeMap));
-                    }else if(Common.CENTERMASS_KEYWORD.equals(tempNode.getNodeName())){
+                    }
+                    else if (Common.CENTERMASS_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(centerMassCommand(nodeMap));
-                    }else if(Common.WALL_KEYWORD.equals(tempNode.getNodeName())){
+                    }
+                    else if (Common.WALL_KEYWORD.equals(tempNode.getNodeName())) {
                         model.add(wallCommand(nodeMap));
                     }
                 }
 
-                //                 System.out.println("Node Value =" + tempNode.getTextContent());
+                // System.out.println("Node Value =" + tempNode.getTextContent());
 
                 if (tempNode.hasChildNodes()) {
                     // loop again if has child nodes
                     traverseNote(tempNode.getChildNodes(), model);
                 }
 
-                //                 System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
+                // System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
 
             }
 
@@ -154,7 +156,7 @@ public class Parser {
     }
 
     private Mass massCommand (NamedNodeMap nodeMap) {
-        mass=Common.DEFAULT_MASS;
+        mass = Common.DEFAULT_MASS;
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
@@ -182,14 +184,14 @@ public class Parser {
             // System.out.println(node.getNodeName() + " " + node.getNodeValue());
         }
 
-//               System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
+        // System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
 
         Mass result = new Mass(id, Common.MASS_CID, mass, x, y, vx, vy);
         myMasses.put(id, result);
 
         return result;
     }
-    
+
     private FixedMass fixedMassCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
@@ -209,7 +211,7 @@ public class Parser {
             // System.out.println(node.getNodeName() + " " + node.getNodeValue());
         }
 
-        //        System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
+        // System.out.println(id + " " + mass + " " + (float)vx + " " + vy + " " + x + " " + y);
 
         FixedMass result = new FixedMass(id, Common.FIXEDMASS_CID, x, y);
         myMasses.put(id, result);
@@ -218,8 +220,8 @@ public class Parser {
     }
 
     private Spring springCommand (NamedNodeMap nodeMap) {
-        constant=Common.DEFAULT_K;
-        restlength=0;
+        constant = Common.DEFAULT_K;
+        restlength = 0;
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
@@ -240,7 +242,7 @@ public class Parser {
 
             // System.out.println(node.getNodeName() + " " + node.getNodeValue());
         }
-//        System.out.println(id1 + " " + id2 + " " + constant + " " + restlength);
+        // System.out.println(id1 + " " + id2 + " " + constant + " " + restlength);
 
         PhysicalObject m1 = myMasses.get(id1);
         PhysicalObject m2 = myMasses.get(id2);
@@ -249,10 +251,10 @@ public class Parser {
     }
 
     private Muscle muscleCommand (NamedNodeMap nodeMap) {
-        restlength=0;
-        constant=Common.DEFAULT_K;
+        restlength = 0;
+        constant = Common.DEFAULT_K;
         for (int i = 0; i < nodeMap.getLength(); i++) {
- 
+
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
@@ -278,29 +280,29 @@ public class Parser {
         PhysicalObject m1 = myMasses.get(id1);
         PhysicalObject m2 = myMasses.get(id2);
 
-        return new Muscle("muscle", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant, amplitude);
+        return new Muscle("muscle", Common.SPRING_CID, JGColor.cyan, m1, m2, restlength, constant,
+                          amplitude);
     }
 
-
-    private Gravity gravityCommand(NamedNodeMap nodeMap){
+    private Gravity gravityCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
 
             if (nodeName.equals(Common.MAGNITUDE)) {
-                magnitude= Double.parseDouble(nodeValue);     
+                magnitude = Double.parseDouble(nodeValue);
             }
 
             if (nodeName.equals(Common.GRAVITY_DIRECTION)) {
-                direction= Double.parseDouble(nodeValue);     
+                direction = Double.parseDouble(nodeValue);
             }
         }
 
         return new Gravity(direction, magnitude);
     }
 
-    private Viscosity viscosityCommand(NamedNodeMap nodeMap){
+    private Viscosity viscosityCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
@@ -314,17 +316,17 @@ public class Parser {
         return new Viscosity(magnitude);
     }
 
-    private CenterOfMass centerMassCommand(NamedNodeMap nodeMap){
+    private CenterOfMass centerMassCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
 
-            if (nodeName.equals(Common.MAGNITUDE)){
+            if (nodeName.equals(Common.MAGNITUDE)) {
                 magnitude = Double.parseDouble(nodeValue);
             }
 
-            if (nodeName.equals(Common.EXPONENT)){
+            if (nodeName.equals(Common.EXPONENT)) {
                 exponent = Double.parseDouble(nodeValue);
             }
 
@@ -333,35 +335,33 @@ public class Parser {
         return new CenterOfMass(magnitude, exponent);
     }
 
-    private WallRepulsion wallCommand(NamedNodeMap nodeMap){
+    private WallRepulsion wallCommand (NamedNodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getLength(); i++) {
             Node node = nodeMap.item(i);
             String nodeName = node.getNodeName();
             String nodeValue = node.getNodeValue();
 
-            if (nodeName.equals(Common.MASS_ID)){
+            if (nodeName.equals(Common.MASS_ID)) {
                 wallId = nodeValue;
             }
 
-            if (nodeName.equals(Common.MAGNITUDE)){
+            if (nodeName.equals(Common.MAGNITUDE)) {
                 magnitude = Double.parseDouble(nodeValue);
             }
 
-            if (nodeName.equals(Common.EXPONENT)){
+            if (nodeName.equals(Common.EXPONENT)) {
                 exponent = Double.parseDouble(nodeValue);
-            }       
+            }
 
         }
-          
-        if (wallId.equals("1")){
+
+        if (wallId.equals("1"))
             return new WallRepulsion1(wallId, magnitude, exponent);
-        }else if (wallId.equals("2")){
+        else if (wallId.equals("2"))
             return new WallRepulsion2(wallId, magnitude, exponent);
-        }else if (wallId.equals("3")){
+        else if (wallId.equals("3"))
             return new WallRepulsion3(wallId, magnitude, exponent);
-        }else{
-            return new WallRepulsion4(wallId, magnitude, exponent);
-        }
+        else return new WallRepulsion4(wallId, magnitude, exponent);
 
     }
 }
