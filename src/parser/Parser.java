@@ -13,6 +13,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import environment.Force;
 import springies.Common;
 import springies.Model;
 
@@ -24,6 +25,9 @@ import springies.Model;
 
 public class Parser {
     Map<String, PhysicalObject> myMasses = new HashMap<String, PhysicalObject>();
+    PhysicalObject physicalObject = null;
+    Force force = null;
+//    CreateForce createForce;
 
     /**
      * parse selectedFile and create new object to model
@@ -80,39 +84,45 @@ public class Parser {
                     NamedNodeMap nodeMap = tempNode.getAttributes();
 
                     if (Common.MASS_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(new CreateMass(myMasses).createObject(nodeMap));
+                        physicalObject = new CreateMass(myMasses).createObject(nodeMap);
                     }
                     else if (Common.FIXEDMASS_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(new CreateFixedMass(myMasses).createObject(nodeMap));
+                        physicalObject = new CreateFixedMass(myMasses).createObject(nodeMap);
                     }
                     else if (Common.MUSCLE_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(new CreateMuscle(myMasses).createObject(nodeMap));
+                        physicalObject = new CreateMuscle(myMasses).createObject(nodeMap);
                     }
                     else if (Common.SPRING_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add(new CreateSpring(myMasses).createObject(nodeMap));
+                        physicalObject = new CreateSpring(myMasses).createObject(nodeMap);
                     }
                     else if (Common.GRAVITY_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add((new CreateGravity()).createForce(nodeMap));
+                        force = (new CreateGravity()).createForce(nodeMap);
                     }
                     else if (Common.VISCOSITY_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add((new CreateViscosity()).createForce(nodeMap));
+                        force = (new CreateViscosity()).createForce(nodeMap);
                     }
                     else if (Common.CENTERMASS_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add((new CreateCenterOfMass()).createForce(nodeMap));
+                        force = (new CreateCenterOfMass()).createForce(nodeMap);
                     }
                     else if (Common.WALL_KEYWORD.equals(tempNode.getNodeName())) {
-                        model.add((new CreateWallRepulsion()).createForce(nodeMap));
+                        force = (new CreateWallRepulsion()).createForce(nodeMap);
+                    }
+                    
+                    if(physicalObject != null){
+                        model.add(physicalObject);
+                        physicalObject = null;
+                    }
+                    
+                    if(force != null){
+                        model.add(force);
+                        force = null;
                     }
                 }
-
-                // System.out.println("Node Value =" + tempNode.getTextContent());
-
+               
                 if (tempNode.hasChildNodes()) {
                     // loop again if has child nodes
                     traverseNote(tempNode.getChildNodes(), model);
                 }
-
-                // System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
 
             }
 
